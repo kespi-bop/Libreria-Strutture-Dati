@@ -1,6 +1,6 @@
 
 #! /bin/bash
-//ciao
+
 g++ -O3 -std=c++20 -o main main.cpp \
   zmytest/test.cpp zlasdtest/test.cpp zlasdtest/container/container.cpp \
   zlasdtest/exercise1a/simpletest.cpp zlasdtest/exercise1a/fulltest.cpp \
