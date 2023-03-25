@@ -13,7 +13,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class TestableContainer {
+class TestableContainer : virtual public Container{
                           // Must extend Container
 
 private:
@@ -47,7 +47,7 @@ public:
 
   // Specific member function
 
-  // type Exists(argument) specifiers; // (concrete function should not throw exceptions)
+  bool Exists(argument) const noexcept; // (concrete function should not throw exceptions)
 
 };
 

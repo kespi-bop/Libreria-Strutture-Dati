@@ -17,7 +17,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class MappableContainer {
+class MappableContainer : public FoldableContainer<Data>{
                           // Must extend FoldableContainer<Data>
 
 private:
@@ -68,7 +68,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class PreOrderMappableContainer {
+class PreOrderMappableContainer : MappableContainer<Data>, PreOrderFoldableContainer<Data>{
                                   // Must extend MappableContainer<Data>,
                                   //             PreOrderFoldableContainer<Data>
 
@@ -132,7 +132,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class PostOrderMappableContainer {
+class PostOrderMappableContainer : public MappableContainer<Data>, PostOrderFoldableContainer<Data>{
                                   // Must extend MappableContainer<Data>,
                                   //             PostOrderFoldableContainer<Data>
 
@@ -324,7 +324,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class MutableMappableContainer {
+class MutableMappableContainer : public MappableContainer<Data>{
                                   // Must extend MappableContainer<Data>
 
 private:
@@ -367,7 +367,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class MutablePreOrderMappableContainer {
+class MutablePreOrderMappableContainer : public  MutableMappableContainer<Data>, PreOrderMappableContainer<Data>{
                                           // Must extend MutableMappableContainer<Data>,
                                           //             PreOrderMappableContainer<Data>
 
@@ -417,7 +417,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class MutablePostOrderMappableContainer {
+class MutablePostOrderMappableContainer : public  MutableMappableContainer<Data>, PostOrderMappableContainer<Data>{
                                           // Must extend MutableMappableContainer<Data>,
                                           //             PostOrderMappableContainer<Data>
 

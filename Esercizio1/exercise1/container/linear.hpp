@@ -13,7 +13,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class LinearContainer {
+class LinearContainer : public MutablePreOrderMappableContainer<Data>, MutablePostOrderMappableContainer<Data>{
                         // Must extend MutablePreOrderMappableContainer<Data>,
                         //             MutablePostOrderMappableContainer<Data>
 
@@ -122,7 +122,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class SortableLinearContainer {
+class SortableLinearContainer : public LinearContainer<Data>{
                                 // Must extend LinearContainer<Data>
 
 private:

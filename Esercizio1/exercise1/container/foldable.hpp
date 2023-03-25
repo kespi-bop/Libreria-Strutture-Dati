@@ -17,7 +17,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class FoldableContainer {
+class FoldableContainer : public TestableContainer<Data>{
                           // Must extend TestableContainer<Data>
 
 private:
@@ -66,7 +66,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class PreOrderFoldableContainer {
+class PreOrderFoldableContainer : public FoldableContainer<Data> {
                                   // Must extend FoldableContainer<Data>
 
 private:
@@ -115,7 +115,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class PostOrderFoldableContainer {
+class PostOrderFoldableContainer : public FoldableContainer<Data>{
                                   // Must extend FoldableContainer<Data>
 
 private:

@@ -49,7 +49,7 @@ public:
 
 /* ************************************************************************** */
 
-class ClearableContainer {
+class ClearableContainer : public Container{
                             // Must extend Container
 
 private:
@@ -89,7 +89,7 @@ public:
 
 /* ************************************************************************** */
 
-class ResizableContainer {
+class ResizableContainer : public ClearableContainer{
                             // Must extend ClearableContainer
 
 private:
