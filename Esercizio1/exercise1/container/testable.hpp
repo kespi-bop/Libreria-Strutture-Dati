@@ -27,27 +27,27 @@ protected:
 public:
 
   // Destructor
-  // ~TestableContainer() specifiers
+  virtual ~TestableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  virtual TestableContainer& operator=(const TestableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  // type operator=(argument); // Move assignment of abstract types should not be possible.
+  virtual TestableContainer&& operator=(TestableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
+  virtual bool operator==(const TestableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  virtual bool operator!=(const TestableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  bool Exists(argument) const noexcept; // (concrete function should not throw exceptions)
+  virtual bool Exists(const void* element) const noexcept = 0; // (concrete function should not throw exceptions)
 
 };
 

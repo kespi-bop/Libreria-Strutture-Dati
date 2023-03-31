@@ -31,27 +31,33 @@ protected:
 public:
 
   // Destructor
-  // ~FoldableContainer() specifiers
+  virtual ~FoldableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
   // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  virtual FoldableContainer& operator=(const FoldableContainer& right) = delete;
 
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types should not be possible.
+  virtual FoldableContainer& operator=(FoldableContainer&& right) = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
+  virtual bool operator==(const FoldableContainer& right) = 0;
+
   // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
+  virtual bool operator!=(const FoldableContainer& right) = 0;
 
   /* ************************************************************************ */
 
   // Specific member function
 
   // using FoldFunctor = std::function<void(const Data &, void *)>;
+  using FoldFunctor = std::function<void(const Data &, void *)>;
 
   // type Fold(arguments) specifiers;
 
