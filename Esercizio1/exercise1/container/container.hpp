@@ -29,20 +29,20 @@ public:
 
   // Copy assignment
   // type operator=(argument); // Copy assignment of abstract types should not be possible.
-  virtual Container& operator=(const Container& right) = delete;
+  Container& operator=(const Container& right) = delete;
 
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types should not be possible.
-  virtual Container& operator=(Container&& right) noexcept = delete;
+  Container& operator=(Container&& right) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  virtual bool operator== (const Container& right) const noexcept = delete;
+  bool operator==(const Container& right) const noexcept = delete;
   
   // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
-  virtual bool operator!=(const Container& right) const noexcept = delete;
+  bool operator!=(const Container& right) const noexcept = delete;
 
   /* ************************************************************************ */
 
@@ -79,20 +79,20 @@ public:
 
   // Copy assignment
   // type operator=(argument); // Copy assignment of abstract types should not be possible.
-  virtual ClearableContainer& operator=(const ClearableContainer& right) = delete;
+  ClearableContainer& operator=(const ClearableContainer& right) = delete;
 
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types should not be possible.
-  virtual ClearableContainer& operator=(ClearableContainer&& right) noexcept = delete;
+  ClearableContainer& operator=(ClearableContainer&& right) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  virtual bool operator==(const ClearableContainer& right) const noexcept = delete;
+  bool operator==(const ClearableContainer& right) const noexcept = delete;
 
   // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
-  virtual bool operator!=(const ClearableContainer& right) const noexcept = delete; 
+  bool operator!=(const ClearableContainer& right) const noexcept = delete; 
 
   /* ************************************************************************ */
 
@@ -126,20 +126,20 @@ public:
 
   // Copy assignment
   // type operator=(argument); // Copy assignment of abstract types should not be possible.
-  virtual ResizableContainer& operator=(const ResizableContainer& right) = delete;
+  ResizableContainer& operator=(const ResizableContainer& right) = delete;
 
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types should not be possible.
-  virtual ResizableContainer& operator=(ResizableContainer&& right) noexcept = delete;
+  ResizableContainer& operator=(ResizableContainer&& right) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  virtual bool operator==(const ResizableContainer& right) const noexcept = delete; 
+  bool operator==(const ResizableContainer& right) const noexcept = delete; 
 
   // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
-  virtual bool operator!=(const ResizableContainer& right) const noexcept = delete; 
+  bool operator!=(const ResizableContainer& right) const noexcept = delete; 
 
   /* ************************************************************************ */
 

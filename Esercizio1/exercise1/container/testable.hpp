@@ -32,22 +32,22 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  virtual TestableContainer& operator=(const TestableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
+  TestableContainer& operator=(const TestableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  virtual TestableContainer&& operator=(TestableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
+  TestableContainer& operator=(TestableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
-  virtual bool operator==(const TestableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
-  virtual bool operator!=(const TestableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const TestableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const TestableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  virtual bool Exists(const void* element) const noexcept = 0; // (concrete function should not throw exceptions)
+  virtual bool Exists(const void* item) const noexcept = 0; // (concrete function should not throw exceptions)
 
 };
 

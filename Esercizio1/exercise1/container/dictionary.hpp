@@ -33,19 +33,19 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  virtual DictionaryContainer& operator=(const DictionaryContainer& right) = delete; // Copy assignment of abstract types should not be possible.
+  DictionaryContainer& operator=(const DictionaryContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  virtual DictionaryContainer& operator=(DictionaryContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
+  DictionaryContainer& operator=(DictionaryContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  virtual bool operator==(const DictionaryContainer& right) const noexcept = delete;
+  bool operator==(const DictionaryContainer& right) const noexcept = delete;
 
   // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
-  virtual bool operator!=(const DictionaryContainer& right) const noexcept = delete;
+  bool operator!=(const DictionaryContainer& right) const noexcept = delete;
 
   /* ************************************************************************ */
 
