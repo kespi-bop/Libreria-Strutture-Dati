@@ -7,16 +7,24 @@ namespace lasd {
 
 /* ************************************************************************** */
 
+
 template<typename Data>
-bool FoldableContainer<Data>::Exists(const Data& item) const noexcept {
-    bool flag;
+bool FoldableContainer<Data>::Exists(const Data& valore) const noexcept {
+
+    bool result = false;
+
     this->Fold(
-        [this, item, &flag](const Data& dat){
-            flag |= dat==item;
+        [this, valore](const Data& dat, void* result){
+            *((bool*)result) |= (dat == valore);
         }
-    , flag);
-    return flag;
+    , &result
+    );
+    return result;
+
 }
+
+
+
 
 /* ************************************************************************** */
 

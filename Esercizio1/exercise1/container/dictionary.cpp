@@ -3,79 +3,74 @@
 
 /* ************************************************************************** */
 
-namespace lasd {
+namespace lasd { 
 
 /* ************************************************************************** */
 
 template<typename Data>
-bool DictionaryContainer<Data>::InsertAll(const MappableContainer<Data>& structure){
-    bool flag = true;
-    structure.Map(
-        [this, &flag] (const Data& item) {
-            flag &= Insert(item);
+bool DictionaryContainer<Data>::InsertAll(const MappableContainer<Data>& vals){
+    bool result = true;
+    vals.Map(
+        [this, &result] (const Data& dat) {
+            result &= Insert(dat);
         }
     );
-    return flag;
+    return result;
 }
 
-
 template<typename Data>
-bool DictionaryContainer<Data>::InsertAll(MappableContainer<Data>&& structure){
-    bool flag = true;
-    structure.Map(
-        [this, &flag] (const Data& item) {
-            flag &= Insert(std::move(item));
+bool DictionaryContainer<Data>::InsertAll(MappableContainer<Data>&& vals){
+    bool result = true;
+    vals.Map(
+        [this, &result] (const Data& dat) {
+            result &= Insert(std::move(dat));
         }
     );
-    return flag;
+    return result;
 }
 
-
 template<typename Data>
-bool DictionaryContainer<Data>::RemoveAll(const MappableContainer<Data>& structure){
-    bool flag = true;
-    structure.Map(
-        [this, &flag] (const Data& item) {
-            flag &= Remove(item);
+bool DictionaryContainer<Data>::RemoveAll(const MappableContainer<Data>& vals){
+    bool result = true;
+    vals.Map(
+        [this, &result] (const Data& dat) {
+            result &= Remove(dat);
         }
     );
-    return flag;
+    return result;
 }
 
-
 template<typename Data>
-bool DictionaryContainer<Data>::InsertSome(const MappableContainer<Data>& structure){
-    bool flag = false;
-    structure.Map(
-        [this, &flag] (const Data& item) {
-            flag |= Insert(item);
+bool DictionaryContainer<Data>::InsertSome(const MappableContainer<Data>& vals){
+    bool result = false;
+    vals.Map(
+        [this, &result] (const Data& dat) {
+            result |= Insert(dat);
         }
     );
-    return flag;
+    return result;
 }
 
-
 template<typename Data>
-bool DictionaryContainer<Data>::InsertSome(MappableContainer<Data>&& structure){
-    bool flag = false;
-    structure.Map(
-        [this, &flag] (const Data& item) {
-            flag |= Insert(std::move(item));
+bool DictionaryContainer<Data>::InsertSome(MappableContainer<Data>&& vals){
+    bool result = false;
+    vals.Map(
+        [this, &result] (const Data& dat) {
+            result |= Insert(std::move(dat));
         }
     );
-    return flag;
+    return result;
 }
 
-
 template<typename Data>
-bool DictionaryContainer<Data>::RemoveSome(const MappableContainer<Data>& structure){
-    bool flag = false;
-    structure.Map(
-        [this, &flag] (const Data& item) {
-            flag |= Remove(item);
+bool DictionaryContainer<Data>::RemoveSome(const MappableContainer<Data>& vals){
+    bool result = false;
+    vals.Map(
+        [this, &result] (const Data& dat) {
+            result |= Remove(dat);
         }
     );
-    return flag;
+    return result;
 }
 
 /* ************************************************************************** */

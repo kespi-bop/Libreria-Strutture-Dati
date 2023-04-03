@@ -2,6 +2,8 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+#include <iostream>
+
 /* ************************************************************************** */
 
 #include "../container/container.hpp"
@@ -14,78 +16,74 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class Vector : public ResizableContainer, SortableLinearContainer<Data>{
-                // Must extend ResizableContainer,
-                //             SortableLinearContainer<Data>
+class Vector : virtual public ResizableContainer,
+               virtual public SortableLinearContainer<Data> {
 
 private:
 
-  // ...
+  Data* Elements;
 
 protected:
 
   using Container::size;
-
-  // ...
+  void Quicksort(uint p, uint r) noexcept;
+  uint Partition(uint p, uint r) noexcept;
 
 public:
 
   // Default constructor
-  virtual Vector() = default;
-
+  Vector() = default;
   /* ************************************************************************ */
 
   // Specific constructors
-  Vector(const ulong size) specifiers; // A vector with a given initial dimension
-  Vector(const MappableContainer<Data>& map) specifiers; // A vector obtained from a MappableContainer
-  Vector(MutableMappableContainer<Data>&& Mmap) specifiers; // A vector obtained from a MutableMappableContainer
+  Vector(const ulong new_size); // A vector with a given initial dimension
+  Vector(const MappableContainer<Data>& map); // A vector obtained from a MappableContainer
+  Vector(MutableMappableContainer<Data>&& Mmap); // A vector obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
   // Copy constructor
-  Vector(const Vector& right);
+  Vector(const Vector& other);
 
   // Move constructor
-  Vector(Vector&& right) noexcept;
+  Vector(Vector&& other) noexcept;
 
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~Vector();
+  virtual ~Vector() = default; //OVVIAMENTE VA CAMBIATO
 
   /* ************************************************************************ */
 
   // Copy assignment
-  Vector& operator=(const Vector& right);
+  Vector& operator=(const Vector& other);
 
   // Move assignment
-  Vector& operator=(const Vector&) noexcept;
+  Vector& operator=(Vector&& other) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  bool operator==(const Vector& right) const noexcept;
-  // type operator!=(argument) specifiers;
-  bool operator!=(const Vector& right) const noexcept;
+  bool operator==(const Vector& other) const noexcept;
+  bool operator!=(const Vector& other) const noexcept;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ClearableContainer)
 
-  void Clear() override; // Override ClearableContainer member
+  void Clear() override { Resize(0); }; // Override ClearableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ResizableContainer)
 
-  void Resize(const ulong NewSize) override; // Override ResizableContainer member
+  void Resize(const ulong new_size) override; // Override ResizableContainer member
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from LinearContainer)
 
-  const Data& operator[](const ulong index) const override; // Override (NonMutable) LinearContainer member (must throw std::out_of_range when out of range)
+  const Data & operator[](const ulong index) const override; // Override (NonMutable) LinearContainer member (must throw std::out_of_range when out of range)
   Data& operator[](const ulong index) override; // Override (Mutable) LinearContainer member (must throw std::out_of_range when out of range)
 
   const Data& Front() const override; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
