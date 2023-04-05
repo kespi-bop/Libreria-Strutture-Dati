@@ -15,7 +15,9 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class List {
+class List : virtual public ClearableContainer,
+             virtual public DictionaryContainer<Data>,
+             virtual public LinearContainer<Data>{
               // Must extend ClearableContainer,
               //             DictionaryContainer<Data>,
               //             LinearContainer<Data>
@@ -26,35 +28,57 @@ private:
 
 protected:
 
-  // using Container::???;
+  using Container::size;
 
   struct Node {
 
     // Data
-    // ...
-
+    Data element;
+    Node* next = nullptr;
     /* ********************************************************************** */
 
     // Specific constructors
-    // ...
+    Node(Data &elemento){
+      element  = elemento;
+    }
+
+    Node(Data &&elemento){
+      element = std::move(elemento);
+    }
 
     /* ********************************************************************** */
 
     // Copy constructor
-    // ...
+    Node(Node& nodo){
+      element = nodo.element;
+      next = nodo.next;
+    }
 
     // Move constructor
-    // ...
+    Node(Node&& nodo){
+      element = std::move(nodo.element);
+      next = nodo.next;
+    }
 
     /* ********************************************************************** */
 
     // Destructor
-    // ...
+    virtual ~Node() = default;
 
     /* ********************************************************************** */
 
     // Comparison operators
-    // ...
+    bool operator==(Node& right) const{
+      if(element == right.element)
+        return true;
+      return false;
+    }
+
+    bool operator!=(Node& right) const{
+      if(element != right.element)
+        return true;
+      return false;
+    }
 
     /* ********************************************************************** */
 
@@ -64,18 +88,20 @@ protected:
 
   };
 
+  Node* head;
+
   // ...
 
 public:
 
   // Default constructor
-  // List() specifiers;
+  List() = default;
 
   /* ************************************************************************ */
 
   // Specific constructor
-  // List(argument) specifiers; // A list obtained from a MappableContainer
-  // List(argument) specifiers; // A list obtained from a MutableMappableContainer
+  // List(MappableContainer& right); // A list obtained from a MappableContainer
+  // List(MutableMappableContainer& right) noexcept; // A list obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
@@ -88,7 +114,7 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  // ~List() specifiers;
+  virtual ~List() = default;
 
   /* ************************************************************************ */
 
@@ -108,13 +134,13 @@ public:
 
   // Specific member functions
 
-  // type InsertAtFront(argument) specifier; // Copy of the value
-  // type InsertAtFront(argument) specifier; // Move of the value
-  // type RemoveFromFront() specifier; // (must throw std::length_error when empty)
-  // type FrontNRemove() specifier; // (must throw std::length_error when empty)
+  virtual void InsertAtFront(const Data& element); // Copy of the value
+  virtual void InsertAtFront(Data&& element) noexcept; // Move of the value
+  virtual void RemoveFromFront(); // (must throw std::length_error when empty)
+  virtual Data FrontNRemove(); // (must throw std::length_error when empty)
 
-  // type InsertAtBack(argument) specifier; // Copy of the value
-  // type InsertAtBack(argument) specifier; // Move of the value
+  bool InsertAtBack(const Data& element); // Copy of the value
+  bool InsertAtBack(Data&& element) noexcept; // Move of the value
 
   /* ************************************************************************ */
 
@@ -134,8 +160,8 @@ public:
 
   // Specific member functions (inherited from LinearContainer)
 
-  // type operator[](argument) specifiers; // Override (NonMutable) LinearContainer member (must throw std::out_of_range when out of range)
-  // type operator[](argument) specifiers; // Override (Mutable) LinearContainer member (must throw std::out_of_range when out of range)
+  const Data & operator[](const ulong inedex) const override; // Override (NonMutable) LinearContainer member (must throw std::out_of_range when out of range)
+  Data & operator[](const ulong index) override; // Override (Mutable) LinearContainer member (must throw std::out_of_range when out of range)
 
   // type Front() specifiers; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
   // type Front() specifiers; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)

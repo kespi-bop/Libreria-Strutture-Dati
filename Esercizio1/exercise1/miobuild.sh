@@ -11,7 +11,8 @@ g++ -O3 -std=c++20 -o main main.cpp \
     container/linear.hpp \
     container/foldable.hpp \
     container/mappable.hpp \
-    vector/vector.hpp
+    vector/vector.hpp \
+    list/list.hpp
     
 
 # container/dictionary.cpp \

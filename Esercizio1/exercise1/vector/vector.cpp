@@ -43,7 +43,7 @@ template <typename Data>
 Vector<Data>::Vector(const Vector<Data>& other){
     size = other.size;
     Elements = new Data[size];
-    for(int i = 0; i<size; i++) {
+    for(ulong i = 0; i<size; i++) {
         //std::cout<<"vector["<<i<<"]="<<other[i];
         this->operator[](i)=other[i];
     }
@@ -82,14 +82,14 @@ Vector<Data>& Vector<Data>::operator=(Vector&& other) noexcept {
 template <typename Data>
 const Data& Vector<Data>::operator[](const ulong index) const {
     if(index<0 || index >= size)
-        throw std::out_of_range("Error: IndexOutOfBounds");
+        throw std::out_of_range("Error: Vector->IndexOutOfBounds");
     return Elements[index];
 }
 
 template <typename Data>
 Data& Vector<Data>::operator[](const ulong index) {
     if(index<0 || index>= size)  
-        throw std::out_of_range("Error: IndexOutOfBounds");
+        throw std::out_of_range("Error: Vector->IndexOutOfBounds");
     return Elements[index];
 }
 
@@ -97,7 +97,7 @@ template <typename Data>
 bool Vector<Data>::operator==(const Vector& other) const noexcept {
     bool result=true;
     if(size!=other.size) return false;
-    for(int i=0; i<size; i++) if(this[i]!=other[i]) return false;
+    for(ulong i=0; i<size; i++) if(this[i]!=other[i]) return false;
     return true;
 }
 
@@ -105,7 +105,7 @@ template <typename Data>
 bool Vector<Data>::operator!=(const Vector& other) const noexcept {
     bool result=false;
     if(size!=other.size) return true;
-    for(int i=0; i<size; i++) if(this[i]!=other[i]) return true;
+    for(ulong i=0; i<size; i++) if(this[i]!=other[i]) return true;
     return false;
 }
 
