@@ -1,5 +1,6 @@
 
 #include <stdexcept>
+#include "linear.hpp"
 
 /* ************************************************************************** */
 
@@ -49,18 +50,30 @@ bool LinearContainer<Data>::operator!=(LinearContainer& other) const {
 }
 
 template <typename Data>
-void LinearContainer<Data>::Map(const MapFunctor func) const {
-    for(int i=0; i<size; i++) func(this->operator[](i));
+void LinearContainer<Data>::PreOrderFold(const FoldFunctor func, void* acc) const {
+    for(ulong i = 0; i<size; i++) func(this->operator[](i), acc);
 }
 
 template <typename Data>
-void LinearContainer<Data>::PostOrderMap(const MapFunctor func) const {
+void LinearContainer<Data>::PostOrderFold(const FoldFunctor func, void* acc) const {
+    ulong i = size;
+    while (i>0) func(this->operator[](--i), acc);
+}
+
+template <typename Data>
+void LinearContainer<Data>::PreOrderMap(const MapFunctor func) const {
+    for(ulong i=0; i<size; i++) func(this->operator[](i));
+}
+
+template <typename Data>
+void LinearContainer<Data>::PostOrderMap(const MapFunctor func) const
+{
     for(int i = size-1; i>=0; i--) func(this->operator[](i));
 }
 
 template <typename Data>
-void LinearContainer<Data>::Map(MutableMapFunctor func) {
-    for(int i=0; i<size; i++) func(this->operator[](i));
+void LinearContainer<Data>::PreOrderMap(MutableMapFunctor func) {
+    for(ulong i=0; i<size; i++) func(this->operator[](i));
 }
 
 template <typename Data>

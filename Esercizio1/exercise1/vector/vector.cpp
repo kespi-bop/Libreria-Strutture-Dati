@@ -30,7 +30,7 @@ Vector<Data>::Vector(MutableMappableContainer<Data>&& Mmap) {
     ulong index = 0;
     Mmap.Map(
         [this, &index](const Data& dat) {
-            Elements[index++] = std::move(dat);
+            Elements[index++] = dat;
         }
     );
 }
@@ -43,17 +43,15 @@ template <typename Data>
 Vector<Data>::Vector(const Vector<Data>& other){
     size = other.size;
     Elements = new Data[size];
-    for(ulong i = 0; i<size; i++) {
-        //std::cout<<"vector["<<i<<"]="<<other[i];
-        this->operator[](i)=other[i];
-    }
+    std::copy(other.Elements, other.Elements+size, Elements);
 }
 
 //Move constructor
 
 template <typename Data>
 Vector<Data>::Vector(Vector<Data>&& other) noexcept {
-    return;
+    std::swap(size, other.size);
+    std::swap(Elements, other.Elements);
 }
 
 /* ************************************************************************** */
@@ -62,8 +60,9 @@ Vector<Data>::Vector(Vector<Data>&& other) noexcept {
 
 template <typename Data>
 Vector<Data>& Vector<Data>::operator=(const Vector& other) {
-    //
-    // return this;
+    size = other.size;
+    Elements = new Data[size];
+    std::copy(other.Elements, other.Elements+size, Elements);
     return *this;
 }
 
@@ -71,9 +70,11 @@ Vector<Data>& Vector<Data>::operator=(const Vector& other) {
 
 template <typename Data>
 Vector<Data>& Vector<Data>::operator=(Vector&& other) noexcept {
-    //
+    std::swap(size, other.size);
+    std::swap(Elements, other.Elements);
     return *this;
 }
+
 
 /* ************************************************************************** */
 
@@ -97,7 +98,7 @@ template <typename Data>
 bool Vector<Data>::operator==(const Vector& other) const noexcept {
     bool result=true;
     if(size!=other.size) return false;
-    for(ulong i=0; i<size; i++) if(this[i]!=other[i]) return false;
+    for(ulong i=0; i<size; i++) if(this->operator[](i)!=other[i]) return false;
     return true;
 }
 
@@ -105,7 +106,7 @@ template <typename Data>
 bool Vector<Data>::operator!=(const Vector& other) const noexcept {
     bool result=false;
     if(size!=other.size) return true;
-    for(ulong i=0; i<size; i++) if(this[i]!=other[i]) return true;
+    for(ulong i=0; i<size; i++) if(this->operator[](i)!=other[i]) return true;
     return false;
 }
 
@@ -115,22 +116,22 @@ bool Vector<Data>::operator!=(const Vector& other) const noexcept {
 
 template <typename Data>
 const Data& Vector<Data>::Front() const {
-    return this->operator[](0); 
+    return Elements[0]; 
 }
 
 template <typename Data>
 Data& Vector<Data>::Front() {
-    return this->operator[](0); 
+    return Elements[0]; 
 }
 
 template <typename Data>
 const Data& Vector<Data>::Back() const {
-    return this->operator[](size - 1); 
+    return Elements[size - 1]; 
 }
 
 template <typename Data>
 Data& Vector<Data>::Back() {
-    return this->operator[](size - 1); 
+    return Elements[size - 1]; 
 }
 
 template <typename Data>

@@ -69,14 +69,14 @@ public:
   // Specific member function (inherited from PreOrderFoldableContainer)
 
   // type PreOrderFold(arguments) specifiers; // Override PreOrderFoldableContainer member
-  virtual void PreOrderFold(const FoldFunctor func, void* acc) const { ; };
+  virtual void PreOrderFold(const FoldFunctor func, void* acc) const override;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderFoldableContainer)
 
   // type PostOrderFold(arguments) specifiers; // Override PostOrderFoldableContainer member
-  virtual void PostOrderFold(const FoldFunctor func, void* acc) const { ; };
+  virtual void PostOrderFold(const FoldFunctor func, void* acc) const override;
 
   /* ************************************************************************ */
 
@@ -84,13 +84,13 @@ public:
 
   using typename MappableContainer<Data>::MapFunctor;
 
-  virtual void Map(const MapFunctor func) const override; // Override MappableContainer member
+  virtual void Map(const MapFunctor func) const override { PreOrderMap(func); }; // Override MappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PreOrderMappableContainer)
 
-  virtual void PreOrderMap(const MapFunctor func) const override { return Map(func); }; // Override PreOrderMappableContainer member
+  virtual void PreOrderMap(const MapFunctor func) const override; // Override PreOrderMappableContainer member
 
   /* ************************************************************************ */
 
@@ -104,13 +104,13 @@ public:
 
   using typename MutableMappableContainer<Data>::MutableMapFunctor;
 
-  virtual void Map(MutableMapFunctor func) override; // Override MutableMappableContainer member
+  virtual void Map(MutableMapFunctor func) override { PreOrderMap(func); }; // Override MutableMappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MutablePreOrderMappableContainer)
 
-  virtual inline void PreOrderMap(MutableMapFunctor func) override { return Map(func); } // Override MutablePreOrderMappableContainer member
+  virtual inline void PreOrderMap(MutableMapFunctor func) override; // Override MutablePreOrderMappableContainer member
 
   /* ************************************************************************ */
 
