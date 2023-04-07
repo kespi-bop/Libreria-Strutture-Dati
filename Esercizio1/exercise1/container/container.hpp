@@ -111,7 +111,7 @@ public:
 
   // Specific member function
 
-  virtual inline void Resize(const ulong n) = 0;
+  virtual void Resize(const ulong n) = 0;
  
   /* ************************************************************************ */
 

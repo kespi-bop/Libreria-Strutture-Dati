@@ -38,7 +38,7 @@ protected:
     /* ********************************************************************** */
 
     // Specific constructors
-    Node(Data &elemento){
+    Node(const Data &elemento){
       element  = elemento;
     }
 
@@ -68,13 +68,13 @@ protected:
     /* ********************************************************************** */
 
     // Comparison operators
-    bool operator==(Node& right) const{
+    bool operator==(const Node& right) const{
       if(element == right.element)
         return true;
       return false;
     }
 
-    bool operator!=(Node& right) const{
+    bool operator!=(const Node& right) const{
       if(element != right.element)
         return true;
       return false;
@@ -88,7 +88,7 @@ protected:
 
   };
 
-  Node* head;
+  Node* head = nullptr;
 
   // ...
 
@@ -100,16 +100,16 @@ public:
   /* ************************************************************************ */
 
   // Specific constructor
-  // List(MappableContainer& right); // A list obtained from a MappableContainer
-  // List(MutableMappableContainer& right) noexcept; // A list obtained from a MutableMappableContainer
+  List(const MappableContainer<Data>& right); // A list obtained from a MappableContainer
+  List(MutableMappableContainer<Data>&& right) noexcept; // A list obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
   // Copy constructor
-  // List(argument) specifiers;
+  List(const List& right);
 
   // Move constructor
-  // List(argument) specifiers;
+  List(List&& right) noexcept;
 
   /* ************************************************************************ */
 
@@ -119,16 +119,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument) specifiers;
+  List<Data>& operator=(const List& right);
 
   // Move assignment
-  // type operator=(argument) specifiers;
+  List<Data>& operator=(List&& right) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator==(const List& right) const noexcept;
+  bool operator!=(const List& right) const noexcept;
 
   /* ************************************************************************ */
 
@@ -139,22 +139,22 @@ public:
   virtual void RemoveFromFront(); // (must throw std::length_error when empty)
   virtual Data FrontNRemove(); // (must throw std::length_error when empty)
 
-  bool InsertAtBack(const Data& element); // Copy of the value
-  bool InsertAtBack(Data&& element) noexcept; // Move of the value
+  virtual void InsertAtBack(const Data& element); // Copy of the value
+  virtual void InsertAtBack(Data&& element) noexcept; // Move of the value
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ClearableContainer)
 
-  // type Clear() specifiers; // Override ClearableContainer member
+  void Clear() override; // Override ClearableContainer member
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from DictionaryContainer)
 
-  // type Insert(argument) specifier; // Copy of the value
-  // type Insert(argument) specifier; // Move of the value
-  // type Remove(argument) specifier;
+  virtual bool Insert(const Data& element) override; // Copy of the value
+  virtual bool Insert(Data&& element) noexcept override; // Move of the value
+  virtual bool Remove(const Data& element) override;
 
   /* ************************************************************************ */
 
@@ -163,17 +163,17 @@ public:
   const Data & operator[](const ulong inedex) const override; // Override (NonMutable) LinearContainer member (must throw std::out_of_range when out of range)
   Data & operator[](const ulong index) override; // Override (Mutable) LinearContainer member (must throw std::out_of_range when out of range)
 
-  // type Front() specifiers; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
-  // type Front() specifiers; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
+  const Data& Front() const override; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
+  Data& Front() override; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
 
-  // type Back() specifiers; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
-  // type Back() specifiers; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
+  const Data& Back() const override; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
+  Data& Back() override; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from FoldableContainer)
 
-  // using typename FoldableContainer<Data>::FoldFunctor;
+  using typename FoldableContainer<Data>::FoldFunctor;
 
   // type Fold(arguments) specifiers; // Override FoldableContainer member
 
@@ -182,18 +182,20 @@ public:
   // Specific member function (inherited from PreOrderFoldableContainer)
 
   // type PreOrderFold(arguments) specifiers; // Override PreOrderFoldableContainer member
+  virtual void PreOrderFold(const FoldFunctor func, void* accumulator) const;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderFoldableContainer)
 
   // type PostOrderFold(arguments) specifiers; // Override PostOrderFoldableContainer member
+  virtual void PostOrderFold(const FoldFunctor func, void* acc) const override;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
 
-  // using typename MappableContainer<Data>::MapFunctor;
+  using typename MappableContainer<Data>::MapFunctor;
 
   // type Map(argument) specifiers; // Override MappableContainer member
 
@@ -202,18 +204,20 @@ public:
   // Specific member function (inherited from PreOrderMappableContainer)
 
   // type PreOrderMap(argument) specifiers; // Override PreOrderMappableContainer member
+  virtual void PreOrderMap(const MapFunctor func) const override;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderMappableContainer)
 
   // type PostOrderMap(argument) specifiers; // Override PostOrderMappableContainer member
+  virtual void PostOrderMap(const MapFunctor func) const override; 
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MutableMappableContainer)
 
-  // using typename MutableMappableContainer<Data>::MutableMapFunctor;
+  using typename MutableMappableContainer<Data>::MutableMapFunctor;
 
   // type Map(argument) specifiers; // Override MutableMappableContainer member
 
@@ -222,12 +226,14 @@ public:
   // Specific member function (inherited from MutablePreOrderMappableContainer)
 
   // type PreOrderMap(argument) specifiers; // Override MutablePreOrderMappableContainer member
+  virtual void PreOrderMap(MutableMapFunctor func) override; 
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MutablePostOrderMappableContainer)
 
   // type PostOrderMap(argument) specifiers; // Override MutablePostOrderMappableContainer member
+  virtual void PostOrderMap(MutableMapFunctor func) override;
 
 protected:
 

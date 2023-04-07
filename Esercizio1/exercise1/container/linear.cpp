@@ -12,8 +12,6 @@ template<typename Data>
 const Data& LinearContainer<Data>::Front() const {
     if(!Container::Empty()) return this->operator[](0);
     else throw std::out_of_range ("Container vuoto");
-
-
 }
 
 template<typename Data>
@@ -51,12 +49,12 @@ bool LinearContainer<Data>::operator!=(LinearContainer& other) const {
 }
 
 template <typename Data>
-const void LinearContainer<Data>::Map(const MapFunctor func) const {
+void LinearContainer<Data>::Map(const MapFunctor func) const {
     for(int i=0; i<size; i++) func(this->operator[](i));
 }
 
 template <typename Data>
-const void LinearContainer<Data>::PostOrderMap(const MapFunctor func) const {
+void LinearContainer<Data>::PostOrderMap(const MapFunctor func) const {
     for(int i = size-1; i>=0; i--) func(this->operator[](i));
 }
 

@@ -24,7 +24,7 @@ protected:
 public:
 
   // Destructor
-  ~DictionaryContainer() = default;
+  virtual ~DictionaryContainer() = default;
 
   /* ************************************************************************ */
 
@@ -44,9 +44,9 @@ public:
 
   // Specific member functions
 
-  bool Insert(Data& val) = 0; // Copy of the value
-  bool Insert(Data&& val) = 0; // Move of the value
-  bool Remove(Data& val) = 0;
+  virtual bool Insert(const Data& val) = 0; // Copy of the value
+  virtual bool Insert(Data&& val) = 0; // Move of the value
+  virtual bool Remove(const Data& val) = 0;
 
   bool InsertAll(const MappableContainer<Data>&); // Copy of the value; From MappableContainer; True if all are inserted
   bool InsertAll(MappableContainer<Data>&&); // Move of the value; From MutableMappableContainer; True if all are inserted

@@ -48,7 +48,7 @@ public:
 
   using MapFunctor = std::function<void(const Data &)>;
 
-  virtual const void Map(const MapFunctor func) const = 0;
+  virtual void Map(const MapFunctor func) const = 0;
 
   /* ************************************************************************ */
 
@@ -97,13 +97,13 @@ public:
 
   using typename MappableContainer<Data>::MapFunctor;
 
-  virtual const void PreOrderMap(const MapFunctor func) const = 0;
+  virtual void PreOrderMap(const MapFunctor func) const = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
 
-  virtual const void Map(const MapFunctor func) const { // Override MappableContainer member
+  virtual void Map(const MapFunctor func) const { // Override MappableContainer member
     PreOrderMap(func);
   }
   /* ************************************************************************ */
@@ -161,13 +161,13 @@ public:
 
   using typename MappableContainer<Data>::MapFunctor;
 
-  virtual const void PostOrderMap(const MapFunctor func) const = 0;
+  virtual void PostOrderMap(const MapFunctor func) const = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
 
-  virtual const void Map(const MapFunctor func) const { // Override MappableContainer member
+  virtual void Map(const MapFunctor func) const { // Override MappableContainer member
     PostOrderMap(func);
   }
 

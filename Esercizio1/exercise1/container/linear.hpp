@@ -62,7 +62,7 @@ public:
 
   using typename FoldableContainer<Data>::FoldFunctor;
 
-  virtual void Fold(const FoldFunctor func, void* acc) const { ; }; // Override FoldableContainer member
+  virtual void Fold(const FoldFunctor func, void* acc) const { PreOrderFold(func, acc); }; // Override FoldableContainer member
 
   /* ************************************************************************ */
 
@@ -84,19 +84,19 @@ public:
 
   using typename MappableContainer<Data>::MapFunctor;
 
-  virtual const void Map(const MapFunctor func) const override; // Override MappableContainer member
+  virtual void Map(const MapFunctor func) const override; // Override MappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PreOrderMappableContainer)
 
-  virtual const void PreOrderMap(const MapFunctor func) const override { return Map(func); }; // Override PreOrderMappableContainer member
+  virtual void PreOrderMap(const MapFunctor func) const override { return Map(func); }; // Override PreOrderMappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderMappableContainer)
 
-  virtual const void PostOrderMap(const MapFunctor func) const override; // Override PostOrderMappableContainer member
+  virtual void PostOrderMap(const MapFunctor func) const override; // Override PostOrderMappableContainer member
 
   /* ************************************************************************ */
 
