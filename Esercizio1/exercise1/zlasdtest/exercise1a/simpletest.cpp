@@ -27,7 +27,6 @@ void stestVectorInt(uint& testnum, uint& testerr) {
     {
       lasd::Vector<int> vec;
       Empty(loctestnum, loctesterr, vec, true);
-
       GetFront(loctestnum, loctesterr, vec, false, 0);
       GetBack(loctestnum, loctesterr, vec, false, 0);
       SetAt(loctestnum, loctesterr, vec, false, 1, 0);
@@ -135,12 +134,12 @@ void stestVectorString(uint& testnum, uint& testerr) {
     FoldPreOrder(loctestnum, loctesterr, copvec, true, &FoldStringConcatenate, string("?"), string("?A !B !"));
 
     lasd::Vector<string> movvec(move(vec));
-    // FoldPreOrder(loctestnum, loctesterr, movvec, true, &FoldStringConcatenate, string("?"), string("?A B "));
-    // movvec.Sort();
-    // FoldPreOrder(loctestnum, loctesterr, movvec, true, &FoldStringConcatenate, string("?"), string("?A B "));
-    // SetAt(loctestnum, loctesterr, vec, false, 1, string(""));
-    // vec.Resize(1);
-    // SetAt(loctestnum, loctesterr, vec, true, 0, string("X"));
+    FoldPreOrder(loctestnum, loctesterr, movvec, true, &FoldStringConcatenate, string("?"), string("?A B "));
+    movvec.Sort();
+    FoldPreOrder(loctestnum, loctesterr, movvec, true, &FoldStringConcatenate, string("?"), string("?A B "));
+    SetAt(loctestnum, loctesterr, vec, false, 1, string(""));
+    vec.Resize(1);
+    SetAt(loctestnum, loctesterr, vec, true, 0, string("X"));
 
     movvec.Clear();
     Empty(loctestnum, loctesterr, movvec, true);

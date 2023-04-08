@@ -12,11 +12,11 @@ Vector<Data>::Vector(const ulong new_size) {
 }
 
 template <typename Data>
-Vector<Data>::Vector(const MappableContainer<Data>& map) {
-    size = map.Size();
+Vector<Data>::Vector(const MappableContainer<Data>& cont) {
+    size = cont.Size();
     Elements = new Data[size] {};
     ulong index = 0;
-    map.Map(
+    cont.Map(
         [this, &index](const Data& dat) {
             Elements[index++] = dat;
         }
@@ -24,16 +24,20 @@ Vector<Data>::Vector(const MappableContainer<Data>& map) {
 }
 
 template <typename Data>
-Vector<Data>::Vector(MutableMappableContainer<Data>&& Mmap) {
-    size = Mmap.Size();
+Vector<Data>::Vector(MutableMappableContainer<Data>&& cont) noexcept {
+    size = cont.Size();
     Elements = new Data[size] {};
     ulong index = 0;
-    Mmap.Map(
+    cont.Map(
         [this, &index](const Data& dat) {
             Elements[index++] = dat;
         }
     );
+    cont.~MutableMappableContainer();
 }
+
+//Destructor
+
 
 /* ************************************************************************** */
 
@@ -75,30 +79,86 @@ Vector<Data>& Vector<Data>::operator=(Vector&& other) noexcept {
     return *this;
 }
 
-
 /* ************************************************************************** */
 
 //Operators
 
 template <typename Data>
 const Data& Vector<Data>::operator[](const ulong index) const {
-    if(index<0 || index >= size)
-        throw std::out_of_range("Error: Vector->IndexOutOfBounds");
-    return Elements[index];
+    if (index<size) return Elements[index];
+    else throw std::out_of_range("Vector: out of range index of operator[]");
 }
 
 template <typename Data>
 Data& Vector<Data>::operator[](const ulong index) {
-    if(index<0 || index>= size)  
-        throw std::out_of_range("Error: Vector->IndexOutOfBounds");
-    return Elements[index];
+    if (index<size) return Elements[index];
+    else throw std::out_of_range("Vector: out of range index of operator[]");
+}
+
+/* ************************************************************************** */
+
+//Front and back
+
+template <typename Data>
+const Data& Vector<Data>::Front() const {
+    if(size > 0)return Elements[0]; 
+    else throw std::length_error("Vector: out of range index of Front()");
+}
+
+template <typename Data>
+Data& Vector<Data>::Front() {
+    if(size > 0)return Elements[0]; 
+    else throw std::length_error("Vector: out of range index of Front()");
+}
+
+template <typename Data>
+const Data& Vector<Data>::Back() const {
+    if(size > 0)return Elements[size - 1]; 
+    else throw std::length_error("Vector: out of range index of Back()"); 
+}
+
+template <typename Data>
+Data& Vector<Data>::Back() {
+    if(size > 0)return Elements[size - 1]; 
+    else throw std::length_error("Vector: out of range index of Back()"); 
+}
+
+template <typename Data>
+void Vector<Data>::Resize(const ulong new_size) {
+    if(new_size==0){
+        Clear();
+    }
+    else if (size!=new_size) {
+        Data* ptr = new Data[new_size] {};
+        ulong min_size = (size<new_size) ?  size : new_size;
+        for(ulong i{0}; i<min_size; ++i) std::swap(Elements[i], ptr[i]);
+        std::swap(Elements, ptr);
+        size = new_size;
+        delete[] ptr;
+    }
+}
+
+template <typename Data>
+Vector<Data>::~Vector() {
+    delete[] Elements; 
+    Elements=nullptr;
+    size=0;
+}
+
+template <typename Data>
+void Vector<Data>::Clear() {
+    delete[] Elements;
+    Elements=nullptr;
+    size=0;
 }
 
 template <typename Data>
 bool Vector<Data>::operator==(const Vector& other) const noexcept {
     bool result=true;
     if(size!=other.size) return false;
-    for(ulong i=0; i<size; i++) if(this->operator[](i)!=other[i]) return false;
+    for(ulong i=0; i<size; i++) {
+        if(this->operator[](i)!=other[i]) return false;
+    }
     return true;
 }
 
@@ -110,42 +170,6 @@ bool Vector<Data>::operator!=(const Vector& other) const noexcept {
     return false;
 }
 
-/* ************************************************************************** */
-
-//Front and back
-
-template <typename Data>
-const Data& Vector<Data>::Front() const {
-    return Elements[0]; 
-}
-
-template <typename Data>
-Data& Vector<Data>::Front() {
-    return Elements[0]; 
-}
-
-template <typename Data>
-const Data& Vector<Data>::Back() const {
-    return Elements[size - 1]; 
-}
-
-template <typename Data>
-Data& Vector<Data>::Back() {
-    return Elements[size - 1]; 
-}
-
-template <typename Data>
-void Vector<Data>::Resize(const ulong new_size){
-    Data* ptr = new Data[new_size];
-    for(int i = 0; i<new_size; i++) 
-        ptr[i]=Elements[i];
-    delete[] Elements;
-    size=new_size;
-    Elements = ptr;
-}
-
-/* ************************************************************************** */
-
 //Sort
 
 template <typename Data>
@@ -153,6 +177,5 @@ void Vector<Data>::Sort() noexcept {
     SortableLinearContainer<Data>::Quicksort(0, size - 1);
 }
 
-/* ************************************************************************** */
 
 }

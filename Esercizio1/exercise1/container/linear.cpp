@@ -12,25 +12,25 @@ namespace lasd {
 template<typename Data>
 const Data& LinearContainer<Data>::Front() const {
     if(!Container::Empty()) return this->operator[](0);
-    else throw std::out_of_range ("Container vuoto");
+    else throw std::length_error ("Container vuoto");
 }
 
 template<typename Data>
 Data& LinearContainer<Data>::Front() {
     if(!Container::Empty()) return this->operator[](0);
-    else throw std::out_of_range ("Container vuoto");
+    else throw std::length_error ("Container vuoto");
 }
 
 template<typename Data>
 const Data& LinearContainer<Data>::Back() const {
     if(!Container::Empty()) return this->operator[](size-1);
-    else throw std::out_of_range ("Container vuoto");
+    else throw std::length_error ("Container vuoto");
 }
 
 template<typename Data>
 Data& LinearContainer<Data>::Back() {
     if(!Container::Empty()) return (this->operator[](size-1));
-    else throw std::out_of_range ("Container vuoto");
+    else throw std::length_error ("Container vuoto");
 }
 
 template<typename Data>

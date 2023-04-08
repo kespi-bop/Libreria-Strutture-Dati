@@ -21,24 +21,22 @@ class Vector : virtual public ResizableContainer,
 
 private:
 
-  Data* Elements;
-
 protected:
 
   using Container::size;
-  void Quicksort(uint p, uint r) noexcept;
-  uint Partition(uint p, uint r) noexcept;
+  Data* Elements = nullptr;
 
 public:
 
   // Default constructor
   Vector() = default;
+
   /* ************************************************************************ */
 
   // Specific constructors
   Vector(const ulong new_size); // A vector with a given initial dimension
   Vector(const MappableContainer<Data>& map); // A vector obtained from a MappableContainer
-  Vector(MutableMappableContainer<Data>&& Mmap); // A vector obtained from a MutableMappableContainer
+  Vector(MutableMappableContainer<Data>&& Mmap) noexcept; // A vector obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
@@ -51,33 +49,29 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~Vector() = default; //OVVIAMENTE VA CAMBIATO
+  virtual ~Vector();
 
   /* ************************************************************************ */
 
   // Copy assignment
-  Vector<Data>& operator=(const Vector& other);
+  Vector& operator=(const Vector& other);
 
   // Move assignment
-  Vector<Data>& operator=(Vector&& other) noexcept;
+  Vector& operator=(Vector&& other) noexcept;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const Vector& other) const noexcept;
-  bool operator!=(const Vector& other) const noexcept;
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from ClearableContainer)
-
-  void Clear() override { Resize(0); }; // Override ClearableContainer member
+  virtual bool operator==(const Vector& other) const noexcept;
+  virtual bool operator!=(const Vector& other) const noexcept;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ResizableContainer)
 
   void Resize(const ulong new_size) override; // Override ResizableContainer member
+
+  void Clear() override;
 
   /* ************************************************************************ */
 
@@ -91,10 +85,6 @@ public:
 
   const Data& Back() const override; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
   Data& Back() override; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from SortableLinearContainer)
 
   void Sort() noexcept override; // Override SortableLinearContainer member
 
