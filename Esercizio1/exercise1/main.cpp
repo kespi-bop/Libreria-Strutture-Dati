@@ -12,9 +12,17 @@
 #include "container/foldable.hpp"
 #include "container/mappable.hpp"
 #include "container/linear.hpp"
-#include "list/list.hpp"
 
 #include "vector/vector.hpp"
+#include "list/list.hpp"
+
+#include "queue/queue.hpp"
+#include "queue/lst/queuelst.hpp"
+
+#include "stack/stack.hpp"
+#include "stack/lst/stacklst.hpp"
+
+using namespace std;
 
 
 /* **************************************************************************

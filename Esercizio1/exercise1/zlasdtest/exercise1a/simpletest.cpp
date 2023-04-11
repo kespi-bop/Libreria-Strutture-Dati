@@ -27,6 +27,7 @@ void stestVectorInt(uint& testnum, uint& testerr) {
     {
       lasd::Vector<int> vec;
       Empty(loctestnum, loctesterr, vec, true);
+
       GetFront(loctestnum, loctesterr, vec, false, 0);
       GetBack(loctestnum, loctesterr, vec, false, 0);
       SetAt(loctestnum, loctesterr, vec, false, 1, 0);
@@ -36,7 +37,6 @@ void stestVectorInt(uint& testnum, uint& testerr) {
 
       MapPreOrder(loctestnum, loctesterr, vec, true, &MapPrint<int>);
       MapPostOrder(loctestnum, loctesterr, vec, true, &MapPrint<int>);
-
       FoldPreOrder(loctestnum, loctesterr, vec, true, &FoldAdd<int>, 0, 0);
       FoldPostOrder(loctestnum, loctesterr, vec, true, &FoldAdd<int>, 0, 0);
     }
@@ -138,6 +138,7 @@ void stestVectorString(uint& testnum, uint& testerr) {
     movvec.Sort();
     FoldPreOrder(loctestnum, loctesterr, movvec, true, &FoldStringConcatenate, string("?"), string("?A B "));
     SetAt(loctestnum, loctesterr, vec, false, 1, string(""));
+    
     vec.Resize(1);
     SetAt(loctestnum, loctesterr, vec, true, 0, string("X"));
 
@@ -211,6 +212,7 @@ void stestListInt(uint& testnum, uint& testerr) {
     FoldPostOrder(loctestnum, loctesterr, lst, true, &FoldMultiply<int>, 1, 90);
 
     lasd::List<int> coplst(lst);
+    
     EqualList(loctestnum, loctesterr, lst, coplst, true);
     MapPreOrder(loctestnum, loctesterr, lst, true, &MapIncrement<int>);
     NonEqualList(loctestnum, loctesterr, lst, coplst, true);
@@ -223,11 +225,14 @@ void stestListInt(uint& testnum, uint& testerr) {
 
     RemoveFromFront(loctestnum, loctesterr, coplst, true);
     FrontNRemove(loctestnum, loctesterr, coplst, true, 6);
+
     coplst = move(lst);
+
     FoldPreOrder(loctestnum, loctesterr, lst, true, &FoldAdd<int>, 0, 11);
     FoldPreOrder(loctestnum, loctesterr, coplst, true, &FoldAdd<int>, 0, 17);
 
     lasd::List<int> movlst(move(lst));
+
     MapPreOrder(loctestnum, loctesterr, movlst, true, &MapIncrement<int>);
     FoldPreOrder(loctestnum, loctesterr, movlst, true, &FoldAdd<int>, 0, 14);
 
@@ -342,125 +347,127 @@ void stestList(uint& testnum, uint& testerr) {
 
 /* ************************************************************************** */
 
-// void stestVectorListInt(uint& testnum, uint& testerr) {
-//   uint loctestnum = 0, loctesterr = 0;
-//   cout << endl << "Begin of Vector/List<int> Test:" << endl;
-//   try {
-//     lasd::Vector<int> vec(3);
-//     SetAt(loctestnum, loctesterr, vec, true, 0, -1);
-//     SetAt(loctestnum, loctesterr, vec, true, 1, 0);
-//     SetAt(loctestnum, loctesterr, vec, true, 2, 1);
+void stestVectorListInt(uint& testnum, uint& testerr) {
+  uint loctestnum = 0, loctesterr = 0;
+  cout << endl << "Begin of Vector/List<int> Test:" << endl;
+  try {
+    lasd::Vector<int> vec(3);
+    SetAt(loctestnum, loctesterr, vec, true, 0, -1);
+    SetAt(loctestnum, loctesterr, vec, true, 1, 0);
+    SetAt(loctestnum, loctesterr, vec, true, 2, 1);
 
-//     lasd::List<int> lst;
-//     InsertAtFront(loctestnum, loctesterr, lst, true, 1);
-//     InsertAtFront(loctestnum, loctesterr, lst, true, 0);
-//     InsertAtFront(loctestnum, loctesterr, lst, true, -1);
+    lasd::List<int> lst;
+    InsertAtFront(loctestnum, loctesterr, lst, true, 1);
+    InsertAtFront(loctestnum, loctesterr, lst, true, 0);
+    InsertAtFront(loctestnum, loctesterr, lst, true, -1);
 
-//     lasd::Vector<int> copvec(lst);
-//     EqualVector(loctestnum, loctesterr, vec, copvec, true);
-//     lasd::Vector<int> copvecx(vec);
-//     EqualVector(loctestnum, loctesterr, copvecx, copvec, true);
+    lasd::Vector<int> copvec(lst);
+    EqualVector(loctestnum, loctesterr, vec, copvec, true);
+    lasd::Vector<int> copvecx(vec);
+    EqualVector(loctestnum, loctesterr, copvecx, copvec, true);
 
-//     lasd::List<int> coplst(vec);
-//     EqualList(loctestnum, loctesterr, lst, coplst, true);
-//     lasd::List<int> coplstx(lst);
-//     EqualList(loctestnum, loctesterr, coplstx, coplst, true);
-//   } catch(...) {
-//     loctestnum++; loctesterr++;
-//     cout << endl << "Unmanaged error! " << endl;
-//   }
-//   cout << "End of Vector/List<int> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
-//   testnum += loctestnum;
-//   testerr += loctesterr;
-// }
+    lasd::List<int> coplst(vec);
+    EqualList(loctestnum, loctesterr, lst, coplst, true);
+    lasd::List<int> coplstx(lst);
+    EqualList(loctestnum, loctesterr, coplstx, coplst, true);
+  } catch(...) {
+    loctestnum++; loctesterr++;
+    cout << endl << "Unmanaged error! " << endl;
+  }
+  cout << "End of Vector/List<int> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+  testnum += loctestnum;
+  testerr += loctesterr;
+}
 
-// void stestVectorListDouble(uint& testnum, uint& testerr) {
-//   uint loctestnum = 0, loctesterr = 0;
-//   cout << endl << "Begin of Vector/List<double> Test:" << endl;
-//   try {
-//     lasd::Vector<double> vec(3);
-//     SetAt(loctestnum, loctesterr, vec, true, 0, -0.5);
-//     SetAt(loctestnum, loctesterr, vec, true, 1, 0.0);
-//     SetAt(loctestnum, loctesterr, vec, true, 2, 0.5);
+void stestVectorListDouble(uint& testnum, uint& testerr) {
+  uint loctestnum = 0, loctesterr = 0;
+  cout << endl << "Begin of Vector/List<double> Test:" << endl;
+  try {
+    lasd::Vector<double> vec(3);
+    SetAt(loctestnum, loctesterr, vec, true, 0, -0.5);
+    SetAt(loctestnum, loctesterr, vec, true, 1, 0.0);
+    SetAt(loctestnum, loctesterr, vec, true, 2, 0.5);
 
-//     lasd::List<double> lst;
-//     InsertAtBack(loctestnum, loctesterr, lst, true, -0.5);
-//     InsertAtBack(loctestnum, loctesterr, lst, true, 0.0);
-//     InsertAtBack(loctestnum, loctesterr, lst, true, 0.5);
+    lasd::List<double> lst;
+    InsertAtBack(loctestnum, loctesterr, lst, true, -0.5);
+    InsertAtBack(loctestnum, loctesterr, lst, true, 0.0);
+    InsertAtBack(loctestnum, loctesterr, lst, true, 0.5);
 
-//     lasd::Vector<double> copvec(lst);
-//     EqualVector(loctestnum, loctesterr, vec, copvec, true);
-//     lasd::Vector<double> copvecx(vec);
-//     EqualVector(loctestnum, loctesterr, copvecx, copvec, true);
+    lasd::Vector<double> copvec(lst);
+    EqualVector(loctestnum, loctesterr, vec, copvec, true);
+    lasd::Vector<double> copvecx(vec);
+    EqualVector(loctestnum, loctesterr, copvecx, copvec, true);
 
-//     lasd::List<double> coplst(vec);
-//     EqualList(loctestnum, loctesterr, lst, coplst, true);
-//     lasd::List<double> coplstx(lst);
-//     EqualList(loctestnum, loctesterr, coplstx, coplst, true);
-//   } catch(...) {
-//     loctestnum++; loctesterr++;
-//     cout << endl << "Unmanaged error! " << endl;
-//   }
-//   cout << "End of Vector/List<double> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
-//   testnum += loctestnum;
-//   testerr += loctesterr;
-// }
+    lasd::List<double> coplst(vec);
+    EqualList(loctestnum, loctesterr, lst, coplst, true);
+    lasd::List<double> coplstx(lst);
+    EqualList(loctestnum, loctesterr, coplstx, coplst, true);
+  } catch(...) {
+    loctestnum++; loctesterr++;
+    cout << endl << "Unmanaged error! " << endl;
+  }
+  cout << "End of Vector/List<double> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+  testnum += loctestnum;
+  testerr += loctesterr;
+}
 
-// void stestVectorListString(uint& testnum, uint& testerr) {
-//   uint loctestnum = 0, loctesterr = 0;
-//   cout << endl << "Begin of Vector/List<string> Test:" << endl;
-//   try {
-//     lasd::Vector<string> vec(3);
-//     SetAt(loctestnum, loctesterr, vec, true, 0, string("A"));
-//     SetAt(loctestnum, loctesterr, vec, true, 1, string("B"));
-//     SetAt(loctestnum, loctesterr, vec, true, 2, string("C"));
+void stestVectorListString(uint& testnum, uint& testerr) {
+  uint loctestnum = 0, loctesterr = 0;
+  cout << endl << "Begin of Vector/List<string> Test:" << endl;
+  try {
+    lasd::Vector<string> vec(3);
+    SetAt(loctestnum, loctesterr, vec, true, 0, string("A"));
+    SetAt(loctestnum, loctesterr, vec, true, 1, string("B"));
+    SetAt(loctestnum, loctesterr, vec, true, 2, string("C"));
 
-//     lasd::List<string> lst;
-//     InsertAtFront(loctestnum, loctesterr, lst, true, string("B"));
-//     InsertAtBack(loctestnum, loctesterr, lst, true, string("C"));
-//     InsertAtFront(loctestnum, loctesterr, lst, true, string("A"));
+    lasd::List<string> lst;
+    InsertAtFront(loctestnum, loctesterr, lst, true, string("B"));
+    InsertAtBack(loctestnum, loctesterr, lst, true, string("C"));
+    InsertAtFront(loctestnum, loctesterr, lst, true, string("A"));
 
-//     lasd::Vector<string> copvec(lst);
-//     EqualVector(loctestnum, loctesterr, vec, copvec, true);
-//     lasd::Vector<string> copvecx(vec);
-//     EqualVector(loctestnum, loctesterr, copvecx, copvec, true);
+    lasd::Vector<string> copvec(lst);
+    EqualVector(loctestnum, loctesterr, vec, copvec, true);
+    lasd::Vector<string> copvecx(vec);
+    EqualVector(loctestnum, loctesterr, copvecx, copvec, true);
 
-//     lasd::List<string> coplst(vec);
-//     EqualList(loctestnum, loctesterr, lst, coplst, true);
-//     lasd::List<string> coplstx(lst);
-//     EqualList(loctestnum, loctesterr, coplstx, coplst, true);
+    lasd::List<string> coplst(vec);
+    EqualList(loctestnum, loctesterr, lst, coplst, true);
+    lasd::List<string> coplstx(lst);
+    EqualList(loctestnum, loctesterr, coplstx, coplst, true);
 
-//     lasd::List<string> coplsty(move(vec));
-//     EqualList(loctestnum, loctesterr, coplst, coplsty, true);
-//     EqualVector(loctestnum, loctesterr, vec, copvec, false);
+    lasd::List<string> coplsty(move(vec));
+    EqualList(loctestnum, loctesterr, coplst, coplsty, true);
+    EqualVector(loctestnum, loctesterr, vec, copvec, false);
 
-//     lasd::Vector<string> copvecy(move(lst));
-//     EqualVector(loctestnum, loctesterr, copvec, copvecy, true);
-//     EqualList(loctestnum, loctesterr, lst, coplst, false);
-//   } catch(...) {
-//     loctestnum++; loctesterr++;
-//     cout << endl << "Unmanaged error! " << endl;
-//   }
-//   cout << "End of Vector/List<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
-//   testnum += loctestnum;
-//   testerr += loctesterr;
-// }
+    lasd::Vector<string> copvecy(move(lst));
+    EqualVector(loctestnum, loctesterr, copvec, copvecy, true);
+    EqualList(loctestnum, loctesterr, lst, coplst, false);
 
-// void stestVectorList(uint& testnum, uint& testerr) {
-//   uint loctestnum = 0, loctesterr = 0;
-//   stestVectorListInt(loctestnum, loctesterr);
-//   stestVectorListDouble(loctestnum, loctesterr);
-//   stestVectorListString(loctestnum, loctesterr);
-//   testnum += loctestnum;
-//   testerr += loctesterr;
-//   cout << endl << "Exercise 1A - Vector/List (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
-// }
+  } catch(...) {
+    loctestnum++; loctesterr++;
+    cout << endl << "Unmanaged error! " << endl;
+  }
+  cout << "End of Vector/List<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+  testnum += loctestnum;
+  testerr += loctesterr;
 
-// /* ************************************************************************** */
+}
+
+void stestVectorList(uint& testnum, uint& testerr) {
+  uint loctestnum = 0, loctesterr = 0;
+  stestVectorListInt(loctestnum, loctesterr);
+  stestVectorListDouble(loctestnum, loctesterr);
+  stestVectorListString(loctestnum, loctesterr);
+  testnum += loctestnum;
+  testerr += loctesterr;
+  cout << endl << "Exercise 1A - Vector/List (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+}
+
+/* ************************************************************************** */
 
 void testSimpleExercise1A(uint& testnum, uint& testerr) {
   stestVector(testnum, testerr);
   stestList(testnum, testerr);
-  // stestVectorList(testnum, testerr);
+  stestVectorList(testnum, testerr);
   cout << endl << "Exercise 1A (Simple Test) (Errors/Tests: " << testerr << "/" << testnum << ")" << endl;
 }

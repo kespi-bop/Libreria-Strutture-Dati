@@ -35,16 +35,16 @@ public:
 
   // Specific constructors
   Vector(const ulong new_size); // A vector with a given initial dimension
-  Vector(const MappableContainer<Data>& map); // A vector obtained from a MappableContainer
-  Vector(MutableMappableContainer<Data>&& Mmap) noexcept; // A vector obtained from a MutableMappableContainer
+  Vector(const MappableContainer<Data>& MCont); // A vector obtained from a MappableContainer
+  Vector(MutableMappableContainer<Data>&& MuMaCont) noexcept; // A vector obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
   // Copy constructor
-  Vector(const Vector& other);
+  Vector(const Vector& right);
 
   // Move constructor
-  Vector(Vector&& other) noexcept;
+  Vector(Vector&& right) noexcept;
 
   /* ************************************************************************ */
 
@@ -54,16 +54,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  Vector& operator=(const Vector& other);
+  Vector& operator=(const Vector& right);
 
   // Move assignment
-  Vector& operator=(Vector&& other) noexcept;
+  Vector& operator=(Vector&& right) noexcept;
 
     /* ************************************************************************ */
 
   // Comparison operators
-  virtual bool operator==(const Vector& other) const noexcept;
-  virtual bool operator!=(const Vector& other) const noexcept;
+  virtual bool operator==(const Vector& right) const noexcept;
+  virtual bool operator!=(const Vector& right) const noexcept;
 
   /* ************************************************************************ */
 

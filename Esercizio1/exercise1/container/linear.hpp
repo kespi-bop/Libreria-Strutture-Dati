@@ -62,7 +62,7 @@ public:
 
   using typename FoldableContainer<Data>::FoldFunctor;
 
-  virtual void Fold(const FoldFunctor func, void* acc) const { PreOrderFold(func, acc); }; // Override FoldableContainer member
+  virtual void Fold(const FoldFunctor func, void* acc) const; // Override FoldableContainer member
 
   /* ************************************************************************ */
 
@@ -84,7 +84,7 @@ public:
 
   using typename MappableContainer<Data>::MapFunctor;
 
-  virtual void Map(const MapFunctor func) const override { PreOrderMap(func); }; // Override MappableContainer member
+  virtual void Map(const MapFunctor func) const override; // Override MappableContainer member
 
   /* ************************************************************************ */
 

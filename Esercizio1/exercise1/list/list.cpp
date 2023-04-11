@@ -5,21 +5,22 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-List<Data>::List(const MappableContainer<Data>& right){
-    right.PostOrderMap(
-        [](const Data& dat){
-            InsertAtFront(dat);
+List<Data>::List(const MappableContainer<Data>& cont) {
+    cont.Map(
+        [this](const Data& dat) {
+            InsertAtBack(dat);
         }
     );
-}   
+}
 
 template <typename Data>
-List<Data>::List(MutableMappableContainer<Data>&& right) noexcept{
-    right.PostOrderMap(
-        [](const Data& dat){
-            InsertAtFront(dat);
+List<Data>::List(MutableMappableContainer<Data>&& cont) noexcept {
+    cont.Map(
+        [this](const Data& dat) {
+            InsertAtBack(std::move(dat));
         }
-    );      
+    );
+    cont.~MutableMappableContainer();
 }
 
 template <typename Data>
@@ -68,7 +69,6 @@ bool List<Data>::operator==(const List &right) const noexcept
         list1=list1->next;
         list2=list2->next;
     }
-
     return true;
 }
 
@@ -86,8 +86,7 @@ bool List<Data>::operator!=(const List &right) const noexcept
             return true;
         list1=list1->next;
         list2=list2->next;
-    }
-
+    }   
     return false;
 }
 
@@ -118,18 +117,12 @@ void List<Data>::RemoveFromFront(){  // (must throw std::length_error when empty
     size--;
 }
 
-template<typename Data>
-Data List<Data>::FrontNRemove(){    // (must throw std::length_error when empty)
-    if(Empty())
-        throw std::length_error("List->head is empty");
-
-    Node* temp = head;
-    head = head->next;
-    Data result = temp->element;
-    delete temp;
-    size--;
-
-    return result;
+template <typename Data>
+Data& List<Data>::FrontNRemove() {
+    if(Empty())throw std::length_error("List: the list is empty in Front()");
+    Data* element = new Data(head->element);
+    RemoveFromFront();
+    return *element;
 }
 
 

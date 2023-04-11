@@ -15,7 +15,7 @@ private:
 
 protected:
 
-  ulong size = 0; //Dimensione della struttura
+  ulong size = 0;
 
 public:
 
@@ -25,23 +25,27 @@ public:
   /* ************************************************************************ */
 
   // Copy assignmen
-  Container& operator=(const Container& other) = delete;
+  Container& operator=(const Container& right) = delete;
 
   // Move assignment
-  Container& operator=(Container&& other) noexcept = delete;
+  Container& operator=(Container&& right) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  virtual bool operator==(const Container& other) const noexcept = delete; 
-  virtual bool operator!=(const Container& other) const noexcept = delete; 
+  virtual bool operator==(const Container& right) const noexcept = delete; 
+  virtual bool operator!=(const Container& right) const noexcept = delete; 
 
   /* ************************************************************************ */
 
   // Specific member functions
-  virtual inline bool Empty() const noexcept { return size==0; };
+  virtual inline bool Empty() const noexcept {
+    return (size == 0); 
+  };
 
-  virtual inline ulong Size() const noexcept { return size; };
+  virtual inline ulong Size() const noexcept { 
+    return size; 
+  };
 
 };
 
@@ -56,27 +60,27 @@ protected:
 public:
 
   // Destructor
-  virtual ~ClearableContainer() = default; //Forse mancano gli specifiers
+  virtual ~ClearableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  ClearableContainer& operator=(const ClearableContainer& other) = delete;
+  ClearableContainer& operator=(const ClearableContainer& right) = delete;
 
   // Move assignment
-  ClearableContainer& operator=(ClearableContainer&& other) noexcept = delete;
+  ClearableContainer& operator=(ClearableContainer&& right) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const ClearableContainer& other) const noexcept = delete; 
-  bool operator!=(const ClearableContainer& other) const noexcept = delete; 
+  bool operator==(const ClearableContainer& right) const noexcept = delete; 
+  bool operator!=(const ClearableContainer& right) const noexcept = delete; 
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  virtual inline void Clear() = 0;
+  virtual void Clear() = 0;
 
 };
 
@@ -96,22 +100,22 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  ResizableContainer& operator=(const ResizableContainer& other) = delete;
+  ResizableContainer& operator=(const ResizableContainer& right) = delete;
 
   // Move assignment
-  ResizableContainer& operator=(ResizableContainer&& other) noexcept = delete;
+  ResizableContainer& operator=(ResizableContainer&& right) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const ResizableContainer& other) const noexcept = delete; 
-  bool operator!=(const ResizableContainer& other) const noexcept = delete; 
+  bool operator==(const ResizableContainer& right) const noexcept = delete; 
+  bool operator!=(const ResizableContainer& right) const noexcept = delete; 
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  virtual void Resize(const ulong n) = 0;
+  virtual void Resize(const ulong new_dimension) = 0;
  
   /* ************************************************************************ */
 

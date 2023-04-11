@@ -8,69 +8,69 @@ namespace lasd {
 /* ************************************************************************** */
 
 template<typename Data>
-bool DictionaryContainer<Data>::InsertAll(const MappableContainer<Data>& vals){
-    bool result = true;
-    vals.Map(
-        [this, &result] (const Data& dat) {
-            result &= Insert(dat);
+bool DictionaryContainer<Data>::InsertAll(const MappableContainer<Data>& cont){
+    bool resultAll = true;
+    cont.Map(
+        [this, &resultAll] (const Data& dat) {
+            resultAll &= Insert(dat);
         }
     );
-    return result;
+    return resultAll;
 }
 
 template<typename Data>
-bool DictionaryContainer<Data>::InsertAll(MappableContainer<Data>&& vals){
-    bool result = true;
-    vals.Map(
-        [this, &result] (const Data& dat) {
-            result &= Insert(std::move(dat));
+bool DictionaryContainer<Data>::InsertAll(MappableContainer<Data>&& cont){
+    bool resultAll = true;
+    cont.Map(
+        [this, &resultAll] (const Data& dat) {
+            resultAll &= Insert(std::move(dat));
         }
     );
-    return result;
+    return resultAll;
 }
 
 template<typename Data>
-bool DictionaryContainer<Data>::RemoveAll(const MappableContainer<Data>& vals){
-    bool result = true;
-    vals.Map(
-        [this, &result] (const Data& dat) {
-            result &= Remove(dat);
+bool DictionaryContainer<Data>::RemoveAll(const MappableContainer<Data>& cont){
+    bool resultAll = true;
+    cont.Map(
+        [this, &resultAll] (const Data& dat) {
+            resultAll &= Remove(dat);
         }
     );
-    return result;
+    return resultAll;
 }
 
 template<typename Data>
-bool DictionaryContainer<Data>::InsertSome(const MappableContainer<Data>& vals){
-    bool result = false;
-    vals.Map(
-        [this, &result] (const Data& dat) {
-            result |= Insert(dat);
+bool DictionaryContainer<Data>::InsertSome(const MappableContainer<Data>& cont){
+    bool resultAll = false;
+    cont.Map(
+        [this, &resultAll] (const Data& dat) {
+            resultAll |= Insert(dat);
         }
     );
-    return result;
+    return resultAll;
 }
 
 template<typename Data>
-bool DictionaryContainer<Data>::InsertSome(MappableContainer<Data>&& vals){
-    bool result = false;
-    vals.Map(
-        [this, &result] (const Data& dat) {
-            result |= Insert(std::move(dat));
+bool DictionaryContainer<Data>::InsertSome(MappableContainer<Data>&& cont){
+    bool resultAll = false;
+    cont.Map(
+        [this, &resultAll] (const Data& dat) {
+            resultAll |= Insert(std::move(dat));
         }
     );
-    return result;
+    return resultAll;
 }
 
 template<typename Data>
-bool DictionaryContainer<Data>::RemoveSome(const MappableContainer<Data>& vals){
-    bool result = false;
-    vals.Map(
-        [this, &result] (const Data& dat) {
-            result |= Remove(dat);
+bool DictionaryContainer<Data>::RemoveSome(const MappableContainer<Data>& cont){
+    bool resultAll = false;
+    cont.Map(
+        [this, &resultAll] (const Data& dat) {
+            resultAll |= Remove(dat);
         }
     );
-    return result;
+    return resultAll;
 }
 
 /* ************************************************************************** */

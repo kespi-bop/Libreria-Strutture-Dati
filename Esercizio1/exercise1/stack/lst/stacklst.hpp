@@ -14,7 +14,8 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class StackLst {
+class StackLst :  virtual public Stack<Data>,
+                  virtual protected List<Data> {
                   // Must extend Stack<Data>,
                   //             List<Data>
 
@@ -24,64 +25,65 @@ private:
 
 protected:
 
-  // using List<Data>::???;
-
+  using List<Data>::List;
   // ...
 
 public:
 
   // Default constructor
-  // StackLst() specifier;
+  StackLst() : List<Data>::List() {;}
 
   /* ************************************************************************ */
 
   // Specific constructor
-  // StackLst(argument) specifiers; // A stack obtained from a MappableContainer
-  // StackLst(argument) specifiers; // A stack obtained from a MutableMappableContainer
+  StackLst(const MappableContainer<Data>& cont) : List<Data>::List(cont) {;} // A queue obtained from a MappableContainer
+  StackLst(MappableContainer<Data>&& cont) noexcept : List<Data>::List(cont) {;}// A queue obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
   // Copy constructor
-  // StackLst(argument);
+  StackLst(const StackLst& cont) : List<Data>::List(cont) { ; }
 
   // Move constructor
-  // StackLst(argument);
+  StackLst(StackLst&& cont) noexcept : List<Data>::List(cont){ cont.Clear(); }
 
   /* ************************************************************************ */
 
   // Destructor
-  // ~StackLst() specifier;
+  virtual ~StackLst() {
+    while(!(List<Data>::Empty())) List<Data>::RemoveFromFront();
+  }
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument);
+  StackLst<Data>& operator=(const StackLst& other);
 
   // Move assignment
-  // type operator=(argument);
+  StackLst<Data>& operator=(StackLst&& other) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator==(const StackLst& other) const noexcept { return this->List<Data>::operator==(other); }
+  bool operator!=(const StackLst& other) const noexcept { return this->List<Data>::operator!=(other); }
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from Stack)
 
-  // type Top() specifiers; // Override Stack member (non-mutable version; must throw std::length_error when empty)
-  // type Top() specifiers; // Override Stack member (non-mutable version; must throw std::length_error when empty)
-  // type Pop() specifiers; // Override Stack member (must throw std::length_error when empty)
-  // type TopNPop() specifiers; // Override Stack member (must throw std::length_error when empty)
-  // type Push(argument) specifiers; // Override Stack member (copy of the value)
-  // type Push(argument) specifiers; // Override Stack member (move of the value)
+  const Data& Top() const override; // Override Stack member (non-mutable version; must throw std::length_error when empty)
+  Data& Top() override; // Override Stack member (non-mutable version; must throw std::length_error when empty)
+  void Pop() override; // Override Stack member (must throw std::length_error when empty)
+  Data& TopNPop() override; // Override Stack member (must throw std::length_error when empty)
+  void Push(const Data& elem) override; // Override Stack member (copy of the value)
+  void Push(Data&& elem) override; // Override Stack member (move of the value)
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ClearableContainer)
 
-  // using List<Data>::Clear;
+  using List<Data>::Clear;
 
 };
 

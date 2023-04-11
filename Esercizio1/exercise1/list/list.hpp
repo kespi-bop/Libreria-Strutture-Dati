@@ -114,7 +114,9 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~List() = default;
+  virtual ~List() {
+    while(!Empty()) RemoveFromFront();
+  }
 
   /* ************************************************************************ */
 
@@ -137,7 +139,7 @@ public:
   virtual void InsertAtFront(const Data& element); // Copy of the value
   virtual void InsertAtFront(Data&& element) noexcept; // Move of the value
   virtual void RemoveFromFront(); // (must throw std::length_error when empty)
-  virtual Data FrontNRemove(); // (must throw std::length_error when empty)
+  virtual Data& FrontNRemove(); // (must throw std::length_error when empty)
 
   virtual void InsertAtBack(const Data& element); // Copy of the value
   virtual void InsertAtBack(Data&& element) noexcept; // Move of the value
