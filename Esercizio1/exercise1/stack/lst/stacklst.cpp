@@ -22,7 +22,7 @@ void StackLst<Data>::Pop() {
 }
 
 template <typename Data>
-Data& StackLst<Data>::TopNPop() {
+Data StackLst<Data>::TopNPop() {
     if(List<Data>::Empty()) throw std::length_error("StackLst: the stack is empty in TopNPop()");
     return List<Data>::FrontNRemove();
 }

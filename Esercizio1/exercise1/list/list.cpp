@@ -118,11 +118,11 @@ void List<Data>::RemoveFromFront(){  // (must throw std::length_error when empty
 }
 
 template <typename Data>
-Data& List<Data>::FrontNRemove() {
+Data List<Data>::FrontNRemove() {
     if(Empty())throw std::length_error("List: the list is empty in Front()");
-    Data* element = new Data(head->element);
+    Data elemento = head->element;
     RemoveFromFront();
-    return *element;
+    return elemento;
 }
 
 

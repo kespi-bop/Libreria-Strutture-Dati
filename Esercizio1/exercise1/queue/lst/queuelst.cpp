@@ -19,10 +19,10 @@ void QueueLst<Data>::Dequeue() {
 }
 
 template <typename Data>
-Data& QueueLst<Data>::HeadNDequeue() {
-    Data* tmp = new Data(Head());
+Data QueueLst<Data>::HeadNDequeue() {
+    Data tmp = Head();
     Dequeue();
-    return *tmp;
+    return tmp;
 }
 
 template <typename Data>
