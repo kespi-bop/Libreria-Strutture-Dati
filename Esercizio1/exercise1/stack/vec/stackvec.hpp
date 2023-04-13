@@ -14,41 +14,45 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class StackVec : public virtual Stack<Data>,
-                 protected virtual Vector<Data>{
-                  // Must extend Stack<Data>,
-                  //             Vector<Data>
+class StackVec : virtual public Stack<Data>,
+                 virtual protected Vector<Data> {
 
 private:
 
-  // ...
+  const double const_exp_check = 0.75;
+  const double const_exp_set = 1.5;
+  const double const_red_check = 0.5;
+  const double const_red_set = 0.75;
+  const ulong const_init_size = 5;
 
 protected:
 
-  using Vector<Data>::size;
-  using Vector<Data>::Elements;
-  ulong ActualDimension;
-  // ...
+  // using Vector<Data>::???; //chiediamo perché davvero non so cosa scrivere
+  
 
 public:
 
+  ulong riempimento = 0;
+  using Container::size;
+
   // Default constructor
-  StackVec() : Vector<Data>::Vector(){ Elements = new Data[8]; }
+  StackVec();
+    
 
   /* ************************************************************************ */
 
   // Specific constructor
-  StackVec(const MappableContainer<Data>& right) : Vector<Data>::Vector(right){ Elements = new Data[8]; } // A stack obtained from a MappableContainer
-  StackVec(MappableContainer<Data>&& right) noexcept : Vector<Data>::Vector(right) { Elements = new Data[8]; } // A stack obtained from a MutableMappableContainer
+  StackVec(const MappableContainer<Data>& cont); // A stack obtained from a MappableContainer
+  StackVec(MappableContainer<Data>&& cont) noexcept; // A stack obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
   // Copy constructor
-  StackVec(const StackVec& right) : Vector<Data>::Vector(right) { ; }
+  StackVec(const StackVec& other);
 
   // Move constructor
-  StackVec(StackVec&& right) noexcept : Vector<Data>::Vector(right){ right.Clear(); }
-
+  StackVec(StackVec&& other) noexcept;
+  
   /* ************************************************************************ */
 
   // Destructor
@@ -57,48 +61,48 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  StackVec<Data>& operator=(const StackVec& right);
+  StackVec<Data>& operator=(const StackVec& other);
 
   // Move assignment
-  StackVec<Data>& operator=(StackVec&& right) noexcept;
+  StackVec<Data>& operator=(StackVec&& other) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const StackVec& right) const noexcept;
-  bool operator!=(const StackVec& right) const noexcept;
+  bool operator==(const StackVec& other) const noexcept;
+  bool operator!=(const StackVec& other) const noexcept;
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from Stack)
 
-  virtual const Data& Top() const; // Override Stack member (non-mutable version; must throw std::length_error when empty)
-  virtual Data& Top(); // Override Stack member (non-mutable version; must throw std::length_error when empty)
-  virtual void Pop(); // Override Stack member (must throw std::length_error when empty)
-  virtual Data& TopNPop(); // Override Stack member (must throw std::length_error when empty)
-  virtual void Push(const Data& elem); // Override Stack member (copy of the value)
-  virtual void Push(Data&& elem); // Override Stack member (move of the value)
-  
+  const Data& Top() const override; // Override Stack member (non-mutable version; must throw std::length_error when empty)
+  Data& Top() override; // Override Stack member (non-mutable version; must throw std::length_error when empty)
+  void Pop() override; // Override Stack member (must throw std::length_error when empty)
+  Data TopNPop() override; // Override Stack member (must throw std::length_error when empty)
+  void Push(const Data& elem) override; // Override Stack member (copy of the value)
+  void Push(Data&& elem) override; // Override Stack member (move of the value)
+
   /* ************************************************************************ */
 
   // Specific member functions (inherited from Container)
 
-  virtual inline bool Empty() const noexcept override { return (ActualDimension == 0); }; // Override Container member
-
-  virtual inline ulong Size() const noexcept { return ActualDimension; }; // Override Container member
+  bool Empty() const noexcept override { return riempimento==0; } // Override Container member
+  // Va verificato il riempimento e non la dimensione
+  ulong Size() const noexcept override { return riempimento; } // Override Container member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ClearableContainer)
 
-  void Clear() override; // Override ClearableContainer member
+  void Clear(); // Override ClearableContainer member
 
 protected:
 
   // Auxiliary member functions
 
-  virtual void Expand();
-  virtual void Reduce() noexcept;
+  bool CheckNExpand(); //Non so che specifiers mettere
+  bool CheckNReduce();
 
 };
 

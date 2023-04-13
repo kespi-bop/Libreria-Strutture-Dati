@@ -37,6 +37,7 @@ void stestVectorInt(uint& testnum, uint& testerr) {
 
       MapPreOrder(loctestnum, loctesterr, vec, true, &MapPrint<int>);
       MapPostOrder(loctestnum, loctesterr, vec, true, &MapPrint<int>);
+
       FoldPreOrder(loctestnum, loctesterr, vec, true, &FoldAdd<int>, 0, 0);
       FoldPostOrder(loctestnum, loctesterr, vec, true, &FoldAdd<int>, 0, 0);
     }
@@ -138,7 +139,6 @@ void stestVectorString(uint& testnum, uint& testerr) {
     movvec.Sort();
     FoldPreOrder(loctestnum, loctesterr, movvec, true, &FoldStringConcatenate, string("?"), string("?A B "));
     SetAt(loctestnum, loctesterr, vec, false, 1, string(""));
-    
     vec.Resize(1);
     SetAt(loctestnum, loctesterr, vec, true, 0, string("X"));
 
@@ -212,7 +212,6 @@ void stestListInt(uint& testnum, uint& testerr) {
     FoldPostOrder(loctestnum, loctesterr, lst, true, &FoldMultiply<int>, 1, 90);
 
     lasd::List<int> coplst(lst);
-    
     EqualList(loctestnum, loctesterr, lst, coplst, true);
     MapPreOrder(loctestnum, loctesterr, lst, true, &MapIncrement<int>);
     NonEqualList(loctestnum, loctesterr, lst, coplst, true);
@@ -225,14 +224,11 @@ void stestListInt(uint& testnum, uint& testerr) {
 
     RemoveFromFront(loctestnum, loctesterr, coplst, true);
     FrontNRemove(loctestnum, loctesterr, coplst, true, 6);
-
     coplst = move(lst);
-
     FoldPreOrder(loctestnum, loctesterr, lst, true, &FoldAdd<int>, 0, 11);
     FoldPreOrder(loctestnum, loctesterr, coplst, true, &FoldAdd<int>, 0, 17);
 
     lasd::List<int> movlst(move(lst));
-
     MapPreOrder(loctestnum, loctesterr, movlst, true, &MapIncrement<int>);
     FoldPreOrder(loctestnum, loctesterr, movlst, true, &FoldAdd<int>, 0, 14);
 
@@ -442,7 +438,6 @@ void stestVectorListString(uint& testnum, uint& testerr) {
     lasd::Vector<string> copvecy(move(lst));
     EqualVector(loctestnum, loctesterr, copvec, copvecy, true);
     EqualList(loctestnum, loctesterr, lst, coplst, false);
-
   } catch(...) {
     loctestnum++; loctesterr++;
     cout << endl << "Unmanaged error! " << endl;
@@ -450,7 +445,6 @@ void stestVectorListString(uint& testnum, uint& testerr) {
   cout << "End of Vector/List<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
-
 }
 
 void stestVectorList(uint& testnum, uint& testerr) {
