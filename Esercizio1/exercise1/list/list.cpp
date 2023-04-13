@@ -17,11 +17,10 @@ List<Data>::List(const MappableContainer<Data>& cont) {
 template <typename Data>
 List<Data>::List(MutableMappableContainer<Data>&& cont) noexcept {
     cont.Map(
-        [this](const Data& dat) {
+        [this](Data& dat) {
             InsertAtBack(std::move(dat));
         }
     );
-    cont.~MutableMappableContainer();
 }
 
 template <typename Data>
@@ -34,6 +33,7 @@ template <typename Data>
 List<Data>::List(List &&right) noexcept{
     for(ulong i = 0; i < right.Size(); i++)
         InsertAtBack(right[i]);
+    right.Clear();
 }
 
 template <typename Data>
@@ -145,7 +145,7 @@ void List<Data>::InsertAtBack(const Data &element){
 template <typename Data>
 void List<Data>::InsertAtBack(Data &&element) noexcept{
     Node* last_node = head;
-    Node* new_node = new Node(element);
+    Node* new_node = new Node(std::move(element));
 
     if(!Empty()){
         while(last_node->next!=nullptr)

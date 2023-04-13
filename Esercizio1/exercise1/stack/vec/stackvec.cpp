@@ -123,7 +123,7 @@ StackVec<Data>& StackVec<Data>::operator=(StackVec&& other) noexcept {
 template <typename Data>
 void StackVec<Data>::Clear() {
     riempimento=0;
-    CheckNReduce();
+    Vector<Data>::Resize(5);
 }
 
 /* ************************************************************************** */

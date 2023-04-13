@@ -1,177 +1,156 @@
-==1554== Memcheck, a memory error detector
-==1554== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1554== Using Valgrind-3.18.1-42b08ed5bd-20211015 and LibVEX; rerun with -h for copyright info
-==1554== Command: ./main
-==1554== Parent PID: 1553
-==1554== 
---1554-- 
---1554-- Valgrind options:
---1554--    --leak-check=full
---1554--    --show-leak-kinds=all
---1554--    --track-origins=yes
---1554--    --verbose
---1554--    --log-file=valgrind-out.log
---1554-- Contents of /proc/version:
---1554--   Linux version 4.4.0-22621-Microsoft (Microsoft@Microsoft.com) (gcc version 5.4.0 (GCC) ) #1105-Microsoft Fri Jan 01 08:00:00 PST 2016
---1554-- 
---1554-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
---1554-- Page sizes: currently 4096, max supported 4096
---1554-- Valgrind library directory: /usr/libexec/valgrind
---1554-- Reading syms from /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main
---1554-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
---1554--   Considering /usr/lib/debug/.build-id/61/ef896a699bb1c2e4e231642b2e1688b2f1a61e.debug ..
---1554--   .. build-id is valid
---1554-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
---1554--    object doesn't have a symbol table
---1554--    object doesn't have a dynamic symbol table
---1554-- Scheduler: using generic scheduler lock implementation.
---1554-- Reading suppressions file: /usr/libexec/valgrind/default.supp
-==1554== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-1554-by-gianfranco-on-???
-==1554== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-1554-by-gianfranco-on-???
-==1554== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-1554-by-gianfranco-on-???
-==1554== 
-==1554== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==1554== don't want to do, unless you know exactly what you're doing,
-==1554== or are doing some strange experiment):
-==1554==   /usr/bin/vgdb --pid=1554 ...command...
-==1554== 
-==1554== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==1554==   /path/to/gdb ./main
-==1554== and then give GDB the following command
-==1554==   target remote | /usr/bin/vgdb --pid=1554
-==1554== --pid is optional if only one valgrind process is running
-==1554== 
-==1554== error calling PR_SET_PTRACER, vgdb might block
---1554-- REDIR: 0x402aa60 (ld-linux-x86-64.so.2:strlen) redirected to 0x580bcec2 (???)
---1554-- REDIR: 0x402a830 (ld-linux-x86-64.so.2:index) redirected to 0x580bcedc (???)
---1554-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
---1554--    object doesn't have a symbol table
---1554-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
---1554--    object doesn't have a symbol table
-==1554== WARNING: new redirection conflicts with existing -- ignoring it
---1554--     old: 0x0402aa60 (strlen              ) R-> (0000.0) 0x580bcec2 ???
---1554--     new: 0x0402aa60 (strlen              ) R-> (2007.0) 0x0484ee30 strlen
---1554-- REDIR: 0x4027240 (ld-linux-x86-64.so.2:strcmp) redirected to 0x484fcd0 (strcmp)
---1554-- REDIR: 0x402afc0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4853840 (mempcpy)
---1554-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30
---1554--    object doesn't have a symbol table
---1554-- Reading syms from /usr/lib/x86_64-linux-gnu/libm.so.6
---1554--   Considering /usr/lib/debug/.build-id/27/e82301dba6c3f644404d504e1bb1c97894b433.debug ..
---1554--   .. build-id is valid
---1554-- Reading syms from /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
---1554--    object doesn't have a symbol table
---1554-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
---1554--   Considering /usr/lib/debug/.build-id/69/389d485a9793dbe873f0ea2c93e02efaa9aa3d.debug ..
---1554--   .. build-id is valid
-==1554== WARNING: new redirection conflicts with existing -- ignoring it
---1554--     old: 0x04c36ce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
---1554--     new: 0x04c36ce0 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
-==1554== WARNING: new redirection conflicts with existing -- ignoring it
---1554--     old: 0x04c36ce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
---1554--     new: 0x04c36ce0 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
-==1554== WARNING: new redirection conflicts with existing -- ignoring it
---1554--     old: 0x04c36ce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
---1554--     new: 0x04c36ce0 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
-==1554== WARNING: new redirection conflicts with existing -- ignoring it
---1554--     old: 0x04c36ce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
---1554--     new: 0x04c36ce0 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
---1554-- REDIR: 0x4c397a0 (libc.so.6:strnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c39a60 (libc.so.6:strpbrk) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c39360 (libc.so.6:strcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c57d50 (libc.so.6:wcsnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3a750 (libc.so.6:memset) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c565c0 (libc.so.6:wcslen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3ac90 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c563f0 (libc.so.6:wcschr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c392e0 (libc.so.6:index) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c399e0 (libc.so.6:rindex) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3a620 (libc.so.6:memmove) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
-==1554== Preferring higher priority redirection:
---1554--     old: 0x04d31940 (__memcpy_avx_unalign) R-> (2018.0) 0x04850f90 __memcpy_avx_unaligned_erms
---1554--     new: 0x04d31940 (__memcpy_avx_unalign) R-> (2018.1) 0x04852880 memmove
---1554-- REDIR: 0x4c56470 (libc.so.6:wcscmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3aa60 (libc.so.6:stpncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c56a30 (libc.so.6:wmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c398b0 (libc.so.6:strncmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3aaf0 (libc.so.6:strcasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c394a0 (libc.so.6:strcspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c564f0 (libc.so.6:wcscpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c39250 (libc.so.6:strcat) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3abe0 (libc.so.6:strncasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3a500 (libc.so.6:bcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c425f0 (libc.so.6:memrchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3c090 (libc.so.6:strchrnul) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c39410 (libc.so.6:strcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3ab90 (libc.so.6:strcasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c39720 (libc.so.6:strlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c39950 (libc.so.6:strncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3a9d0 (libc.so.6:stpcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3a470 (libc.so.6:memchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c39b80 (libc.so.6:strspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3a850 (libc.so.6:mempcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3ab40 (libc.so.6:strncasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4c3c000 (libc.so.6:rawmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---1554-- REDIR: 0x4d2e790 (libc.so.6:__strrchr_avx2) redirected to 0x484e810 (rindex)
---1554-- REDIR: 0x4c36120 (libc.so.6:malloc) redirected to 0x4848820 (malloc)
---1554-- REDIR: 0x4d2e960 (libc.so.6:__strlen_avx2) redirected to 0x484ed10 (strlen)
---1554-- REDIR: 0x4d2ac00 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x4852010 (bcmp)
---1554-- REDIR: 0x4d29ac0 (libc.so.6:__strcmp_avx2) redirected to 0x484fbd0 (strcmp)
---1554-- REDIR: 0x4d31900 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4853440 (mempcpy)
---1554-- REDIR: 0x490e9b0 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4848fa0 (operator new(unsigned long))
---1554-- REDIR: 0x4d31940 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4852880 (memmove)
---1554-- REDIR: 0x490cc50 (libstdc++.so.6:operator delete(void*)) redirected to 0x484b840 (operator delete(void*))
---1554-- REDIR: 0x4c36460 (libc.so.6:free) redirected to 0x484b210 (free)
---1554-- REDIR: 0x490ea10 (libstdc++.so.6:operator new[](unsigned long)) redirected to 0x484a280 (operator new[](unsigned long))
---1554-- REDIR: 0x4d32100 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x4852770 (memset)
---1554-- REDIR: 0x490cc80 (libstdc++.so.6:operator delete[](void*)) redirected to 0x484ca20 (operator delete[](void*))
---1554-- REDIR: 0x4d2e580 (libc.so.6:__strchrnul_avx2) redirected to 0x4853330 (strchrnul)
---1554-- REDIR: 0x4d2a440 (libc.so.6:__memchr_avx2) redirected to 0x484fd50 (memchr)
---1554-- REDIR: 0x490cc60 (libstdc++.so.6:operator delete(void*, unsigned long)) redirected to 0x484bb00 (operator delete(void*, unsigned long))
---1554-- REDIR: 0x490cc90 (libstdc++.so.6:operator delete[](void*, unsigned long)) redirected to 0x484cce0 (operator delete[](void*, unsigned long))
-==1554== 
-==1554== HEAP SUMMARY:
-==1554==     in use at exit: 292 bytes in 3 blocks
-==1554==   total heap usage: 264 allocs, 261 frees, 99,243 bytes allocated
-==1554== 
-==1554== Searching for pointers to 3 not-freed blocks
-==1554== Checked 147,408 bytes
-==1554== 
-==1554== 24 bytes in 1 blocks are definitely lost in loss record 1 of 3
-==1554==    at 0x484A2F3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1554==    by 0x175181: lasd::Vector<int>::Vector(lasd::Vector<int> const&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x175813: lasd::StackVec<int>::StackVec(lasd::StackVec<int> const&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x175BDD: void stestStackInt<lasd::StackVec<int> >(lasd::StackVec<int>&, unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x163382: stestStackInt(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x1648C5: stestStack(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x1653EF: testSimpleExercise1B(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x142560: lasdtest() (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x1421EC: main (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554== 
-==1554== 28 bytes in 1 blocks are definitely lost in loss record 2 of 3
-==1554==    at 0x484A2F3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1554==    by 0x151D58: lasd::Vector<int>::Resize(unsigned long) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x17523F: lasd::StackVec<int>::CheckNExpand() (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x175C5A: void stestStackInt<lasd::StackVec<int> >(lasd::StackVec<int>&, unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x163382: stestStackInt(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x1648C5: stestStack(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x1653EF: testSimpleExercise1B(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x142560: lasdtest() (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x1421EC: main (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554== 
-==1554== 240 bytes in 1 blocks are definitely lost in loss record 3 of 3
-==1554==    at 0x484A2F3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1554==    by 0x172169: lasd::QueueVec<int>::QueueVec(lasd::QueueVec<int> const&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x163803: stestQueueInt(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x165235: stestQueue(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x1653FA: testSimpleExercise1B(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x142560: lasdtest() (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554==    by 0x1421EC: main (in /mnt/c/Users/gianf/OneDrive/Desktop/LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
-==1554== 
-==1554== LEAK SUMMARY:
-==1554==    definitely lost: 292 bytes in 3 blocks
-==1554==    indirectly lost: 0 bytes in 0 blocks
-==1554==      possibly lost: 0 bytes in 0 blocks
-==1554==    still reachable: 0 bytes in 0 blocks
-==1554==         suppressed: 0 bytes in 0 blocks
-==1554== 
-==1554== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==234== Memcheck, a memory error detector
+==234== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==234== Using Valgrind-3.18.1-42b08ed5bd-20211015 and LibVEX; rerun with -h for copyright info
+==234== Command: ./main
+==234== Parent PID: 233
+==234== 
+--234-- 
+--234-- Valgrind options:
+--234--    --leak-check=full
+--234--    --show-leak-kinds=all
+--234--    --track-origins=yes
+--234--    --verbose
+--234--    --log-file=valgrind-out.log
+--234-- Contents of /proc/version:
+--234--   Linux version 4.4.0-19041-Microsoft (Microsoft@Microsoft.com) (gcc version 5.4.0 (GCC) ) #2311-Microsoft Tue Nov 08 17:09:00 PST 2022
+--234-- 
+--234-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
+--234-- Page sizes: currently 4096, max supported 4096
+--234-- Valgrind library directory: /usr/libexec/valgrind
+--234-- Reading syms from /mnt/c/Users/gianf/Desktop/LASD/GitHub LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main
+--234-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+--234--   Considering /usr/lib/debug/.build-id/61/ef896a699bb1c2e4e231642b2e1688b2f1a61e.debug ..
+--234--   .. build-id is valid
+--234-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
+--234--    object doesn't have a symbol table
+--234--    object doesn't have a dynamic symbol table
+--234-- Scheduler: using generic scheduler lock implementation.
+--234-- Reading suppressions file: /usr/libexec/valgrind/default.supp
+==234== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-234-by-gianfranco-on-???
+==234== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-234-by-gianfranco-on-???
+==234== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-234-by-gianfranco-on-???
+==234== 
+==234== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==234== don't want to do, unless you know exactly what you're doing,
+==234== or are doing some strange experiment):
+==234==   /usr/bin/vgdb --pid=234 ...command...
+==234== 
+==234== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==234==   /path/to/gdb ./main
+==234== and then give GDB the following command
+==234==   target remote | /usr/bin/vgdb --pid=234
+==234== --pid is optional if only one valgrind process is running
+==234== 
+==234== error calling PR_SET_PTRACER, vgdb might block
+--234-- REDIR: 0x402aa60 (ld-linux-x86-64.so.2:strlen) redirected to 0x580bcec2 (???)
+--234-- REDIR: 0x402a830 (ld-linux-x86-64.so.2:index) redirected to 0x580bcedc (???)
+--234-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+--234--    object doesn't have a symbol table
+--234-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+--234--    object doesn't have a symbol table
+==234== WARNING: new redirection conflicts with existing -- ignoring it
+--234--     old: 0x0402aa60 (strlen              ) R-> (0000.0) 0x580bcec2 ???
+--234--     new: 0x0402aa60 (strlen              ) R-> (2007.0) 0x0484ee30 strlen
+--234-- REDIR: 0x4027240 (ld-linux-x86-64.so.2:strcmp) redirected to 0x484fcd0 (strcmp)
+--234-- REDIR: 0x402afc0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4853840 (mempcpy)
+--234-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30
+--234--    object doesn't have a symbol table
+--234-- Reading syms from /usr/lib/x86_64-linux-gnu/libm.so.6
+--234--   Considering /usr/lib/debug/.build-id/27/e82301dba6c3f644404d504e1bb1c97894b433.debug ..
+--234--   .. build-id is valid
+--234-- Reading syms from /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+--234--    object doesn't have a symbol table
+--234-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
+--234--   Considering /usr/lib/debug/.build-id/69/389d485a9793dbe873f0ea2c93e02efaa9aa3d.debug ..
+--234--   .. build-id is valid
+==234== WARNING: new redirection conflicts with existing -- ignoring it
+--234--     old: 0x04c36ce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--234--     new: 0x04c36ce0 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==234== WARNING: new redirection conflicts with existing -- ignoring it
+--234--     old: 0x04c36ce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--234--     new: 0x04c36ce0 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+==234== WARNING: new redirection conflicts with existing -- ignoring it
+--234--     old: 0x04c36ce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--234--     new: 0x04c36ce0 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==234== WARNING: new redirection conflicts with existing -- ignoring it
+--234--     old: 0x04c36ce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--234--     new: 0x04c36ce0 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+--234-- REDIR: 0x4c397a0 (libc.so.6:strnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c39a60 (libc.so.6:strpbrk) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c39360 (libc.so.6:strcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c57d50 (libc.so.6:wcsnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3a750 (libc.so.6:memset) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c565c0 (libc.so.6:wcslen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3ac90 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c563f0 (libc.so.6:wcschr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c392e0 (libc.so.6:index) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c399e0 (libc.so.6:rindex) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3a620 (libc.so.6:memmove) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+==234== Preferring higher priority redirection:
+--234--     old: 0x04d31940 (__memcpy_avx_unalign) R-> (2018.0) 0x04850f90 __memcpy_avx_unaligned_erms
+--234--     new: 0x04d31940 (__memcpy_avx_unalign) R-> (2018.1) 0x04852880 memmove
+--234-- REDIR: 0x4c56470 (libc.so.6:wcscmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3aa60 (libc.so.6:stpncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c56a30 (libc.so.6:wmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c398b0 (libc.so.6:strncmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3aaf0 (libc.so.6:strcasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c394a0 (libc.so.6:strcspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c564f0 (libc.so.6:wcscpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c39250 (libc.so.6:strcat) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3abe0 (libc.so.6:strncasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3a500 (libc.so.6:bcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c425f0 (libc.so.6:memrchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3c090 (libc.so.6:strchrnul) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c39410 (libc.so.6:strcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3ab90 (libc.so.6:strcasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c39720 (libc.so.6:strlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c39950 (libc.so.6:strncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3a9d0 (libc.so.6:stpcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3a470 (libc.so.6:memchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c39b80 (libc.so.6:strspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3a850 (libc.so.6:mempcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3ab40 (libc.so.6:strncasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4c3c000 (libc.so.6:rawmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--234-- REDIR: 0x4d2e790 (libc.so.6:__strrchr_avx2) redirected to 0x484e810 (rindex)
+--234-- REDIR: 0x4c36120 (libc.so.6:malloc) redirected to 0x4848820 (malloc)
+--234-- REDIR: 0x4d2e960 (libc.so.6:__strlen_avx2) redirected to 0x484ed10 (strlen)
+--234-- REDIR: 0x4d2ac00 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x4852010 (bcmp)
+--234-- REDIR: 0x4d29ac0 (libc.so.6:__strcmp_avx2) redirected to 0x484fbd0 (strcmp)
+--234-- REDIR: 0x4d31900 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4853440 (mempcpy)
+--234-- REDIR: 0x490e9b0 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4848fa0 (operator new(unsigned long))
+--234-- REDIR: 0x4d31940 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4852880 (memmove)
+--234-- REDIR: 0x490cc50 (libstdc++.so.6:operator delete(void*)) redirected to 0x484b840 (operator delete(void*))
+--234-- REDIR: 0x4c36460 (libc.so.6:free) redirected to 0x484b210 (free)
+--234-- REDIR: 0x490ea10 (libstdc++.so.6:operator new[](unsigned long)) redirected to 0x484a280 (operator new[](unsigned long))
+--234-- REDIR: 0x4d32100 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x4852770 (memset)
+--234-- REDIR: 0x490cc80 (libstdc++.so.6:operator delete[](void*)) redirected to 0x484ca20 (operator delete[](void*))
+--234-- REDIR: 0x4d2e580 (libc.so.6:__strchrnul_avx2) redirected to 0x4853330 (strchrnul)
+--234-- REDIR: 0x4d2a440 (libc.so.6:__memchr_avx2) redirected to 0x484fd50 (memchr)
+--234-- REDIR: 0x490cc60 (libstdc++.so.6:operator delete(void*, unsigned long)) redirected to 0x484bb00 (operator delete(void*, unsigned long))
+--234-- REDIR: 0x490cc90 (libstdc++.so.6:operator delete[](void*, unsigned long)) redirected to 0x484cce0 (operator delete[](void*, unsigned long))
+==234== 
+==234== HEAP SUMMARY:
+==234==     in use at exit: 20 bytes in 1 blocks
+==234==   total heap usage: 270 allocs, 269 frees, 99,788 bytes allocated
+==234== 
+==234== Searching for pointers to 1 not-freed blocks
+==234== Checked 147,168 bytes
+==234== 
+==234== 20 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==234==    at 0x484A2F3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==234==    by 0x151D48: lasd::Vector<int>::Resize(unsigned long) (in /mnt/c/Users/gianf/Desktop/LASD/GitHub LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
+==234==    by 0x17669E: void stestStackInt<lasd::StackVec<int> >(lasd::StackVec<int>&, unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/Desktop/LASD/GitHub LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
+==234==    by 0x1634E2: stestStackInt(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/Desktop/LASD/GitHub LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
+==234==    by 0x1648F5: stestStack(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/Desktop/LASD/GitHub LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
+==234==    by 0x16543F: testSimpleExercise1B(unsigned int&, unsigned int&) (in /mnt/c/Users/gianf/Desktop/LASD/GitHub LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
+==234==    by 0x142550: lasdtest() (in /mnt/c/Users/gianf/Desktop/LASD/GitHub LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
+==234==    by 0x1421DC: main (in /mnt/c/Users/gianf/Desktop/LASD/GitHub LASD/Laboratorio-Di-Algoritmi-e-Strutture-Dati/Esercizio1/exercise1/main)
+==234== 
+==234== LEAK SUMMARY:
+==234==    definitely lost: 20 bytes in 1 blocks
+==234==    indirectly lost: 0 bytes in 0 blocks
+==234==      possibly lost: 0 bytes in 0 blocks
+==234==    still reachable: 0 bytes in 0 blocks
+==234==         suppressed: 0 bytes in 0 blocks
+==234== 
+==234== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

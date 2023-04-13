@@ -29,19 +29,16 @@ Vector<Data>::Vector(MutableMappableContainer<Data>&& cont) noexcept {
     Elements = new Data[size];
     ulong index = 0;
     cont.Map(
-        [this, &index](const Data& dat) {
-            Elements[index++] = dat;
+        [this, &index](Data& dat) {
+            Elements[index++] = std::move(dat);
         }
     );
-    cont.~MutableMappableContainer();
 }
 
 //Destructor
 template <typename Data>
 Vector<Data>::~Vector() {
     delete[] Elements; 
-    Elements=nullptr;
-    size=0;
 }
 
 /* ************************************************************************** */
@@ -69,8 +66,8 @@ Vector<Data>::Vector(Vector<Data>&& other) noexcept {
 
 template <typename Data>
 Vector<Data>& Vector<Data>::operator=(const Vector& other) {
-    Vector<Data>::Clear();
     size = other.size;
+    delete[] Elements;
     Elements = new Data[size];
     std::copy(other.Elements, other.Elements+size, Elements);
     return *this;
@@ -132,7 +129,7 @@ Data& Vector<Data>::Back() {
 template <typename Data>
 void Vector<Data>::Resize(const ulong new_size) {
     if(new_size==0){
-        Vector<Data>::Clear();
+        Clear();
     }
     else if (size!=new_size) {
         Data* ptr = new Data[new_size] {};

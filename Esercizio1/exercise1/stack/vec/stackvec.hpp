@@ -27,7 +27,7 @@ private:
 
 protected:
 
-  // using Vector<Data>::???; //chiediamo perché davvero non so cosa scrivere
+  using Vector<Data>::Elements;
   
 
 public:
