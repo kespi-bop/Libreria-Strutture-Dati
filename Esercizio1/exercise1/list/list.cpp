@@ -31,8 +31,8 @@ List<Data>::List(const List &right){
 
 template <typename Data>
 List<Data>::List(List &&right) noexcept{
-    for(ulong i = 0; i < right.Size(); i++)
-        InsertAtBack(right[i]);
+    std::swap(head, right.head);
+    std::swap(size, right.size);
     right.Clear();
 }
 
