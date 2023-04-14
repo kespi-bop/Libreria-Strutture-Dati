@@ -37,7 +37,7 @@ public:
 
   // Specific constructor
   StackLst(const MappableContainer<Data>& cont) : List<Data>::List(cont) {;} // A queue obtained from a MappableContainer
-  StackLst(MappableContainer<Data>&& cont) noexcept : List<Data>::List(cont) {;}// A queue obtained from a MutableMappableContainer
+  StackLst(MappableContainer<Data>&& cont) noexcept : List<Data>::List(move(cont)) {;}// A queue obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
@@ -45,7 +45,7 @@ public:
   StackLst(const StackLst& cont) : List<Data>::List(cont) { ; }
 
   // Move constructor
-  StackLst(StackLst&& cont) noexcept : List<Data>::List(cont){ ; }
+  StackLst(StackLst&& cont) noexcept : List<Data>::List(std::move(cont)){ ; }
 
   /* ************************************************************************ */
 

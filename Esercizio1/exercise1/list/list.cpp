@@ -100,7 +100,7 @@ void List<Data>::InsertAtFront(const Data &element){
 
 template<typename Data>
 void List<Data>::InsertAtFront(Data&& element) noexcept{
-    Node* temp = new Node(element);
+    Node* temp = new Node(std::move(element));
     temp->next = head;
     head = temp;
     size++;
@@ -177,7 +177,7 @@ template <typename Data>
 bool List<Data>::Insert(Data &&element) noexcept{
     if(!(FoldableContainer<Data>::Exists(element))) 
     {
-        InsertAtFront(element);
+        InsertAtFront(std::move(element));
         return true;
     }
     return false;

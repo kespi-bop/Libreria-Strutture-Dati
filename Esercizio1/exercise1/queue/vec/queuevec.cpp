@@ -39,7 +39,7 @@ void QueueVec<Data>::Enqueue(const Data& elem) {
 
 template <typename Data>
 void QueueVec<Data>::Enqueue(Data&& elem) {
-    Vector<Data>::operator[](tail) = elem;
+    Vector<Data>::operator[](tail) = std::move(elem);
     tail=(tail+1)%size;
     CheckNExpand();
 }

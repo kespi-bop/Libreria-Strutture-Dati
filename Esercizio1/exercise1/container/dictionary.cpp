@@ -22,7 +22,7 @@ template<typename Data>
 bool DictionaryContainer<Data>::InsertAll(MappableContainer<Data>&& cont){
     bool resultAll = true;
     cont.Map(
-        [this, &resultAll] (const Data& dat) {
+        [this, &resultAll] (Data& dat) {
             resultAll &= Insert(std::move(dat));
         }
     );
@@ -55,7 +55,7 @@ template<typename Data>
 bool DictionaryContainer<Data>::InsertSome(MappableContainer<Data>&& cont){
     bool resultAll = false;
     cont.Map(
-        [this, &resultAll] (const Data& dat) {
+        [this, &resultAll] (Data& dat) {
             resultAll |= Insert(std::move(dat));
         }
     );

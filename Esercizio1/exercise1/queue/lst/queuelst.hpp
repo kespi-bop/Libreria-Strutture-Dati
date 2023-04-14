@@ -38,7 +38,7 @@ public:
 
   // Specific constructor
   QueueLst(const MappableContainer<Data>& cont) : List<Data>::List(cont) { ; } // A queue obtained from a MappableContainer
-  QueueLst(MutableMappableContainer<Data>&& cont) : List<Data>::List(cont) { ; } // A queue obtained from a MutableMappableContainer
+  QueueLst(MutableMappableContainer<Data>&& cont) : List<Data>::List(std::move(cont)) { ; } // A queue obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
@@ -46,10 +46,7 @@ public:
   QueueLst(const QueueLst& cont) : List<Data>::List(cont) { ; }
 
   // // Move constructor
-  QueueLst(QueueLst&& cont) noexcept : List<Data>::List(cont){ 
-    //cont.Clear(); 
-    //CAZZO TOGLIERE.
-    }
+  QueueLst(QueueLst&& cont) noexcept : List<Data>::List(std::move(cont)){ ; }
 
   /* ************************************************************************ */
 
