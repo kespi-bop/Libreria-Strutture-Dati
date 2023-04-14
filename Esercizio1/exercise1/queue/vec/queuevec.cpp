@@ -114,8 +114,6 @@ QueueVec<Data>::QueueVec(MappableContainer<Data>&& cont) noexcept {
     size++;
     tail = size;
     head = 0;
-    
-    cont.~MappableContainer();
 }
 
 template <typename Data>
@@ -129,7 +127,7 @@ QueueVec<Data>::QueueVec(QueueVec&& other) noexcept {
     std::swap(head, other.head);
     std::swap(tail, other.tail);
     std::swap(size, other.size);
-    std::swap(this->Elements, other.Elements);
+    std::swap(Elements, other.Elements);
 }
 
 template <typename Data>
@@ -146,8 +144,8 @@ QueueVec<Data>& QueueVec<Data>::operator=(const QueueVec& other) {
 
 template <typename Data>
 QueueVec<Data>& QueueVec<Data>::operator=(QueueVec&& other) noexcept {
-    this->Clear();
-    std::swap(this->Elements, other.Elements);
+    Clear();
+    std::swap(Elements, other.Elements);
     std::swap(size, other.size);
     std::swap(other.head, head);
     std::swap(other.tail, tail);

@@ -23,7 +23,7 @@ private:
 
 protected:
 
-  // using Vector<Data>::???; //Eh bisogna sempre chiedere
+  using Vector<Data>::Elements;
 
   ulong head = 0;
   ulong tail = 0;

@@ -29,11 +29,7 @@ using namespace std;
 
 
 TODO
-- dictionary.cpp non sono state fatte le implementazioni delle funzioni (Restituiscono true)
-- foldable.hpp Verificare foldable a ricevimento
-- foldable.hpp Mancano BreadthFoldableContainer e InOrderFoldableContainer
-- PreOrderMap in MutableMap sarebbe PreOrderMutuableMap? 
-- mappable.hpp r.395 è override? (440 è lo stesso)
+- queuelst MoveConstructor;
 
 
 ************************************************************************** */

@@ -33,7 +33,6 @@ template <typename Data>
 List<Data>::List(List &&right) noexcept{
     std::swap(head, right.head);
     std::swap(size, right.size);
-    right.Clear();
 }
 
 template <typename Data>

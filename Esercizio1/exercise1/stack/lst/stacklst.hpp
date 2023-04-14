@@ -45,7 +45,7 @@ public:
   StackLst(const StackLst& cont) : List<Data>::List(cont) { ; }
 
   // Move constructor
-  StackLst(StackLst&& cont) noexcept : List<Data>::List(cont){ cont.Clear(); }
+  StackLst(StackLst&& cont) noexcept : List<Data>::List(cont){ ; }
 
   /* ************************************************************************ */
 

@@ -46,7 +46,10 @@ public:
   QueueLst(const QueueLst& cont) : List<Data>::List(cont) { ; }
 
   // // Move constructor
-  QueueLst(QueueLst&& cont) noexcept : List<Data>::List(cont){ cont.Clear(); }
+  QueueLst(QueueLst&& cont) noexcept : List<Data>::List(cont){ 
+    //cont.Clear(); 
+    //CAZZO TOGLIERE.
+    }
 
   /* ************************************************************************ */
 

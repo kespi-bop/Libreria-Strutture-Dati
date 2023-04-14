@@ -85,19 +85,13 @@ void StackVec<Data>::Push(Data&& elem) {
 
 
 template <typename Data>
-bool StackVec<Data>::CheckNExpand() {
-    if ((size*const_exp_check) > riempimento) return false;
-    if(size<=const_init_size) Vector<Data>::Resize(const_init_size);
-    Vector<Data>::Resize(size*const_exp_set);
-    return true;
+void StackVec<Data>::CheckNExpand() {
+    if(riempimento==size) Vector<Data>::Resize(size*2);
 }
 
 template <typename Data>
-bool StackVec<Data>::CheckNReduce() {
-    if(size*const_red_check <= riempimento) return false;
-    if(riempimento<=const_init_size) Vector<Data>::Resize(const_init_size);
-    else Vector<Data>::Resize(size*const_red_set);
-    return true;
+void StackVec<Data>::CheckNReduce() {
+    if(riempimento==(size/4))Vector<Data>::Resize(size*0.5);
 }
 
 template <typename Data>

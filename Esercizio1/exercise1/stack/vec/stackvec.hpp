@@ -101,8 +101,8 @@ protected:
 
   // Auxiliary member functions
 
-  bool CheckNExpand(); //Non so che specifiers mettere
-  bool CheckNReduce();
+  void CheckNExpand();
+  void CheckNReduce();
 
 };
 
