@@ -31,25 +31,24 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  virtual FoldableContainer& operator=(const FoldableContainer& other) = delete; // Copy assignment of abstract types should not be possible.
+  FoldableContainer& operator=(const FoldableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  virtual FoldableContainer& operator=(const FoldableContainer&& other) = delete; // Move assignment of abstract types should not be possible.
+  FoldableContainer& operator=(const FoldableContainer&& right) = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const FoldableContainer& other) const noexcept = delete;
-  bool operator!=(const FoldableContainer& other) const noexcept = delete;
+  bool operator==(const FoldableContainer& right) const noexcept = delete;
+  bool operator!=(const FoldableContainer& right) const noexcept = delete;
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  
   using FoldFunctor = std::function<void(const Data&, void* acc)>;
 
-  virtual void Fold(const FoldFunctor func, void* acc) const = 0;
+  virtual void Fold(FoldFunctor func, void* acc) const = 0;
 
   /* ************************************************************************ */
 
@@ -76,17 +75,17 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  PreOrderFoldableContainer& operator=(const PreOrderFoldableContainer& other) = delete; // Copy assignment of abstract types should not be possible.
+  PreOrderFoldableContainer& operator=(const PreOrderFoldableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  PreOrderFoldableContainer& operator=(PreOrderFoldableContainer&& other) noexcept = delete; // Move assignment of abstract types should not be possible.
+  PreOrderFoldableContainer& operator=(PreOrderFoldableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const PreOrderFoldableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const PreOrderFoldableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const PreOrderFoldableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const PreOrderFoldableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
@@ -94,13 +93,13 @@ public:
 
   using typename FoldableContainer<Data>::FoldFunctor;
 
-  virtual void PreOrderFold(const FoldFunctor func, void* acc) const = 0;
+  virtual void PreOrderFold(FoldFunctor func, void* acc) const = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from FoldableContainer)
 
-  virtual void Fold(const FoldFunctor func, void* acc) const override { // Override FoldableContainer member
+  virtual void inline Fold(FoldFunctor func, void* acc) const override { // Override FoldableContainer member
     PreOrderFold(func, acc);
   }
 
@@ -123,17 +122,17 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  PostOrderFoldableContainer& operator=(const PostOrderFoldableContainer& other) = delete; // Copy assignment of abstract types should not be possible.
+  PostOrderFoldableContainer& operator=(const PostOrderFoldableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  PostOrderFoldableContainer& operator=(PostOrderFoldableContainer&& other) noexcept = delete; // Move assignment of abstract types should not be possible.
+  PostOrderFoldableContainer& operator=(PostOrderFoldableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const PostOrderFoldableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const PostOrderFoldableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const PostOrderFoldableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const PostOrderFoldableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
@@ -141,13 +140,13 @@ public:
 
   using typename FoldableContainer<Data>::FoldFunctor;
 
-  virtual void PostOrderFold(const FoldFunctor func, void* acc) const = 0;
+  virtual void PostOrderFold(FoldFunctor func, void* acc) const = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from FoldableContainer)
 
-  virtual void Fold(const FoldFunctor func, void* acc) const override { // Override FoldableContainer member
+  virtual void inline Fold(FoldFunctor func, void* acc) const override { // Override FoldableContainer member
     PostOrderFold(func, acc);
   }  
 

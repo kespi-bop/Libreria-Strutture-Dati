@@ -34,18 +34,18 @@ void StackLst<Data>::Push(const Data& elem) {
 
 template <typename Data>
 void StackLst<Data>::Push(Data&& elem) {
-    List<Data>::InsertAtFront(elem);
+    List<Data>::InsertAtFront(std::move(elem));
 }
 
 template <typename Data>
 StackLst<Data>& StackLst<Data>::operator=(const StackLst& other) {
-    this->List<Data>::operator=(other);
+    List<Data>::operator=(other);
     return *this;
 }
 
 template <typename Data>
 StackLst<Data>& StackLst<Data>::operator=(StackLst&& other) noexcept {
-    this->List<Data>::operator=(other);
+    List<Data>::operator=(std::move(other));
     return *this;
 }
 

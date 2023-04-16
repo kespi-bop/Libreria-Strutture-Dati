@@ -11,149 +11,114 @@ namespace lasd {
 
 template<typename Data>
 const Data& LinearContainer<Data>::Front() const {
-    if(!Container::Empty())
-    {
+    if(!Container::Empty()) {
         return operator[](0);
     } 
-    else throw std::length_error ("Container vuoto");
+    else throw std::length_error ("Error: Empty-Container!");
 }
 
 template<typename Data>
 Data& LinearContainer<Data>::Front() {
-    if(!Container::Empty())
-    {
+    if(!Container::Empty()) {
         return operator[](0);
     } 
-    else throw std::length_error ("Container vuoto");
+    else throw std::length_error ("Error: Empty-Container!");
 }
 
 template<typename Data>
 const Data& LinearContainer<Data>::Back() const {
-    if(!Container::Empty()) 
-    {
+    if(!Container::Empty()) {
         return operator[](size-1);
     }
-    else throw std::length_error ("Container vuoto");
+    else throw std::length_error ("Error: Empty-Container!");
 }
 
 template<typename Data>
 Data& LinearContainer<Data>::Back() {
-    if(!Container::Empty()) 
-    {
+    if(!Container::Empty()) {
         return (operator[](size-1));
     }
-    else throw std::length_error ("Container vuoto");
+    else throw std::length_error ("Error: Empty-Container!");
 }
 
 template<typename Data>
-bool LinearContainer<Data>::operator==(LinearContainer& other) const {
+bool LinearContainer<Data>::operator==(const LinearContainer& right) const {
     bool result=true;
 
-    if(size!=other.size) 
-    {
+    if(size!=right.size){
         return false;
     }
 
-    for(int i=0; i<size; i++) 
-    {
-        if(this[i]!=other[i]) 
-        {
+    for(int i=0; i < size; i++) {
+        if(this[i]!=right[i]) {
             return false;
         }
     }
-
+    
     return true;
 }
 
 template<typename Data>
-bool LinearContainer<Data>::operator!=(LinearContainer& other) const {
-    bool result=false;
-    if(size!=other.size) return true;
-    for(int i=0; i<size; i++) 
-    {
-        if(this[i]!=other[i]) 
-        {
-            return true;
-        }
-        
-    }
-
-    return false;
+bool LinearContainer<Data>::operator!=(const LinearContainer& right) const {
+    return !(operator==(right));
 }
 
 template <typename Data>
-void LinearContainer<Data>::Fold(const FoldFunctor func, void *acc) const
+void LinearContainer<Data>::PreOrderFold(FoldFunctor func, void *acc) const
 {
-    PreOrderFold(func, acc);
-}
-
-template <typename Data>
-void LinearContainer<Data>::PreOrderFold(const FoldFunctor func, void *acc) const
-{
-    for(ulong i = 0; i<size; i++) 
-    {
+    for(ulong i = 0; i < size; i++){
         func(operator[](i), acc);
     }
 }
 
 template <typename Data>
-void LinearContainer<Data>::PostOrderFold(const FoldFunctor func, void* acc) const {
+void LinearContainer<Data>::PostOrderFold(FoldFunctor func, void* acc) const {
     ulong i = size;
-    while (i>0)
-    {
+    while (i>0){
         func(operator[](--i), acc);
     } 
 }
 
 template <typename Data>
-void LinearContainer<Data>::Map(const MapFunctor func) const
-{
-    PreOrderMap(func);
-}
-
-template <typename Data>
-void LinearContainer<Data>::PreOrderMap(const MapFunctor func) const
-{
-    for(ulong i=0; i<size; i++) 
-    {
+void LinearContainer<Data>::PreOrderMap(MapFunctor func) const{
+    for(ulong i = 0; i < size; i++){
         func(operator[](i));
     }
 }
 
 template <typename Data>
-void LinearContainer<Data>::PostOrderMap(const MapFunctor func) const
-{
-    for(int i = size-1; i>=0; i--)
-    {
-        func(operator[](i));
-    } 
+void LinearContainer<Data>::PostOrderMap(MapFunctor func) const{
+    ulong i = size;
+    while (i>0){
+        func(operator[](--i));
+    }  
 }
 
 template <typename Data>
 void LinearContainer<Data>::PreOrderMap(MutableMapFunctor func) {
-    for(ulong i=0; i<size; i++)
-    {
-        func(operator[](i));
-    } 
-}
-
-template <typename Data>
-void LinearContainer<Data>::PostOrderMap(MutableMapFunctor func){
-    for(int i = size-1; i>=0; i--) 
-    {
+    for(ulong i = 0; i < size; i++){
         func(operator[](i));
     }
 }
 
+template <typename Data>
+void LinearContainer<Data>::PostOrderMap(MutableMapFunctor func){
+    ulong i = size;
+    while (i>0){
+        func(operator[](--i));
+    } 
+}
+
 template<typename Data>
-bool SortableLinearContainer<Data>::operator==(SortableLinearContainer& other) const {
+bool SortableLinearContainer<Data>::operator==(const SortableLinearContainer& right) const {
     bool result=true;
-    if(size!=other.size) return false;
-    
-    for(int i=0; i<size; i++) 
-    {
-        if(this[i]!=other[i]) 
-        {
+
+    if(size!=right.size) {
+        return false;
+    }
+
+    for(int i=0; i < size; i++) {
+        if(this[i]!=right[i]) {
             return false;
         }        
     }
@@ -162,19 +127,8 @@ bool SortableLinearContainer<Data>::operator==(SortableLinearContainer& other) c
 }
 
 template<typename Data>
-bool SortableLinearContainer<Data>::operator!=(SortableLinearContainer& other) const {
-    bool result=false;
-    if(size!=other.size) return true;
-    
-    for(int i=0; i<size; i++) 
-    {
-        if(this[i]!=other[i]) 
-        {
-            return true;
-        }
-    }       
-    
-    return false;
+bool SortableLinearContainer<Data>::operator!=(const SortableLinearContainer& right) const {
+    return !(operator==(right));
 }
 
 template<typename Data>

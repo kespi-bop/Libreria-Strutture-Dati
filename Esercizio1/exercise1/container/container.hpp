@@ -33,8 +33,8 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  virtual bool operator==(const Container& right) const noexcept = delete; 
-  virtual bool operator!=(const Container& right) const noexcept = delete; 
+  bool operator==(const Container& right) const noexcept = delete; 
+  bool operator!=(const Container& right) const noexcept = delete; 
 
   /* ************************************************************************ */
 
@@ -120,7 +120,9 @@ public:
   /* ************************************************************************ */
 
   // Specific member function (inherited from ClearableContainer)
-  virtual inline void Clear() override { Resize(0); }
+  virtual inline void Clear() override { 
+    Resize(0); 
+  }
 
 };
 

@@ -31,16 +31,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  MappableContainer& operator=(const MappableContainer& other) = delete; // Copy assignment of abstract types should not be possible.
+  MappableContainer& operator=(const MappableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  MappableContainer& operator=(MappableContainer&& other) noexcept = delete; // Move assignment of abstract types should not be possible.
+  MappableContainer& operator=(MappableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const MappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const MappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const MappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const MappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
@@ -48,7 +48,7 @@ public:
 
   using MapFunctor = std::function<void(const Data &)>;
 
-  virtual void Map(const MapFunctor func) const = 0;
+  virtual void Map(MapFunctor func) const = 0;
 
   /* ************************************************************************ */
 
@@ -56,9 +56,7 @@ public:
 
   using typename FoldableContainer<Data>::FoldFunctor;
 
-  //using typename FoldableContainer<Data>::Fold;
-
-  virtual void Fold(const FoldFunctor func, void* acc) const = 0; // Override FoldableContainer member
+  virtual void Fold(FoldFunctor func, void* acc) const override; // Override FoldableContainer member
 
 };
 
@@ -80,16 +78,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  PreOrderMappableContainer& operator=(const PreOrderMappableContainer& other) = delete; // Copy assignment of abstract types should not be possible.
+  PreOrderMappableContainer& operator=(const PreOrderMappableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  PreOrderMappableContainer& operator=(PreOrderMappableContainer&& other) noexcept = delete; // Move assignment of abstract types should not be possible.
+  PreOrderMappableContainer& operator=(PreOrderMappableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const PreOrderMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const PreOrderMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const PreOrderMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const PreOrderMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
@@ -97,13 +95,13 @@ public:
 
   using typename MappableContainer<Data>::MapFunctor;
 
-  virtual void PreOrderMap(const MapFunctor func) const = 0;
+  virtual void PreOrderMap(MapFunctor func) const = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
 
-  virtual void Map(const MapFunctor func) const { // Override MappableContainer member
+  virtual void inline Map(MapFunctor func) const { // Override MappableContainer member
     PreOrderMap(func);
   }
   /* ************************************************************************ */
@@ -114,15 +112,15 @@ public:
 
   //using typename FoldableContainer<Data>::Fold;
 
-  virtual void Fold(const FoldFunctor func, void* acc) const = 0; // Override FoldableContainer member
+  virtual inline void Fold(FoldFunctor func, void* acc) const override {   // Override FoldableContainer member
+      MappableContainer<Data>::Fold(func, acc);
+  }; 
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PreOrderFoldableContainer)
 
-  //using typename PreOrderFoldableContainer<Data>::PreOrderFold;
-
-  virtual void PreOrderFold(const FoldFunctor func, void* acc) const = 0; // Override PreOrderFoldableContainer member
+  virtual void PreOrderFold(FoldFunctor func, void* acc) const override; // Override PreOrderFoldableContainer member
 
 };
 
@@ -144,16 +142,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  virtual PostOrderMappableContainer& operator=(const PostOrderMappableContainer& other) = delete; // Copy assignment of abstract types should not be possible.
+  virtual PostOrderMappableContainer& operator=(const PostOrderMappableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  virtual PostOrderMappableContainer& operator=(PostOrderMappableContainer&& other) noexcept = delete; // Move assignment of abstract types should not be possible.
+  virtual PostOrderMappableContainer& operator=(PostOrderMappableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
-  virtual bool operator==(const PostOrderMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  virtual bool operator!=(const PostOrderMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  virtual bool operator==(const PostOrderMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  virtual bool operator!=(const PostOrderMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
@@ -161,13 +159,13 @@ public:
 
   using typename MappableContainer<Data>::MapFunctor;
 
-  virtual void PostOrderMap(const MapFunctor func) const = 0;
+  virtual void PostOrderMap(MapFunctor func) const = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
 
-  virtual void Map(const MapFunctor func) const { // Override MappableContainer member
+  virtual void Map(MapFunctor func) const { // Override MappableContainer member
     PostOrderMap(func);
   }
 
@@ -179,15 +177,15 @@ public:
 
   //using typename FoldableContainer<Data>::Fold;
 
-  virtual void Fold(const FoldFunctor func, void* acc) const = 0; // Override FoldableContainer member
+  virtual inline void Fold(FoldFunctor func, void* acc) const override {   // Override FoldableContainer member
+      MappableContainer<Data>::Fold(func, acc);
+  }; 
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderFold)
 
-  //using typename PostOrderFoldableContainer<Data>::PostOrderFold;
-
-  virtual void PostOrderFold(const FoldFunctor func, void* acc) const = 0; // Override PostOrderFold member
+  virtual void PostOrderFold(FoldFunctor func, void* acc) const override; // Override PostOrderFold member
 
 };
 
@@ -354,6 +352,7 @@ public:
 
   using MutableMapFunctor = std::function<void(Data &)>;
 
+
   virtual void Map(MutableMapFunctor func) = 0;
 
 };
@@ -400,9 +399,8 @@ public:
   /* ************************************************************************ */
 
   // Specific member function (inherited from MutableMappableContainer)
-
-  // type Map(argument) specifiers; // Override MutableMappableContainer member
-  virtual void Map(MutableMapFunctor func) = 0;
+  
+  virtual void inline Map(MutableMapFunctor func) { PreOrderMap(func); }; // Override MutableMappableContainer member
 
 };
 
@@ -447,7 +445,7 @@ public:
 
   // Specific member function (inherited from MutableMappableContainer)
 
-  virtual void Map(MutableMapFunctor func) = 0; // Override MutableMappableContainer member
+  virtual void inline Map(MutableMapFunctor func) { PostOrderMap(func); }; // Override MutableMappableContainer member
 
 };
 
