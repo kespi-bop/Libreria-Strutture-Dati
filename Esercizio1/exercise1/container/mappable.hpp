@@ -334,17 +334,17 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  MutableMappableContainer& operator=(const MutableMappableContainer& other) = delete; // Copy assignment of abstract types should not be possible.
+  MutableMappableContainer& operator=(const MutableMappableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  MutableMappableContainer& operator=(MutableMappableContainer&& other) noexcept = delete; // Move assignment of abstract types should not be possible.
+  MutableMappableContainer& operator=(MutableMappableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const MutableMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const MutableMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const MutableMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const MutableMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
@@ -376,16 +376,16 @@ public:
 
   
   // Copy assignment
-  MutablePreOrderMappableContainer& operator=(const MutablePreOrderMappableContainer& other) = delete; // Copy assignment of abstract types should not be possible.
+  MutablePreOrderMappableContainer& operator=(const MutablePreOrderMappableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  MutablePreOrderMappableContainer& operator=(MutablePreOrderMappableContainer&& other) noexcept = delete; // Move assignment of abstract types should not be possible.
+  MutablePreOrderMappableContainer& operator=(MutablePreOrderMappableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const MutablePreOrderMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const MutablePreOrderMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const MutablePreOrderMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const MutablePreOrderMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
@@ -421,16 +421,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  MutablePostOrderMappableContainer& operator=(const MutablePostOrderMappableContainer& other) = delete; // Copy assignment of abstract types should not be possible.
+  MutablePostOrderMappableContainer& operator=(const MutablePostOrderMappableContainer& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  MutablePostOrderMappableContainer& operator=(MutablePostOrderMappableContainer&& other) noexcept = delete; // Move assignment of abstract types should not be possible.
+  MutablePostOrderMappableContainer& operator=(MutablePostOrderMappableContainer&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const MutablePostOrderMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const MutablePostOrderMappableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const MutablePostOrderMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const MutablePostOrderMappableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
 
   /* ************************************************************************ */

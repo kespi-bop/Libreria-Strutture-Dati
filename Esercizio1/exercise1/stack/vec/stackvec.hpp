@@ -19,21 +19,19 @@ class StackVec : virtual public Stack<Data>,
 
 private:
 
-  const double const_exp_check = 0.75;
-  const double const_exp_set = 1.5;
-  const double const_red_check = 0.5;
-  const double const_red_set = 0.75;
-  const ulong const_init_size = 5;
+  const double expand_check = 1;
+  const double expand_set = 2;
+  const double reduce_check = 0.5;
+  const double reduce_set = 0.75;
+  const ulong initial_size = 5;
 
 protected:
 
   using Vector<Data>::Elements;
-  
-
-public:
-
-  ulong riempimento = 0;
   using Container::size;
+  ulong number_elements = 0;
+  
+public:
 
   // Default constructor
   StackVec();
@@ -43,15 +41,15 @@ public:
 
   // Specific constructor
   StackVec(const MappableContainer<Data>& cont); // A stack obtained from a MappableContainer
-  StackVec(MappableContainer<Data>&& cont) noexcept; // A stack obtained from a MutableMappableContainer
+  StackVec(MutableMappableContainer<Data>&& cont) noexcept; // A stack obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
   // Copy constructor
-  StackVec(const StackVec& other);
+  StackVec(const StackVec& right);
 
   // Move constructor
-  StackVec(StackVec&& other) noexcept;
+  StackVec(StackVec&& right) noexcept;
   
   /* ************************************************************************ */
 
@@ -61,16 +59,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  StackVec<Data>& operator=(const StackVec& other);
+  StackVec<Data>& operator=(const StackVec& right);
 
   // Move assignment
-  StackVec<Data>& operator=(StackVec&& other) noexcept;
+  StackVec<Data>& operator=(StackVec&& right) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const StackVec& other) const noexcept;
-  bool operator!=(const StackVec& other) const noexcept;
+  bool operator==(const StackVec& right) const noexcept;
+  bool operator!=(const StackVec& right) const noexcept;
 
   /* ************************************************************************ */
 
@@ -87,9 +85,9 @@ public:
 
   // Specific member functions (inherited from Container)
 
-  bool Empty() const noexcept override { return riempimento==0; } // Override Container member
+  bool Empty() const noexcept override { return number_elements==0; } // Override Container member
   // Va verificato il riempimento e non la dimensione
-  ulong Size() const noexcept override { return riempimento; } // Override Container member
+  ulong Size() const noexcept override { return number_elements; } // Override Container member
 
   /* ************************************************************************ */
 
@@ -101,8 +99,8 @@ protected:
 
   // Auxiliary member functions
 
-  void CheckNExpand();
-  void CheckNReduce();
+  void Expand();
+  void Reduce();
 
 };
 

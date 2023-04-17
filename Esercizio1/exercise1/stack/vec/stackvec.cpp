@@ -5,156 +5,140 @@ namespace lasd {
 
 // Copy constructor
 template <typename Data>
-StackVec<Data>::StackVec(const StackVec& other) {
-    size = other.riempimento;
-    riempimento=other.riempimento;
-    this->Elements = new Data[riempimento];
-    std::copy(other.Elements, other.Elements+riempimento, this->Elements);
-    CheckNExpand();
-    CheckNReduce();
+StackVec<Data>::StackVec(const StackVec& right) {
+    size = right.Size();
+    number_elements = right.number_elements;
+    Elements = new Data[size];
+    std::copy(right.Elements, right.Elements+number_elements, Elements);
 }
 
 // Move constructor
 template <typename Data>
-StackVec<Data>::StackVec(StackVec&& other) noexcept {
-    std::swap(other.Elements, this->Elements);
-    std::swap(other.riempimento, riempimento);
-    std::swap(other.size, size);
-    CheckNExpand();
-    CheckNReduce();
+StackVec<Data>::StackVec(StackVec&& right) noexcept : Vector<Data>(std::move(right)){
+    std::swap(right.number_elements, number_elements);
 }
 
 template <typename Data>
-bool StackVec<Data>::operator==(const StackVec& other) const noexcept {
-    bool result=true;
-    if(riempimento!=other.riempimento) return false;
-    for(ulong i=0; i<riempimento; i++) {
-        if(this->operator[](i)!=other[i]) return false;
+bool StackVec<Data>::operator==(const StackVec& right) const noexcept {
+    bool result = true;
+    if(number_elements != right.number_elements) {
+        return false;
+    }
+    for(ulong i=0; i < number_elements; i++) {
+        if(Elements[i]!=right[i]) {
+            return false;
+        }
     }
     return true;
 }
 
 template <typename Data>
-bool StackVec<Data>::operator!=(const StackVec& other) const noexcept {
-    bool result=false;
-    if(riempimento!=other.riempimento) return true;
-    for(ulong i=0; i<riempimento; i++) {
-        if(this->operator[](i)!=other[i]) return true;
-    }
-    return false;
+bool StackVec<Data>::operator!=(const StackVec& right) const noexcept {
+    return !(operator==(right));
 }
 
 template <typename Data>
 const Data& StackVec<Data>::Top() const {
-    if(Empty()) throw std::length_error("StackVec: the stack is empty in Top()");
-    return Vector<Data>::operator[](riempimento-1);
+    if(Empty()) {
+        throw std::length_error("Error: StackVector is empty.");
+    }
+    return Elements[number_elements - 1];
 }
 
 template <typename Data>
 Data& StackVec<Data>::Top() {
-    if(Empty()) throw std::length_error("StackVec: the stack is empty in Top()");
-    return Vector<Data>::operator[](riempimento-1);
+    if(Empty()) {
+        throw std::length_error("Error: StackVector is empty.");
+    }
+    return Elements[number_elements - 1];
 }
 
 template <typename Data>
 void StackVec<Data>::Pop() {
-    if(Empty()) throw std::length_error("StackVec: the stack is empty in Pop()");
-    CheckNReduce();
-    riempimento--;
+    if(Empty()) {
+        throw std::length_error("Error: StackVector is empty.");
+    }
+    Reduce();
+    --number_elements; 
 }
 
 template <typename Data>
 Data StackVec<Data>::TopNPop() {
-    if(Empty()) throw std::length_error("StackVec: the stack is empty in TopNPop()");
-    CheckNReduce();
-    return Vector<Data>::operator[](--riempimento);
+    if(Empty()) {
+        throw std::length_error("Error: StackVector is empty.");
+    }
+    Reduce();
+    return Elements[--number_elements];
 }
 
 template <typename Data>
 void StackVec<Data>::Push(const Data& elem) {
-    CheckNExpand();
-    Vector<Data>::operator[](riempimento++) = elem;
+    Expand();
+    Elements[number_elements++] = elem;
 }
 
 template <typename Data>
 void StackVec<Data>::Push(Data&& elem) {
-    //forse prima va cancellato e poi fatto il move
-    Vector<Data>::operator[](riempimento++) = std::move(elem);
-    CheckNExpand();
-}
-
-
-template <typename Data>
-void StackVec<Data>::CheckNExpand() {
-    if(riempimento==size) Vector<Data>::Resize(size*2);
+    Expand();
+    Elements[number_elements++] = std::move(elem);
 }
 
 template <typename Data>
-void StackVec<Data>::CheckNReduce() {
-    if(riempimento==(size/4))Vector<Data>::Resize(size*0.5);
+void StackVec<Data>::Expand() {
+    if(number_elements == size * expand_check) {
+        Vector<Data>::Resize(size * expand_set);
+    }
+        
 }
 
 template <typename Data>
-StackVec<Data>& StackVec<Data>::operator=(const StackVec& other) {
+void StackVec<Data>::Reduce() {
+    if(number_elements==(size * reduce_check)) {
+        Vector<Data>::Resize(size * reduce_set);
+    }
+}
+
+template <typename Data>
+StackVec<Data>& StackVec<Data>::operator=(const StackVec& right) {
     Clear();
-    Vector<Data>::operator=(other);
-    riempimento=other.riempimento;
-    CheckNExpand();
-    CheckNReduce();
+    Vector<Data>::operator=(right);
+    number_elements = right.number_elements;
     return *this;
 }
 
 template <typename Data>
-StackVec<Data>& StackVec<Data>::operator=(StackVec&& other) noexcept {
-    std::swap(size, other.size);
-    std::swap(this->Elements, other.Elements);
-    std::swap(riempimento, other.riempimento);
-    CheckNExpand();
-    CheckNReduce();
+StackVec<Data>& StackVec<Data>::operator=(StackVec&& right) noexcept {
+    Vector<Data>::operator=(std::move(right));
+    std::swap(number_elements, right.number_elements);
     return *this;
 }
 
 template <typename Data>
 void StackVec<Data>::Clear() {
-    riempimento=0;
-    Vector<Data>::Resize(5);
+    delete[] Elements;
+    Elements = new Data[initial_size];
+    size = initial_size;
+    number_elements = 0;
 }
 
 /* ************************************************************************** */
 
 template <typename Data>
 StackVec<Data>::StackVec(){
-    this->Elements = new Data[const_init_size];
-    size=const_init_size;
+    Elements = new Data[initial_size];
+    size = initial_size;
 }
 
 template <typename Data>
-StackVec<Data>::StackVec(const MappableContainer<Data>& cont) {
-    size = cont.Size();
-    Vector<Data>::Elements = new Data[size] {};
-    ulong index = 0;
-    cont.Map(
-        [this, &index](const Data& dat) {
-            this->Elements[index++] = dat;
-        }
-    );
-    riempimento = cont.Size();
-    CheckNExpand(); 
+StackVec<Data>::StackVec(const MappableContainer<Data>& cont) : Vector<Data>::Vector(cont) {
+    number_elements = cont.Size();
+    Expand(); 
 }
 
 template <typename Data>
-StackVec<Data>::StackVec(MappableContainer<Data>&& cont) noexcept {
-    riempimento = cont.Size();
-    Vector<Data>::Elements = new Data[size] {};
-    ulong index = 0;
-    cont.Map(
-        [this, &index](Data& dat) {
-            this->Elements[index++] = dat;
-        }
-    );
-    size=cont.size();
-    CheckNExpand(); 
-    cont.~MappableContainer();
+StackVec<Data>::StackVec(MutableMappableContainer<Data>&& cont) noexcept : Vector<Data>::Vector(std::move(cont)){
+    number_elements = cont.Size();
+    Expand();
 }
 
 }

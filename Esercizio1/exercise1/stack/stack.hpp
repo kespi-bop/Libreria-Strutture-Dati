@@ -32,16 +32,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  Stack& operator=(const Stack& other) = delete; // Copy assignment of abstract types should not be possible.
+  Stack& operator=(const Stack& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  Stack& operator=(Stack&& other) noexcept = delete; // Move assignment of abstract types should not be possible.
+  Stack& operator=(Stack&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const Stack& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const Stack& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const Stack& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const Stack& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
