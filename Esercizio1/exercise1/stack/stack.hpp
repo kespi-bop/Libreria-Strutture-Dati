@@ -40,8 +40,8 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  virtual bool operator==(const Stack& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  virtual bool operator!=(const Stack& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const Stack& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const Stack& other) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 

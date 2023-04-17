@@ -431,7 +431,6 @@ void stestVectorListString(uint& testnum, uint& testerr) {
     lasd::List<string> coplstx(lst);
     EqualList(loctestnum, loctesterr, coplstx, coplst, true);
 
-
     lasd::List<string> coplsty(move(vec));
     EqualList(loctestnum, loctesterr, coplst, coplsty, true);
     EqualVector(loctestnum, loctesterr, vec, copvec, false);

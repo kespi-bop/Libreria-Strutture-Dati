@@ -50,23 +50,21 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~StackLst() {
-    while(!(List<Data>::Empty())) List<Data>::RemoveFromFront();
-  }
+  virtual ~StackLst() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  StackLst<Data>& operator=(const StackLst& other);
+  StackLst<Data>& operator=(const StackLst& right);
 
   // Move assignment
-  StackLst<Data>& operator=(StackLst&& other) noexcept;
+  StackLst<Data>& operator=(StackLst&& right) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const StackLst& other) const noexcept { return this->List<Data>::operator==(other); }
-  bool operator!=(const StackLst& other) const noexcept { return this->List<Data>::operator!=(other); }
+  bool operator==(const StackLst& right) const noexcept { return this->List<Data>::operator==(right); }
+  bool operator!=(const StackLst& right) const noexcept { return this->List<Data>::operator!=(right); }
 
   /* ************************************************************************ */
 

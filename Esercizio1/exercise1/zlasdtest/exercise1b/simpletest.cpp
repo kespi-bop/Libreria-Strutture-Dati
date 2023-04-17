@@ -327,8 +327,7 @@ void stestQueueString(uint& testnum, uint& testerr) {
 
     EnqueueM(loctestnum, loctesterr, quevec, string("A"));
     EnqueueM(loctestnum, loctesterr, quevec, string("B"));
-
-    lasd::QueueVec<string> newquevec(vec);    
+    lasd::QueueVec<string> newquevec(vec);
     EqualQueue(loctestnum, loctesterr, quevec, newquevec, true);
 
     EnqueueM(loctestnum, loctesterr, quelst, string("A"));

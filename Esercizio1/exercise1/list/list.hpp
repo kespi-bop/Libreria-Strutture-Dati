@@ -35,15 +35,23 @@ protected:
     // Data
     Data element;
     Node* next = nullptr;
+
     /* ********************************************************************** */
+
+    //Default constructor
+    Node() {
+      delete next;
+    }
 
     // Specific constructors
     Node(const Data &elemento){
       element  = elemento;
+      next = nullptr;
     }
 
     Node(Data &&elemento){
-      element = std::move(elemento);
+      std::swap(element, elemento);
+      next = nullptr;
     }
 
     /* ********************************************************************** */
@@ -56,8 +64,8 @@ protected:
 
     // Move constructor
     Node(Node&& nodo){
-      element = std::move(nodo.element);
-      next = nodo.next;
+      std::swap(element, nodo.elem);
+      std::swap(next, nodo.next);
     }
 
     /* ********************************************************************** */
@@ -69,15 +77,11 @@ protected:
 
     // Comparison operators
     bool operator==(const Node& right) const{
-      if(element == right.element)
-        return true;
-      return false;
+      return ((right.element == element) && ((next == nullptr && right.next == nullptr) || (next != nullptr && right.next != nullptr)) && (*next = *right.next));
     }
 
-    bool operator!=(const Node& right) const{
-      if(element != right.element)
-        return true;
-      return false;
+    bool inline operator!=(const Node& right) const{
+      return !(operator==(right));
     }
 
     /* ********************************************************************** */
@@ -89,8 +93,6 @@ protected:
   };
 
   Node* head = nullptr;
-
-  // ...
 
 public:
 
@@ -130,7 +132,7 @@ public:
 
   // Comparison operators
   bool operator==(const List& right) const noexcept;
-  bool operator!=(const List& right) const noexcept;
+  bool inline operator!=(const List& right) const noexcept;
 
   /* ************************************************************************ */
 
@@ -176,22 +178,21 @@ public:
   // Specific member function (inherited from FoldableContainer)
 
   using typename FoldableContainer<Data>::FoldFunctor;
-
-  // type Fold(arguments) specifiers; // Override FoldableContainer member
+  virtual void inline Fold(FoldFunctor func, void* acc) const override { PreOrderFold(func, acc); }; // Override FoldableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PreOrderFoldableContainer)
 
   // type PreOrderFold(arguments) specifiers; // Override PreOrderFoldableContainer member
-  virtual void PreOrderFold(const FoldFunctor func, void* accumulator) const;
+  virtual void PreOrderFold(FoldFunctor func, void* acc) const override;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderFoldableContainer)
 
   // type PostOrderFold(arguments) specifiers; // Override PostOrderFoldableContainer member
-  virtual void PostOrderFold(const FoldFunctor func, void* acc) const override;
+  virtual void PostOrderFold(FoldFunctor func, void* acc) const override;
 
   /* ************************************************************************ */
 
@@ -199,21 +200,21 @@ public:
 
   using typename MappableContainer<Data>::MapFunctor;
 
-  // type Map(argument) specifiers; // Override MappableContainer member
+  virtual void Map(MapFunctor func) const override { PreOrderMap(func); }; // Override MappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PreOrderMappableContainer)
 
   // type PreOrderMap(argument) specifiers; // Override PreOrderMappableContainer member
-  virtual void PreOrderMap(const MapFunctor func) const override;
+  virtual void PreOrderMap(MapFunctor func) const override;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderMappableContainer)
 
   // type PostOrderMap(argument) specifiers; // Override PostOrderMappableContainer member
-  virtual void PostOrderMap(const MapFunctor func) const override; 
+  virtual void PostOrderMap(MapFunctor func) const override; 
 
   /* ************************************************************************ */
 
@@ -221,7 +222,7 @@ public:
 
   using typename MutableMappableContainer<Data>::MutableMapFunctor;
 
-  // type Map(argument) specifiers; // Override MutableMappableContainer member
+  virtual void inline Map(MutableMapFunctor func) override { PreOrderMap(func); }; // Override MutableMappableContainer member
 
   /* ************************************************************************ */
 
@@ -242,21 +243,21 @@ protected:
   // Auxiliary member functions (for PreOrderFoldableContainer & PostOrderFoldableContainer)
 
   // type PreOrderFold(arguments) specifiers; // Accessory function executing from one point of the list onwards
-  // type PostOrderFold(arguments) specifiers; // Accessory function executing from one point of the list onwards
+  void RecursivePostOrderFold(const Node* nodo, FoldFunctor func, void* acc) const; // Accessory function executing from one point of the list onwards
 
   /* ************************************************************************ */
 
   // Auxiliary member functions (for PreOrderMappableContainer & PostOrderMappableContainer)
 
   // type PreOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onwards
-  // type PostOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onward
+  void RecursivePostOrderMap(Node* nodo, MapFunctor func) const; // Accessory function executing from one point of the list onward
 
   /* ************************************************************************ */
 
   // Auxiliary member functions (for MutablePreOrderMappableContainer & MutablePostOrderMappableContainer)
 
   // type PreOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onwards
-  // type PostOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onward
+  void RecursivePostOrderMap(Node* nodo, MutableMapFunctor func); // Accessory function executing from one point of the list onward
 
   /* ************************************************************************ */
 

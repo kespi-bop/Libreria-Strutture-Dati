@@ -59,7 +59,7 @@ bool LinearContainer<Data>::operator==(const LinearContainer& right) const {
 }
 
 template<typename Data>
-bool LinearContainer<Data>::operator!=(const LinearContainer& right) const {
+bool inline LinearContainer<Data>::operator!=(const LinearContainer& right) const {
     return !(operator==(right));
 }
 

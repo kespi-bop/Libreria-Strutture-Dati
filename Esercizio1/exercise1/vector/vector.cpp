@@ -46,18 +46,18 @@ Vector<Data>::~Vector() {
 //Copy constructor
 
 template <typename Data>
-Vector<Data>::Vector(const Vector<Data>& other){
-    size = other.size;
+Vector<Data>::Vector(const Vector<Data>& right){
+    size = right.size;
     Elements = new Data[size];
-    std::copy(other.Elements, other.Elements+size, Elements);
+    std::copy(right.Elements, right.Elements + size, Elements);
 }
 
 //Move constructor
 
 template <typename Data>
-Vector<Data>::Vector(Vector<Data>&& other) noexcept {
-    std::swap(size, other.size);
-    std::swap(Elements, other.Elements);
+Vector<Data>::Vector(Vector<Data>&& right) noexcept {
+    std::swap(size, right.size);
+    std::swap(Elements, right.Elements);
 }
 
 /* ************************************************************************** */
@@ -65,20 +65,20 @@ Vector<Data>::Vector(Vector<Data>&& other) noexcept {
 //Copy assignement
 
 template <typename Data>
-Vector<Data>& Vector<Data>::operator=(const Vector& other) {
-    size = other.size;
+Vector<Data>& Vector<Data>::operator=(const Vector& right) {
+    size = right.size;
     delete[] Elements;
     Elements = new Data[size];
-    std::copy(other.Elements, other.Elements+size, Elements);
+    std::copy(right.Elements, right.Elements + size, Elements);
     return *this;
 }
 
 //Move assignement
 
 template <typename Data>
-Vector<Data>& Vector<Data>::operator=(Vector&& other) noexcept {
-    std::swap(size, other.size);
-    std::swap(Elements, other.Elements);
+Vector<Data>& Vector<Data>::operator=(Vector&& right) noexcept {
+    std::swap(size, right.size);
+    std::swap(Elements, right.Elements);
     return *this;
 }
 
@@ -88,14 +88,20 @@ Vector<Data>& Vector<Data>::operator=(Vector&& other) noexcept {
 
 template <typename Data>
 const Data& Vector<Data>::operator[](const ulong index) const {
-    if (index<size) return Elements[index];
-    else throw std::out_of_range("Vector: out of range index of operator[]");
+    if (index<size) {
+        return Elements[index];
+    } else {
+        throw std::out_of_range("Error: vector size " + std::to_string(size) + " -> trying access at " + std::to_string(index));
+    }
 }
 
 template <typename Data>
 Data& Vector<Data>::operator[](const ulong index) {
-    if (index<size) return Elements[index];
-    else throw std::out_of_range("Vector: out of range index of operator[]");
+    if (index<size) {
+        return Elements[index];
+    } else {
+        throw std::out_of_range("Error: vector size " + std::to_string(size) + " -> trying access at " + std::to_string(index));
+    }
 }
 
 /* ************************************************************************** */
@@ -104,40 +110,54 @@ Data& Vector<Data>::operator[](const ulong index) {
 
 template <typename Data>
 const Data& Vector<Data>::Front() const {
-    if(size > 0)return Elements[0]; 
-    else throw std::length_error("Vector: out of range index of Front()");
+    if(size > 0) {
+        return Elements[0]; 
+    } else {
+        throw std::length_error("Error: Vector is empty.");
+    }
 }
 
 template <typename Data>
 Data& Vector<Data>::Front() {
-    if(size > 0)return Elements[0]; 
-    else throw std::length_error("Vector: out of range index of Front()");
+    if(size > 0) {
+        return Elements[0];
+    } else {
+        throw std::length_error("Error: Vector is empty.");
+    }
 }
 
 template <typename Data>
 const Data& Vector<Data>::Back() const {
-    if(size > 0)return Elements[size - 1]; 
-    else throw std::length_error("Vector: out of range index of Back()"); 
+    if(size > 0) {
+        return Elements[size - 1]; 
+    } else {
+        throw std::length_error("Error: Vector is empty.");
+    }
 }
 
 template <typename Data>
 Data& Vector<Data>::Back() {
-    if(size > 0)return Elements[size - 1]; 
-    else throw std::length_error("Vector: out of range index of Back()"); 
+    if(size > 0) {
+        return Elements[size - 1]; 
+    }
+    else {
+        throw std::length_error("Error: Vector is empty.");
+    }
 }
 
 template <typename Data>
 void Vector<Data>::Resize(const ulong new_size) {
-    if(new_size==0){
+    if(new_size == 0){
         Clear();
-    }
-    else if (size!=new_size) {
-        Data* ptr = new Data[new_size] {};
+    } else if (size!=new_size) {
+        Data* temp_vec = new Data[new_size] {};
         ulong min_size = (size<new_size) ?  size : new_size;
-        for(ulong i{0}; i<min_size; ++i) std::swap(Elements[i], ptr[i]);
-        std::swap(Elements, ptr);
+        for(ulong i = 0; i < min_size; i++) {
+            std::swap(Elements[i], temp_vec[i]);
+        }
+        std::swap(Elements, temp_vec);
         size = new_size;
-        delete[] ptr;
+        delete[] temp_vec;
     }
 }
 
@@ -151,21 +171,22 @@ void Vector<Data>::Clear() {
 }
 
 template <typename Data>
-bool Vector<Data>::operator==(const Vector& other) const noexcept {
+bool Vector<Data>::operator==(const Vector& right) const noexcept {
     bool result=true;
-    if(size!=other.size) return false;
+    if(size!=right.size) { 
+        return false;
+    }
     for(ulong i=0; i<size; i++) {
-        if(this->operator[](i)!=other[i]) return false;
+        if(Elements[i]!=right.Elements[i]) {
+            return false;
+        }
     }
     return true;
 }
 
 template <typename Data>
-bool Vector<Data>::operator!=(const Vector& other) const noexcept {
-    bool result=false;
-    if(size!=other.size) return true;
-    for(ulong i=0; i<size; i++) if(this->operator[](i)!=other[i]) return true;
-    return false;
+bool Vector<Data>::operator!=(const Vector& right) const noexcept {
+    return !(operator==(right));
 }
 
 //Sort

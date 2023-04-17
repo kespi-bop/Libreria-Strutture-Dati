@@ -149,7 +149,7 @@ public:
 
   // Comparison operators
   bool operator==(const SortableLinearContainer& rigth) const; // Comparison of abstract types is possible.
-  bool operator!=(const SortableLinearContainer& rigth) const; // Comparison of abstract types is possible.
+  bool inline operator!=(const SortableLinearContainer& rigth) const; // Comparison of abstract types is possible.
 
   /* ************************************************************************ */
 

@@ -35,8 +35,8 @@ public:
 
   // Specific constructors
   Vector(const ulong new_size); // A vector with a given initial dimension
-  Vector(const MappableContainer<Data>& MCont); // A vector obtained from a MappableContainer
-  Vector(MutableMappableContainer<Data>&& MuMaCont) noexcept; // A vector obtained from a MutableMappableContainer
+  Vector(const MappableContainer<Data>& cont); // A vector obtained from a MappableContainer
+  Vector(MutableMappableContainer<Data>&& cont) noexcept; // A vector obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
@@ -62,16 +62,20 @@ public:
     /* ************************************************************************ */
 
   // Comparison operators
-  virtual bool operator==(const Vector& right) const noexcept;
-  virtual bool operator!=(const Vector& right) const noexcept;
+  bool operator==(const Vector& right) const noexcept;
+  bool inline operator!=(const Vector& right) const noexcept;
+
+  /* ************************************************************************ */
+
+  // Specific member functions (inherited from ClearableContainer)
+
+  void Clear() override;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ResizableContainer)
 
   void Resize(const ulong new_size) override; // Override ResizableContainer member
-
-  void Clear() override;
 
   /* ************************************************************************ */
 
@@ -85,6 +89,10 @@ public:
 
   const Data& Back() const override; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
   Data& Back() override; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
+
+  /* ************************************************************************ */
+
+  // Specific member functions (inherited from SortableLinearContainer)
 
   void Sort() noexcept override; // Override SortableLinearContainer member
 

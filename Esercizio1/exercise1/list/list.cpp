@@ -25,8 +25,9 @@ List<Data>::List(MutableMappableContainer<Data>&& cont) noexcept {
 
 template <typename Data>
 List<Data>::List(const List &right){
-    for(ulong i = 0; i < right.Size(); i++)
+    for(ulong i = 0; i < right.Size(); i++){
         InsertAtBack(right[i]);
+    }
 }
 
 template <typename Data>
@@ -57,15 +58,17 @@ List<Data> &List<Data>::operator=(List &&right) noexcept
 template <typename Data>
 bool List<Data>::operator==(const List &right) const noexcept
 {
-    if(size!=right.size) 
+    if(size!=right.size) {
         return false;
-
+    }
+    
     Node* list1 = head;
     Node* list2 = right.head;
 
     for(ulong i = 0; i < size; i++){
-        if(list1->element != list2->element) 
+        if(list1->element != list2->element) {
             return false;
+        }  
         list1=list1->next;
         list2=list2->next;
     }
@@ -75,19 +78,7 @@ bool List<Data>::operator==(const List &right) const noexcept
 template <typename Data>
 bool List<Data>::operator!=(const List &right) const noexcept
 {
-    if(size!=right.size) 
-        return true;
-
-    Node* list1 = head;
-    Node* list2 = right.head;
-
-    for(ulong i = 0; i < size; i++){
-        if(list1->element != list2->element) 
-            return true;
-        list1=list1->next;
-        list2=list2->next;
-    }   
-    return false;
+    return !(operator==(right));
 }
 
 template <typename Data>
@@ -108,9 +99,9 @@ void List<Data>::InsertAtFront(Data&& element) noexcept{
 
 template<typename Data>
 void List<Data>::RemoveFromFront(){  // (must throw std::length_error when empty)
-    if(Empty())
-        throw std::length_error("List->head is empty");
-
+    if(Empty()){
+        throw std::length_error("Error: List->IsEmpty");
+    }
     Node* temp = head;
     head = head->next;
     delete temp;
@@ -119,7 +110,9 @@ void List<Data>::RemoveFromFront(){  // (must throw std::length_error when empty
 
 template <typename Data>
 Data List<Data>::FrontNRemove() {
-    if(Empty())throw std::length_error("List: the list is empty in Front()");
+    if(Empty()){
+        throw std::length_error("Error: List->IsEmpty");
+    }
     Data elemento = head->element;
     RemoveFromFront();
     return elemento;
@@ -135,9 +128,9 @@ void List<Data>::InsertAtBack(const Data &element){
         while(last_node->next!=nullptr)
             last_node = last_node->next;
         last_node->next = new_node;    
-    }
-    else
+    } else {
         head = new_node;
+    }
     size++;
 }
 
@@ -150,9 +143,9 @@ void List<Data>::InsertAtBack(Data &&element) noexcept{
         while(last_node->next!=nullptr)
             last_node = last_node->next;
         last_node->next = new_node;    
-    }
-    else
+    } else {
         head = new_node;
+    }
     size++;
 }
 
@@ -188,14 +181,12 @@ bool List<Data>::Remove(const Data &element){
     Node* find = head;
     Node* prev = nullptr;
 
-    while (find!=nullptr && find->element!=element)
-    {
+    while (find!=nullptr && find->element!=element){
         prev = find;
         find = find->next;
     }
     
     if(find!=nullptr){
-
         if(prev ==nullptr){
             head = find->next;
         }
@@ -254,7 +245,6 @@ const Data &List<Data>::Back() const
 {
     if(Empty())
         throw std::length_error("Error: List->IsEmpty");
-
     Node* temp = head;
     while(temp->next!=nullptr)
         temp = temp->next;
@@ -276,33 +266,24 @@ Data &List<Data>::Back()
 
 
 template <typename Data>
-void List<Data>::PreOrderFold(const FoldFunctor func, void *accumulator) const{
+void List<Data>::PreOrderFold(FoldFunctor func, void *acc) const{
     Node* punt = head;
     for(ulong i = 0;i<size;i++){
-        func(punt->element, accumulator);
+        func(punt->element, acc);
         punt=punt->next;
     }
 }
 
 template <typename Data>
-void List<Data>::PostOrderFold(const FoldFunctor func, void *acc) const{
-
+void List<Data>::PostOrderFold(FoldFunctor func, void *acc) const{
     if(!Empty())
     {
-        Node* punt = head;
-        Node* punts[size];
-        for(ulong i = 0; i < size; i++){
-            punts[i]=punt;
-            punt=punt->next;
-        }
-        for(ulong i = 0; i < size; i++){
-            func(punts[(size - 1) - i]->element, acc);
-        }
+        RecursivePostOrderFold(head, func, acc);
     }
 }
 
 template <typename Data>
-void List<Data>::PreOrderMap(const MapFunctor func) const{
+void List<Data>::PreOrderMap(MapFunctor func) const{
     Node* punt = head;
     for(ulong i = 0;i < size;i++){
         func(punt->element);
@@ -311,19 +292,10 @@ void List<Data>::PreOrderMap(const MapFunctor func) const{
 }
 
 template <typename Data>
-void List<Data>::PostOrderMap(const MapFunctor func) const{;
+void List<Data>::PostOrderMap(MapFunctor func) const{;
     if(!Empty())
     {
-        Node* punt = head;
-        Node* punts[size];
-        for(ulong i = 0; i < size; i++){
-            punts[i]=punt;
-            punt=punt->next;
-        }
-        for(ulong i = 0; i < size; i++){
-            std::cout<<size<<std::endl;
-            func(punts[(size - 1) - i]->element);
-        }
+        RecursivePostOrderMap(head, func);
     }
 }
 
@@ -340,16 +312,35 @@ template <typename Data>
 void List<Data>::PostOrderMap(MutableMapFunctor func){;
     if(!Empty())
     {
-        Node* punt = head;
-        Node* punts[size];
-        for(ulong i = 0; i < size; i++){
-            punts[i]=punt;
-            punt=punt->next;
-        }
-        for(ulong i = 0; i < size; i++){
-            func(punts[(size - 1) - i]->element);
-        }
+        RecursivePostOrderMap(head, func);
     }
+}
+
+template <typename Data>
+void List<Data>::RecursivePostOrderFold(const Node *nodo, FoldFunctor func, void *acc) const
+{
+    if(nodo->next!=nullptr) {
+        RecursivePostOrderFold(nodo->next, func, acc);
+    }
+    func(nodo->element, acc);
+}
+
+template <typename Data>
+void List<Data>::RecursivePostOrderMap(Node *nodo, MapFunctor func) const
+{
+    if(nodo->next!=nullptr){
+        RecursivePostOrderMap(nodo->next, func);
+    }
+    func(nodo->element);
+}
+
+template <typename Data>
+void List<Data>::RecursivePostOrderMap(Node *nodo, MutableMapFunctor func)
+{
+    if(nodo->next!=nullptr){
+        RecursivePostOrderMap(nodo->next, func);
+    }
+    func(nodo->element);
 }
 
 /* ************************************************************************** */
