@@ -23,21 +23,19 @@ private:
 
 protected:
 
+  using Container::size;
   using Vector<Data>::Elements;
-
   ulong head = 0;
   ulong tail = 0;
   
 
-  // const double const_exp_check = 0.75;
-  const double const_exp_set = 1.5;
+  const double const_exp_check = 1;
+  const double const_exp_set = 2;
   const double const_red_check = 0.5;
-  const double const_red_set = 0.6;
-  const ulong const_init_size = 100;
+  const double const_red_set = 0.75;
+  const ulong const_init_size = 50;
 
 public:
-
-using Container::size;
 
   // Default constructor
   QueueVec();
@@ -51,10 +49,10 @@ using Container::size;
   /* ************************************************************************ */
 
   // Copy constructor
-  QueueVec(const QueueVec& other);
+  QueueVec(const QueueVec& right);
 
   // Move constructor
-  QueueVec(QueueVec&& other) noexcept;
+  QueueVec(QueueVec&& right) noexcept;
 
   /* ************************************************************************ */
 
@@ -64,16 +62,16 @@ using Container::size;
   /* ************************************************************************ */
 
   // Copy assignment
-  QueueVec<Data>& operator=(const QueueVec& other);
+  QueueVec<Data>& operator=(const QueueVec& right);
 
   // Move assignment
-  QueueVec<Data>& operator=(QueueVec&& other) noexcept;
+  QueueVec<Data>& operator=(QueueVec&& right) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const QueueVec& other) const noexcept;
-  bool operator!=(const QueueVec& other) const noexcept;
+  bool operator==(const QueueVec& right) const noexcept;
+  bool operator!=(const QueueVec& right) const noexcept;
 
   /* ************************************************************************ */
 
@@ -90,9 +88,9 @@ using Container::size;
 
   // Specific member functions (inherited from Container)
 
-  bool Empty() const noexcept override { return head==tail; } // Override Container member
+  bool Empty() const noexcept override { return head == tail; } // Override Container member
 
-  ulong Size() const noexcept override { return ((tail+size-head)%size); } // Override Container member
+  ulong Size() const noexcept override { return ((tail + size - head) % size); } // Override Container member
 
   /* ************************************************************************ */
 

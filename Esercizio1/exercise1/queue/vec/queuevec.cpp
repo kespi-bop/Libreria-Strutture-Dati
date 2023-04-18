@@ -5,48 +5,56 @@ namespace lasd {
 
 template <typename Data>
 const Data& QueueVec<Data>::Head() const {
-    if(Empty()) throw std::length_error("QueueVec: the stack is empty in Head()");
-    return Vector<Data>::operator[](head);
+    if(Empty()) {
+        throw std::length_error("QueueVec: the stack is empty in Head()");
+    }
+    return Elements[head];
 }
 
 template <typename Data>
 Data& QueueVec<Data>::Head() {
-    if(Empty()) throw std::length_error("QueueVec: the stack is empty in Head()");
-    return Vector<Data>::operator[](head);
+    if(Empty()) {
+        throw std::length_error("QueueVec: the stack is empty in Head()");
+    }
+    return Elements[head];
 }
 
 template <typename Data>
 void QueueVec<Data>::Dequeue() {
-    if(Empty()) throw std::length_error("QueueVec: the stack is empty in Dequeue()");
+    if(Empty()) {
+        throw std::length_error("QueueVec: the stack is empty in Dequeue()");
+    }
     CheckNReduce();
-    head=(head+1)%size;
+    head = (head + 1) % size;
 }
 
 template <typename Data>
 Data QueueVec<Data>::HeadNDequeue() {
-    if(Empty()) throw std::length_error("QueueVec: the stack is empty in HeadNDequeue()");
+    if(Empty()) {
+        throw std::length_error("QueueVec: the stack is empty in HeadNDequeue()");
+    }
     CheckNReduce();
-    head=(head+1)%size;
-    return Vector<Data>::operator[]((head-1)%size);
+    head = (head + 1) % size;
+    return Elements[((head - 1) % size)];
 }
 
 template <typename Data>
 void QueueVec<Data>::Enqueue(const Data& elem) {
-    Vector<Data>::operator[](tail) = elem;
-    tail=(tail+1)%size;
     CheckNExpand();
+    Elements[tail] = elem;
+    tail = (tail + 1) % size;
 }
 
 template <typename Data>
 void QueueVec<Data>::Enqueue(Data&& elem) {
-    Vector<Data>::operator[](tail) = std::move(elem);
-    tail=(tail+1)%size;
     CheckNExpand();
+    Elements[tail] = std::move(elem);
+    tail = (tail + 1) % size;
 }
 
 template <typename Data>
 void QueueVec<Data>::Clear() {
-    head=tail=0;
+    head = tail = 0;
     CheckNReduce();
 }
 
@@ -54,9 +62,10 @@ void QueueVec<Data>::Clear() {
 
 template <typename Data>
 bool QueueVec<Data>::CheckNExpand() {
-    if((tail+1)%size!=head) return false;
-    ulong new_size = std::round(size*const_exp_set);
-    std::round(new_size);
+    if((tail+1)%size!=head) {
+        return false;
+    }
+    ulong new_size = (ulong)(size * const_exp_set);
     Data* nuovo = new Data[new_size] {};
     for(ulong i{0}; i<Size(); ++i) nuovo[i]=this->Elements[(i+head)%size];
     std::swap(this->Elements, nuovo);
