@@ -93,14 +93,16 @@ void StackVec<Data>::Expand() {
 
 template <typename Data>
 void StackVec<Data>::Reduce() {
-    if(number_elements==(size * reduce_check)) {
+    if(number_elements <= size * reduce_check) {
         Vector<Data>::Resize(size * reduce_set);
+        if(number_elements <= initial_size){
+            Vector<Data>::Resize(initial_size);    
+        }
     }
 }
 
 template <typename Data>
 StackVec<Data>& StackVec<Data>::operator=(const StackVec& right) {
-    Clear();
     Vector<Data>::operator=(right);
     number_elements = right.number_elements;
     return *this;

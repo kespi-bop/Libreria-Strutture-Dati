@@ -242,21 +242,21 @@ protected:
 
   // Auxiliary member functions (for PreOrderFoldableContainer & PostOrderFoldableContainer)
 
-  // type PreOrderFold(arguments) specifiers; // Accessory function executing from one point of the list onwards
+  void AuxPreOrderFold(const Node* nodo, FoldFunctor func, void* acc) const; // Accessory function executing from one point of the list onwards
   void RecursivePostOrderFold(const Node* nodo, FoldFunctor func, void* acc) const; // Accessory function executing from one point of the list onwards
 
   /* ************************************************************************ */
 
   // Auxiliary member functions (for PreOrderMappableContainer & PostOrderMappableContainer)
 
-  // type PreOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onwards
+  void AuxPreOrderMap(const Node* nodo, MapFunctor func) const; // Accessory function executing from one point of the list onwards
   void RecursivePostOrderMap(Node* nodo, MapFunctor func) const; // Accessory function executing from one point of the list onward
 
   /* ************************************************************************ */
 
   // Auxiliary member functions (for MutablePreOrderMappableContainer & MutablePostOrderMappableContainer)
 
-  // type PreOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onwards
+  void AuxPreOrderMap(Node* nodo, MutableMapFunctor func); // Accessory function executing from one point of the list onwards
   void RecursivePostOrderMap(Node* nodo, MutableMapFunctor func); // Accessory function executing from one point of the list onward
 
   /* ************************************************************************ */

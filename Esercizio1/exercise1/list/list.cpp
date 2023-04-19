@@ -160,7 +160,7 @@ template <typename Data>
 bool List<Data>::Insert(const Data &element){
     if(!(FoldableContainer<Data>::Exists(element))) 
     {
-        InsertAtFront(element);
+        InsertAtBack(element);
         return true;
     }
     return false;
@@ -170,7 +170,7 @@ template <typename Data>
 bool List<Data>::Insert(Data &&element) noexcept{
     if(!(FoldableContainer<Data>::Exists(element))) 
     {
-        InsertAtFront(std::move(element));
+        InsertAtBack(std::move(element));
         return true;
     }
     return false;
@@ -267,8 +267,13 @@ Data &List<Data>::Back()
 
 template <typename Data>
 void List<Data>::PreOrderFold(FoldFunctor func, void *acc) const{
-    Node* punt = head;
-    for(ulong i = 0;i<size;i++){
+    AuxPreOrderFold(head, func, acc);
+}
+
+template <typename Data>
+void List<Data>::AuxPreOrderFold(const Node* nodo, FoldFunctor func, void* acc) const {
+    const Node* punt = nodo;
+    while(punt!=nullptr){
         func(punt->element, acc);
         punt=punt->next;
     }
@@ -284,8 +289,13 @@ void List<Data>::PostOrderFold(FoldFunctor func, void *acc) const{
 
 template <typename Data>
 void List<Data>::PreOrderMap(MapFunctor func) const{
-    Node* punt = head;
-    for(ulong i = 0;i < size;i++){
+    AuxPreOrderMap(head, func);
+}
+
+template <typename Data>
+void List<Data>::AuxPreOrderMap(const Node* nodo, MapFunctor func) const {
+    const Node* punt = nodo;
+    while(punt!=nullptr){
         func(punt->element);
         punt=punt->next;
     }
@@ -301,16 +311,21 @@ void List<Data>::PostOrderMap(MapFunctor func) const{;
 
 template <typename Data>
 void List<Data>::PreOrderMap(MutableMapFunctor func){
-    Node* punt = head;
-    for(ulong i = 0;i<size;i++){
+    AuxPreOrderMap(head, func);
+}
+
+template <typename Data>
+void List<Data>::AuxPreOrderMap(Node* nodo, MutableMapFunctor func) {
+    Node* punt = nodo;
+    while(punt!=nullptr){
         func(punt->element);
         punt=punt->next;
     }
 }
 
 template <typename Data>
-void List<Data>::PostOrderMap(MutableMapFunctor func){;
-    if(!Empty())
+void List<Data>::PostOrderMap(MutableMapFunctor func){
+    if(!(Empty()))
     {
         RecursivePostOrderMap(head, func);
     }
