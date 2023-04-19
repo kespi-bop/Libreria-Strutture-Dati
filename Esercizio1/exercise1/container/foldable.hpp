@@ -169,16 +169,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  InOrderFoldableContainer& operator=(const InOrderFoldableContainer& other) = delete;
+  InOrderFoldableContainer& operator=(const InOrderFoldableContainer& right) = delete;
 
   // Move assignment
-  InOrderFoldableContainer& operator=(InOrderFoldableContainer&& other) noexcept = delete;
+  InOrderFoldableContainer& operator=(InOrderFoldableContainer&& right) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const InOrderFoldableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const InOrderFoldableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const InOrderFoldableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const InOrderFoldableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
 
   /* ************************************************************************ */
@@ -212,16 +212,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  BreadthFoldableContainer& operator=(const BreadthFoldableContainer& other) = delete;
+  BreadthFoldableContainer& operator=(const BreadthFoldableContainer& right) = delete;
 
   // Move assignment
-  BreadthFoldableContainer& operator=(BreadthFoldableContainer&& other) noexcept = delete;
+  BreadthFoldableContainer& operator=(BreadthFoldableContainer&& right) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const BreadthFoldableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const BreadthFoldableContainer& other) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const BreadthFoldableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const BreadthFoldableContainer& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 

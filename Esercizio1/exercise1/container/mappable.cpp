@@ -34,6 +34,24 @@ void inline PostOrderMappableContainer<Data>::PostOrderFold(FoldFunctor func, vo
     );
 }
 
+template <typename Data>
+void InOrderMappableContainer<Data>::InOrderFold(FoldFunctor func, void* acc) const { 
+    InOrderMap(
+        [&func, &acc](const Data& dat) {
+            func(dat, acc);
+        }
+    );
+}
+
+template <typename Data>
+void BreadthMappableContainer<Data>::BreadthFold(FoldFunctor func, void* acc) const { 
+    BreadthMap(
+        [&func, &acc](const Data& dat) {
+            func(dat, acc);
+        }
+    );
+}
+
 /* ************************************************************************** */
 
 }

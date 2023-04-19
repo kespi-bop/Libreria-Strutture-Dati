@@ -40,7 +40,7 @@ bool StackVec<Data>::operator!=(const StackVec& right) const noexcept {
 template <typename Data>
 const Data& StackVec<Data>::Top() const {
     if(Empty()) {
-        throw std::length_error("Error: StackVector is empty.");
+        throw std::length_error("Error: StackVector->is empty.");
     }
     return Elements[number_elements - 1];
 }
@@ -48,7 +48,7 @@ const Data& StackVec<Data>::Top() const {
 template <typename Data>
 Data& StackVec<Data>::Top() {
     if(Empty()) {
-        throw std::length_error("Error: StackVector is empty.");
+        throw std::length_error("Error: StackVector->is empty.");
     }
     return Elements[number_elements - 1];
 }
@@ -56,7 +56,7 @@ Data& StackVec<Data>::Top() {
 template <typename Data>
 void StackVec<Data>::Pop() {
     if(Empty()) {
-        throw std::length_error("Error: StackVector is empty.");
+        throw std::length_error("Error: StackVector->is empty.");
     }
     Reduce();
     --number_elements; 
@@ -65,7 +65,7 @@ void StackVec<Data>::Pop() {
 template <typename Data>
 Data StackVec<Data>::TopNPop() {
     if(Empty()) {
-        throw std::length_error("Error: StackVector is empty.");
+        throw std::length_error("Error: StackVector->is empty.");
     }
     Reduce();
     return Elements[--number_elements];

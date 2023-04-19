@@ -102,8 +102,8 @@ protected:
 
   // Auxiliary member functions
 
-  bool CheckNExpand();
-  bool CheckNReduce();
+  void CheckNExpand();
+  void CheckNReduce();
 
   // void ResizeVec(ulong head, ulong tail) specifiers;
 

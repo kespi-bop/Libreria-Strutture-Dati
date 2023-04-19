@@ -61,34 +61,37 @@ void QueueVec<Data>::Clear() {
 /* ************************************************************************** */
 
 template <typename Data>
-bool QueueVec<Data>::CheckNExpand() {
-    if((tail+1)%size!=head) {
-        return false;
+void QueueVec<Data>::CheckNExpand() {
+    if((tail + 1) % size == head) {
+        ulong new_size = (ulong)(size * const_exp_set);
+        Data* nuovo = new Data[new_size] {};
+        for(ulong i = 0; i < size; ++i) {
+            nuovo[i] = Elements[(i + head) % size];
+        }
+        std::swap(Elements, nuovo);
+        delete[] nuovo;
+        tail = Size();
+        head = 0;
+        size = new_size;
     }
-    ulong new_size = (ulong)(size * const_exp_set);
-    Data* nuovo = new Data[new_size] {};
-    for(ulong i{0}; i<Size(); ++i) nuovo[i]=this->Elements[(i+head)%size];
-    std::swap(this->Elements, nuovo);
-    delete[] nuovo;
-    tail=Size();
-    head=0;
-    size = new_size;
-    return true;
 }
 
 template <typename Data>
-bool QueueVec<Data>::CheckNReduce() {    
-    if(size*const_red_check < Size() || Size()==const_init_size) return false;
-    ulong new_size = (ulong)(size*const_red_set);
-    std::round(new_size);
-    Data* nuovo = new Data[new_size] {};
-    for(ulong i{0}; i<Size(); ++i) nuovo[i]=this->Elements[(i+head)%size];
-    delete[] this->Elements;
-    this->Elements=nuovo;
-    tail = Size();
-    head=0;
-    size = new_size;
-    return true;
+void QueueVec<Data>::CheckNReduce() {    
+    if(Size() <= size * const_red_check ) {
+        ulong new_size = (ulong)(size * const_red_set);
+        std::round(new_size);
+        Data* nuovo = new Data[new_size] {};
+        for(ulong i = 0; i < Size(); ++i) {
+            nuovo[i] = Elements[(i+head)%size];
+        }
+        delete[] Elements;
+        Elements=nuovo;
+        tail = Size();
+        head=0;
+        size = new_size;
+        std::cout<<size<<"->";
+    }
 }
 
 template <typename Data>
@@ -126,57 +129,57 @@ QueueVec<Data>::QueueVec(MappableContainer<Data>&& cont) noexcept {
 }
 
 template <typename Data>
-QueueVec<Data>::QueueVec(const QueueVec& other) : Vector<Data>::Vector(other) {
-    head=other.head;
-    tail=other.tail;
+QueueVec<Data>::QueueVec(const QueueVec& right) : Vector<Data>::Vector(right) {
+    head=right.head;
+    tail=right.tail;
 }
 
 template <typename Data>
-QueueVec<Data>::QueueVec(QueueVec&& other) noexcept {
-    std::swap(head, other.head);
-    std::swap(tail, other.tail);
-    std::swap(size, other.size);
-    std::swap(Elements, other.Elements);
+QueueVec<Data>::QueueVec(QueueVec&& right) noexcept {
+    std::swap(head, right.head);
+    std::swap(tail, right.tail);
+    std::swap(size, right.size);
+    std::swap(Elements, right.Elements);
 }
 
 template <typename Data>
-QueueVec<Data>& QueueVec<Data>::operator=(const QueueVec& other) {
+QueueVec<Data>& QueueVec<Data>::operator=(const QueueVec& right) {
     this->Clear();
-    Vector<Data>::Resize(other.size);
-    for(ulong i{0}; i<other.Size(); i++){
-        Vector<Data>::operator[](i)=other.operator[]((i+other.head)%other.size);
+    Vector<Data>::Resize(right.size);
+    for(ulong i{0}; i<right.Size(); i++){
+        Vector<Data>::operator[](i)=right.operator[]((i+right.head)%right.size);
     }
     head=0;
-    tail=other.Size();
+    tail=right.Size();
     return *this;
 }
 
 template <typename Data>
-QueueVec<Data>& QueueVec<Data>::operator=(QueueVec&& other) noexcept {
+QueueVec<Data>& QueueVec<Data>::operator=(QueueVec&& right) noexcept {
     Clear();
-    std::swap(Elements, other.Elements);
-    std::swap(size, other.size);
-    std::swap(other.head, head);
-    std::swap(other.tail, tail);
+    std::swap(Elements, right.Elements);
+    std::swap(size, right.size);
+    std::swap(right.head, head);
+    std::swap(right.tail, tail);
     return *this;
 }
 
 template <typename Data>
-bool QueueVec<Data>::operator==(const QueueVec& other) const noexcept {
+bool QueueVec<Data>::operator==(const QueueVec& right) const noexcept {
     bool result=true;
-    if(Size()!=other.Size()) return false;
+    if(Size()!=right.Size()) return false;
     for(ulong i=0; i<Size(); i++) {
-        if(this->operator[]((i+head)%size)!=other[(i+other.head)%other.size]) return false;
+        if(this->operator[]((i+head)%size)!=right[(i+right.head)%right.size]) return false;
     }
     return true;
 }
 
 template <typename Data>
-bool QueueVec<Data>::operator!=(const QueueVec& other) const noexcept {
+bool QueueVec<Data>::operator!=(const QueueVec& right) const noexcept {
     bool result=false;
-    if(Size()!=other.Size()) return true;
+    if(Size()!=right.Size()) return true;
     for(ulong i=0; i<Size(); i++) {
-        if(this->operator[]((i+head)%size)!=other[(i+other.head)%other.size]) return true;
+        if(this->operator[]((i+head)%size)!=right[(i+right.head)%right.size]) return true;
     }
     return false;
 }
