@@ -232,7 +232,7 @@ public:
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
-  inline virtual void Map(MapFunctor func) const { InOrderMap(func); } // Override MappableContainer member
+  inline virtual void Map(MapFunctor func) const override { InOrderMap(func); } // Override MappableContainer member
 
   /* ************************************************************************ */
 
@@ -293,7 +293,7 @@ public:
 
   // Specific member function (inherited from MappableContainer)
 
-  inline virtual void Map(MapFunctor func) const { BreadthMap(func); } // Override MappableContainer member
+  inline virtual void Map(MapFunctor func) const override { BreadthMap(func); } // Override MappableContainer member
 
   /* ************************************************************************ */
 
@@ -394,7 +394,7 @@ public:
 
   // Specific member function (inherited from MutableMappableContainer)
   
-  virtual void inline Map(MutableMapFunctor func) { PreOrderMap(func); }; // Override MutableMappableContainer member
+  virtual void inline Map(MutableMapFunctor func) override { PreOrderMap(func); }; // Override MutableMappableContainer member
 
 };
 
@@ -439,7 +439,7 @@ public:
 
   // Specific member function (inherited from MutableMappableContainer)
 
-  virtual void inline Map(MutableMapFunctor func) { PostOrderMap(func); }; // Override MutableMappableContainer member
+  virtual void inline Map(MutableMapFunctor func) override { PostOrderMap(func); }; // Override MutableMappableContainer member
 
 };
 
@@ -487,7 +487,7 @@ public:
   /* ************************************************************************ */
 
   // Specific member function (inherited from MutableMappableContainer)
-  inline virtual void Map(MutableMapFunctor func) { InOrderMap(func); }; // Override MutableMappableContainer member
+  inline virtual void Map(MutableMapFunctor func) override { InOrderMap(func); }; // Override MutableMappableContainer member
 
 };
 
@@ -535,7 +535,7 @@ public:
   /* ************************************************************************ */
 
   // Specific member function (inherited from MutableMappableContainer)
-  inline virtual void Map(MutableMapFunctor func) { BreadthMap(func); }; // Override MutableMappableContainer member
+  inline virtual void Map(MutableMapFunctor func) override { BreadthMap(func); }; // Override MutableMappableContainer member
 
 };
 

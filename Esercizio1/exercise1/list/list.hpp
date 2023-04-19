@@ -39,9 +39,7 @@ protected:
     /* ********************************************************************** */
 
     //Default constructor
-    Node() {
-      delete next;
-    }
+    inline Node() = default;
 
     // Specific constructors
     Node(const Data &elemento){
