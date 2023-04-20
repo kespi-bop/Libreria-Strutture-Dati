@@ -44,7 +44,7 @@ public:
 
   // Specific constructor
   QueueVec(const MappableContainer<Data>& cont); // A queue obtained from a MappableContainer
-  QueueVec(MappableContainer<Data>&& cont) noexcept; // A queue obtained from a MutableMappableContainer
+  QueueVec(MutableMappableContainer<Data>&& cont) noexcept; // A queue obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 

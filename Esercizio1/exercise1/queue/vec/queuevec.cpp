@@ -98,15 +98,30 @@ QueueVec<Data>::QueueVec() {
 }
 
 template <typename Data>
-QueueVec<Data>::QueueVec(const MappableContainer<Data>& cont) : Vector<Data>::Vector(cont) {
+QueueVec<Data>::QueueVec(const MappableContainer<Data>& cont) {
     size = cont.Size() + 1;
+    Elements = new Data[size];
+    ulong index = 0;
+    cont.Map(
+        [this, &index](const Data& dat) {
+            Elements[index++] = dat;
+        }
+    );
     tail = cont.Size();
     head = 0;
 }
 
 template <typename Data>
-QueueVec<Data>::QueueVec(MappableContainer<Data>&& cont) noexcept : Vector<Data>::Vector(std::move(cont)) {
-    tail = size;
+QueueVec<Data>::QueueVec(MutableMappableContainer<Data>&& cont) noexcept {
+    size = cont.Size() + 1;
+    Elements = new Data[size];
+    ulong index = 0;
+    cont.Map(
+        [this, &index](Data& dat) {
+            Elements[index++] = std::move(dat);
+        }
+    );
+    tail = cont.Size();
     head = 0;
 }
 
