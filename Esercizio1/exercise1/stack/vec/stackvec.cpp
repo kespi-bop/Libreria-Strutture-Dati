@@ -93,12 +93,10 @@ void StackVec<Data>::Expand() {
 
 template <typename Data>
 void StackVec<Data>::Reduce() {
-    if(number_elements <= size * reduce_check) {
-        Vector<Data>::Resize(size * reduce_set);
-        if(number_elements <= initial_size){
-            Vector<Data>::Resize(initial_size);    
-        }
+    if(number_elements <= size * reduce_check && number_elements >= initial_size) {
+            Vector<Data>::Resize(size * reduce_set);
     }
+
 }
 
 template <typename Data>

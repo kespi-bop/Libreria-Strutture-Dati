@@ -23,7 +23,7 @@ private:
   const double expand_set = 2;
   const double reduce_check = 0.5;
   const double reduce_set = 0.75;
-  const ulong initial_size = 5;
+  const ulong initial_size = 10;
 
 protected:
 

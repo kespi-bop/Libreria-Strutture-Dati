@@ -29,11 +29,11 @@ protected:
   ulong tail = 0;
   
 
-  const double const_exp_check = 1;
-  const double const_exp_set = 2;
-  const double const_red_check = 0.5;
-  const double const_red_set = 0.75;
-  const ulong const_init_size = 50;
+  const double expand_check = 1;
+  const double expand_set = 2;
+  const double reduce_check = 0.5;
+  const double reduce_set = 0.75;
+  const ulong initial_size = 10;
 
 public:
 

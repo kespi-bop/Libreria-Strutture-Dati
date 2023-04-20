@@ -29,19 +29,19 @@
 
 int main() {
   std::cout << "Lasd Libraries 2023" << std::endl;
-  //lasdtest(); // Call in the menu of your library test!
-  lasd::QueueVec<int> qvc;
-  for(int i = 0; i < 999; i++)
-  {
-    qvc.Enqueue(i);
-  }
+  lasdtest(); // Call in the menu of your library test!
+  // lasd::Vector<int> vct(999);
+  // for(int i = 0; i < 999; i++)
+  // {
+  //   vct[i] = i;
+  // }
 
-  for(int i = 0; i < 999; i++)
-  {
-    qvc.HeadNDequeue();
-  }
+  // lasd::QueueVec<int> qvc(vct);
 
-    
+  // for(int i = 0; i < 999; i++)
+  // {
+  //   std::cout<<qvc.HeadNDequeue()<<"->";
+  // }
   
   return 0;
 }
