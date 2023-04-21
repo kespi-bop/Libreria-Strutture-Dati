@@ -1,6 +1,7 @@
 
 #ifndef QUEUEVEC_HPP
 #define QUEUEVEC_HPP
+#define initial_size_queue 10
 
 /* ************************************************************************** */
 
@@ -33,7 +34,6 @@ protected:
   const double expand_set = 2;
   const double reduce_check = 0.5;
   const double reduce_set = 0.75;
-  const ulong initial_size = 10;
 
 public:
 
@@ -102,8 +102,8 @@ protected:
 
   // Auxiliary member functions
 
-  void CheckNExpand();
-  void CheckNReduce();
+  void Expand();
+  void Reduce();
 
   // void ResizeVec(ulong head, ulong tail) specifiers;
 

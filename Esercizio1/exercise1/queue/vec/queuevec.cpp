@@ -24,7 +24,7 @@ void QueueVec<Data>::Dequeue() {
     if(Empty()) {
         throw std::length_error("Error: QueueVec->is empty.");
     }
-    CheckNReduce();
+    Reduce();
     head = (head + 1) % size;
 }
 
@@ -33,21 +33,21 @@ Data QueueVec<Data>::HeadNDequeue() {
     if(Empty()) {
         throw std::length_error("Error: QueueVec->is empty.");
     }
-    CheckNReduce();
+    Reduce();
     head = (head + 1) % size;
     return Elements[((head - 1) % size)];
 }
 
 template <typename Data>
 void QueueVec<Data>::Enqueue(const Data& elem) {
-    CheckNExpand();
+    Expand();
     Elements[tail] = elem;
     tail = (tail + 1) % size;
 }
 
 template <typename Data>
 void QueueVec<Data>::Enqueue(Data&& elem) {
-    CheckNExpand();
+    Expand();
     Elements[tail] = std::move(elem);
     tail = (tail + 1) % size;
 }
@@ -55,13 +55,13 @@ void QueueVec<Data>::Enqueue(Data&& elem) {
 template <typename Data>
 void QueueVec<Data>::Clear() {
     head = tail = 0;
-    CheckNReduce();
+    Reduce();
 }
 
 /* ************************************************************************** */
 
 template <typename Data>
-void QueueVec<Data>::CheckNExpand() {
+void QueueVec<Data>::Expand() {
     if((tail + 1) % size == head) {
         ulong new_size = (size * expand_set);
         Data* nuovo = new Data[new_size] {};
@@ -77,8 +77,8 @@ void QueueVec<Data>::CheckNExpand() {
 }
 
 template <typename Data>
-void QueueVec<Data>::CheckNReduce() { 
-    if(Size() <= size * reduce_check && Size() >= initial_size) {
+void QueueVec<Data>::Reduce() { 
+    if(Size() <= size * reduce_check && Size() >= initial_size_queue) {
         ulong new_size = (size * reduce_set);
         Data* nuovo = new Data[new_size] {};
         for(ulong i = 0; i < Size(); ++i) {
@@ -94,7 +94,7 @@ void QueueVec<Data>::CheckNReduce() {
 
 template <typename Data>
 QueueVec<Data>::QueueVec() {
-    Vector<Data>::Resize(initial_size);
+    Vector<Data>::Resize(initial_size_queue);
 }
 
 template <typename Data>
@@ -151,8 +151,7 @@ QueueVec<Data>& QueueVec<Data>::operator=(const QueueVec& right) {
 
 template <typename Data>
 QueueVec<Data>& QueueVec<Data>::operator=(QueueVec&& right) noexcept {
-    std::swap(Elements, right.Elements);
-    std::swap(size, right.size);
+    Vector<Data>::operator=(std::move(right));
     std::swap(right.head, head);
     std::swap(right.tail, tail);
     return *this;

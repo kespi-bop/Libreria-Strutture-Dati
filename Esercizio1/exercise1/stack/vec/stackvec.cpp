@@ -93,7 +93,7 @@ void StackVec<Data>::Expand() {
 
 template <typename Data>
 void StackVec<Data>::Reduce() {
-    if(number_elements <= size * reduce_check && number_elements >= initial_size) {
+    if(number_elements <= size * reduce_check && number_elements >= initial_size_stack) {
             Vector<Data>::Resize(size * reduce_set);
     }
 
@@ -116,18 +116,12 @@ StackVec<Data>& StackVec<Data>::operator=(StackVec&& right) noexcept {
 template <typename Data>
 void StackVec<Data>::Clear() {
     delete[] Elements;
-    Elements = new Data[initial_size];
-    size = initial_size;
+    Elements = new Data[initial_size_stack];
+    size = initial_size_stack;
     number_elements = 0;
 }
 
 /* ************************************************************************** */
-
-template <typename Data>
-StackVec<Data>::StackVec(){
-    Elements = new Data[initial_size];
-    size = initial_size;
-}
 
 template <typename Data>
 StackVec<Data>::StackVec(const MappableContainer<Data>& cont) : Vector<Data>::Vector(cont) {

@@ -1,6 +1,7 @@
 
 #ifndef STACKVEC_HPP
 #define STACKVEC_HPP
+#define initial_size_stack 10
 
 /* ************************************************************************** */
 
@@ -23,7 +24,6 @@ private:
   const double expand_set = 2;
   const double reduce_check = 0.5;
   const double reduce_set = 0.75;
-  const ulong initial_size = 10;
 
 protected:
 
@@ -34,8 +34,7 @@ protected:
 public:
 
   // Default constructor
-  StackVec();
-    
+  StackVec() : Vector<Data>(10) {};
 
   /* ************************************************************************ */
 

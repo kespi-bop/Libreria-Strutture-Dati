@@ -5,8 +5,8 @@
 
 using namespace std;
 
-#define MAX_SIZE 200
-#define MIN_SIZE 1
+#define MAX_SIZE 1
+#define MIN_SIZE 0
 #define NUMERO_TEST_QV 2
 #define NUMERO_TEST_SV 2
 #define NUMERO_TEST_QL 2
