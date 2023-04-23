@@ -37,14 +37,15 @@ List<Data>::List(List &&right) noexcept{
 }
 
 template <typename Data>
-List<Data> &List<Data>::operator=(const List &right){
-    if(*this != right)
-    {
-        Clear();
-        for(ulong i = 0; i < right.Size(); i++)
-            InsertAtBack(right[i]);
-    }
-    return *this;   
+List<Data>& List<Data>::operator=(const List& other) {
+    Node* nodo = other.head;
+    Clear();
+    other.PostOrderMap(
+        [this](const Data& dat) {
+            InsertAtFront(dat);
+        }
+    );
+    return *this;
 }
 
 template <typename Data>
@@ -98,7 +99,7 @@ void List<Data>::InsertAtFront(Data&& element) noexcept{
 }
 
 template<typename Data>
-void List<Data>::RemoveFromFront(){  // (must throw std::length_error when empty)
+void List<Data>::RemoveFromFront(){
     if(Empty()){
         throw std::length_error("Error: List->IsEmpty");
     }
@@ -334,6 +335,9 @@ void List<Data>::PostOrderMap(MutableMapFunctor func){
 template <typename Data>
 void List<Data>::RecursivePostOrderFold(const Node *nodo, FoldFunctor func, void *acc) const
 {
+    if(nodo==nullptr)
+        return;
+        
     if(nodo->next!=nullptr) {
         RecursivePostOrderFold(nodo->next, func, acc);
     }
@@ -343,6 +347,9 @@ void List<Data>::RecursivePostOrderFold(const Node *nodo, FoldFunctor func, void
 template <typename Data>
 void List<Data>::RecursivePostOrderMap(Node *nodo, MapFunctor func) const
 {
+    if(nodo==nullptr)
+        return;
+
     if(nodo->next!=nullptr){
         RecursivePostOrderMap(nodo->next, func);
     }
@@ -352,6 +359,9 @@ void List<Data>::RecursivePostOrderMap(Node *nodo, MapFunctor func) const
 template <typename Data>
 void List<Data>::RecursivePostOrderMap(Node *nodo, MutableMapFunctor func)
 {
+    if(nodo==nullptr)
+        return;
+
     if(nodo->next!=nullptr){
         RecursivePostOrderMap(nodo->next, func);
     }

@@ -23,7 +23,7 @@ int main() {
     else if(scelta == 1)
       lasdtest();
     else if(scelta == 2)
-      mytest();
+      myTest();
     else  
       continue;
   }

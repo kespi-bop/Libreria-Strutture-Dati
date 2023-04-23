@@ -1,3 +1,4 @@
+#include "queuevec.hpp"
 
 namespace lasd {
 
@@ -54,8 +55,9 @@ void QueueVec<Data>::Enqueue(Data&& elem) {
 
 template <typename Data>
 void QueueVec<Data>::Clear() {
-    head = tail = 0;
-    Reduce();
+    head = 0;
+    tail = 0;
+    Vector<Data>::Resize(initial_size_queue);
 }
 
 /* ************************************************************************** */
@@ -63,33 +65,30 @@ void QueueVec<Data>::Clear() {
 template <typename Data>
 void QueueVec<Data>::Expand() {
     if((tail + 1) % size == head) {
-        ulong new_size = (size * expand_set);
-        Data* nuovo = new Data[new_size] {};
-        for(ulong i = 0; i < size; ++i) {
-            nuovo[i] = Elements[(i + head) % size];
-        }
-        std::swap(Elements, nuovo);
-        delete[] nuovo;
-        tail = Size();
-        head = 0;
-        size = new_size;
+        ResizeVec(head, tail);
     }
 }
 
 template <typename Data>
 void QueueVec<Data>::Reduce() { 
     if(Size() <= size * reduce_check && Size() >= initial_size_queue) {
-        ulong new_size = (size * reduce_set);
-        Data* nuovo = new Data[new_size] {};
-        for(ulong i = 0; i < Size(); ++i) {
-            nuovo[i] = Elements[(i + head) % size];
-        }
-        delete[] Elements;
-        Elements=nuovo;
-        tail = Size();
-        head=0;
-        size = new_size;
+        ResizeVec(head, tail);
     }
+}
+
+template <typename Data>
+void QueueVec<Data>::ResizeVec(ulong head, ulong tail)
+{
+    ulong new_size = (size * expand_set);
+    Data* nuovo = new Data[new_size] {};
+    for(ulong i = 0; i < size; ++i) {
+        nuovo[i] = Elements[(i + head) % size];
+    }
+    std::swap(Elements, nuovo);
+    delete[] nuovo;
+    tail = Size();
+    head = 0;
+    size = new_size;
 }
 
 template <typename Data>
@@ -132,9 +131,10 @@ QueueVec<Data>::QueueVec(const QueueVec& right) : Vector<Data>::Vector(right) {
 }
 
 template <typename Data>
-QueueVec<Data>::QueueVec(QueueVec&& right) noexcept : Vector<Data>::Vector(right){
+QueueVec<Data>::QueueVec(QueueVec&& right) noexcept : Vector<Data>::Vector(std::move(right)){
     std::swap(head, right.head);
     std::swap(tail, right.tail);
+    right.Clear();
 }
 
 template <typename Data>

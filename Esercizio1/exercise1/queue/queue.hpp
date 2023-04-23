@@ -14,7 +14,6 @@ namespace lasd {
 
 template <typename Data>
 class Queue : virtual public ClearableContainer {
-              // Must extend ClearableContainer
 
 private:
 

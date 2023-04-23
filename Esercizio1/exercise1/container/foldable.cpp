@@ -7,7 +7,6 @@ namespace lasd {
 
 /* ************************************************************************** */
 
-
 template<typename Data>
 bool FoldableContainer<Data>::Exists(const Data& valore) const noexcept {
 
@@ -22,9 +21,6 @@ bool FoldableContainer<Data>::Exists(const Data& valore) const noexcept {
     return result;
 
 }
-
-
-
 
 /* ************************************************************************** */
 

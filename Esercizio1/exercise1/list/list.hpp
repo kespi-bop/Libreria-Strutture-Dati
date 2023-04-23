@@ -18,9 +18,6 @@ template <typename Data>
 class List : virtual public ClearableContainer,
              virtual public DictionaryContainer<Data>,
              virtual public LinearContainer<Data>{
-              // Must extend ClearableContainer,
-              //             DictionaryContainer<Data>,
-              //             LinearContainer<Data>
 
 private:
 
@@ -48,7 +45,7 @@ protected:
     }
 
     Node(Data &&elemento){
-      std::swap(element, elemento);
+      element = std::move(elemento);
       next = nullptr;
     }
 
@@ -182,15 +179,13 @@ public:
 
   // Specific member function (inherited from PreOrderFoldableContainer)
 
-  // type PreOrderFold(arguments) specifiers; // Override PreOrderFoldableContainer member
-  virtual void PreOrderFold(FoldFunctor func, void* acc) const override;
+  virtual void PreOrderFold(FoldFunctor func, void* acc) const override; // Override PreOrderFoldableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderFoldableContainer)
 
-  // type PostOrderFold(arguments) specifiers; // Override PostOrderFoldableContainer member
-  virtual void PostOrderFold(FoldFunctor func, void* acc) const override;
+  virtual void PostOrderFold(FoldFunctor func, void* acc) const override; // Override PostOrderFoldableContainer member
 
   /* ************************************************************************ */
 
@@ -204,15 +199,13 @@ public:
 
   // Specific member function (inherited from PreOrderMappableContainer)
 
-  // type PreOrderMap(argument) specifiers; // Override PreOrderMappableContainer member
-  virtual void PreOrderMap(MapFunctor func) const override;
+  virtual void PreOrderMap(MapFunctor func) const override; // Override PreOrderMappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderMappableContainer)
 
-  // type PostOrderMap(argument) specifiers; // Override PostOrderMappableContainer member
-  virtual void PostOrderMap(MapFunctor func) const override; 
+  virtual void PostOrderMap(MapFunctor func) const override;  // Override PostOrderMappableContainer member
 
   /* ************************************************************************ */
 
@@ -226,15 +219,13 @@ public:
 
   // Specific member function (inherited from MutablePreOrderMappableContainer)
 
-  // type PreOrderMap(argument) specifiers; // Override MutablePreOrderMappableContainer member
-  virtual void PreOrderMap(MutableMapFunctor func) override; 
+  virtual void PreOrderMap(MutableMapFunctor func) override;  // Override MutablePreOrderMappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MutablePostOrderMappableContainer)
 
-  // type PostOrderMap(argument) specifiers; // Override MutablePostOrderMappableContainer member
-  virtual void PostOrderMap(MutableMapFunctor func) override;
+  virtual void PostOrderMap(MutableMapFunctor func) override; // Override MutablePostOrderMappableContainer member
 
 protected:
 

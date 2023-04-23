@@ -28,7 +28,7 @@ Data& LinearContainer<Data>::Front() {
 template<typename Data>
 const Data& LinearContainer<Data>::Back() const {
     if(!Container::Empty()) {
-        return operator[](size-1);
+        return operator[](size - 1);
     }
     else throw std::length_error ("Error: Empty-Container!");
 }
@@ -36,7 +36,7 @@ const Data& LinearContainer<Data>::Back() const {
 template<typename Data>
 Data& LinearContainer<Data>::Back() {
     if(!Container::Empty()) {
-        return (operator[](size-1));
+        return (operator[](size - 1));
     }
     else throw std::length_error ("Error: Empty-Container!");
 }
@@ -132,7 +132,7 @@ bool SortableLinearContainer<Data>::operator!=(const SortableLinearContainer& ri
 }
 
 template<typename Data>
-ulong SortableLinearContainer<Data>::Partition(ulong p, ulong r)noexcept{
+ulong SortableLinearContainer<Data>::Partition(ulong p, ulong r)noexcept {
     Data x = this->operator[](p);
     uint i = p - 1;
     uint j = r + 1;
@@ -148,7 +148,7 @@ ulong SortableLinearContainer<Data>::Partition(ulong p, ulong r)noexcept{
 
 
 template<typename Data>
-void SortableLinearContainer<Data>::Quicksort(ulong p, ulong r)noexcept{
+void SortableLinearContainer<Data>::Quicksort(ulong p, ulong r)noexcept {
     if (p < r) {
     uint q = Partition(p, r);
     Quicksort(p, q);

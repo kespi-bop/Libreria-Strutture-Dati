@@ -49,11 +49,11 @@ public:
   virtual bool Remove(const Data& value) = 0;
 
   bool InsertAll(const MappableContainer<Data>& cont); // Copy of the value; From MappableContainer; True if all are inserted
-  bool InsertAll(MappableContainer<Data>&& cont); // Move of the value; From MutableMappableContainer; True if all are inserted
+  bool InsertAll(MutableMappableContainer<Data>&& cont); // Move of the value; From MutableMappableContainer; True if all are inserted
   bool RemoveAll(const MappableContainer<Data>& cont); // From MappableContainer; True if all are removed
 
   bool InsertSome(const MappableContainer<Data>& cont); // Copy of the value; From MappableContainer; True if some is inserted
-  bool InsertSome(MappableContainer<Data>&& cont); // Move of the value; From MutableMappableContainer; True if some is inserted
+  bool InsertSome(MutableMappableContainer<Data>&& cont); // Move of the value; From MutableMappableContainer; True if some is inserted
   bool RemoveSome(const MappableContainer<Data>& cont); // From MappableContainer; True if some is removed
 
 };

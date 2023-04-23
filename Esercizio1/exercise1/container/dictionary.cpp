@@ -19,7 +19,7 @@ bool DictionaryContainer<Data>::InsertAll(const MappableContainer<Data>& cont){
 }
 
 template<typename Data>
-bool DictionaryContainer<Data>::InsertAll(MappableContainer<Data>&& cont){
+bool DictionaryContainer<Data>::InsertAll(MutableMappableContainer<Data>&& cont){
     bool resultAll = true;
     cont.Map(
         [this, &resultAll] (Data& value) {
@@ -52,7 +52,7 @@ bool DictionaryContainer<Data>::InsertSome(const MappableContainer<Data>& cont){
 }
 
 template<typename Data>
-bool DictionaryContainer<Data>::InsertSome(MappableContainer<Data>&& cont){
+bool DictionaryContainer<Data>::InsertSome(MutableMappableContainer<Data>&& cont){
     bool resultSome = false;
     cont.Map(
         [this, &resultSome] (Data& value) {

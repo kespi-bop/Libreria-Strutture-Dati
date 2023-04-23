@@ -193,7 +193,9 @@ bool Vector<Data>::operator!=(const Vector& right) const noexcept {
 
 template <typename Data>
 void Vector<Data>::Sort() noexcept {
-    SortableLinearContainer<Data>::Quicksort(0, size - 1);
+    if(!(Empty())) {
+        SortableLinearContainer<Data>::Quicksort(0, size - 1);
+    }
 }
 
 

@@ -3,19 +3,32 @@
 #define MYTEST_HPP
 
 
+#include "../container/container.hpp"
+#include "../container/testable.hpp"
+#include "../container/dictionary.hpp"
+#include "../container/foldable.hpp"
+#include "../container/mappable.hpp"
+#include "../container/linear.hpp"
+
+#include "../vector/vector.hpp"
+#include "../list/list.hpp"
+
+#include "../queue/queue.hpp"
 #include "../queue/lst/queuelst.hpp"
 #include "../queue/vec/queuevec.hpp"
+
+#include "../stack/stack.hpp"
 #include "../stack/lst/stacklst.hpp"
 #include "../stack/vec/stackvec.hpp"
 
 /* ************************************************************************** */
 
-bool mytest();
+void myTest();
 
-bool TestQueuevec(lasd::QueueVec<int> s1);
-bool TestStackvec(lasd::StackVec<int> s1);
-bool TestQueuelst(lasd::QueueLst<int> s1);
-bool TestStacklst(lasd::StackLst<int> s1);
+bool TestCostruttori();
+bool TestAssegnazioni();
+bool TestDictionaryFunctions();
+bool TestSort();
 
 /* ************************************************************************** */
 

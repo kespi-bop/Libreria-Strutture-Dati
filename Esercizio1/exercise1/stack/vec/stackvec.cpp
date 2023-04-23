@@ -16,6 +16,7 @@ StackVec<Data>::StackVec(const StackVec& right) {
 template <typename Data>
 StackVec<Data>::StackVec(StackVec&& right) noexcept : Vector<Data>(std::move(right)){
     std::swap(right.number_elements, number_elements);
+    right.Clear();
 }
 
 template <typename Data>
