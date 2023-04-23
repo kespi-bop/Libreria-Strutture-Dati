@@ -41,20 +41,31 @@ Data QueueVec<Data>::HeadNDequeue() {
 
 template <typename Data>
 void QueueVec<Data>::Enqueue(const Data& elem) {
-    Expand();
     Elements[tail] = elem;
+    Expand();
     tail = (tail + 1) % size;
 }
 
 template <typename Data>
 void QueueVec<Data>::Enqueue(Data&& elem) {
-    Expand();
     Elements[tail] = std::move(elem);
+    Expand();
     tail = (tail + 1) % size;
 }
 
 template <typename Data>
-void QueueVec<Data>::Clear() {
+ulong QueueVec<Data>::Size() const noexcept
+{
+    if(size == 0) {
+      return 0;
+    } else {
+      return ((tail + size - head) % size); 
+    }
+}
+
+template <typename Data>
+void QueueVec<Data>::Clear()
+{
     head = 0;
     tail = 0;
     Vector<Data>::Resize(initial_size_queue);
@@ -65,31 +76,35 @@ void QueueVec<Data>::Clear() {
 template <typename Data>
 void QueueVec<Data>::Expand() {
     if((tail + 1) % size == head) {
-        ResizeVec(head, tail);
+        ulong new_size = (size * expand_set);
+        Data* nuovo = new Data[new_size] {};
+        for(ulong i = 0; i < size; ++i) {
+            nuovo[i] = Elements[(i + head) % size];
+        }
+        std::swap(Elements, nuovo);
+        delete[] nuovo;
+        tail = Size();
+        head = 0;
+        size = new_size;
     }
 }
 
 template <typename Data>
 void QueueVec<Data>::Reduce() { 
     if(Size() <= size * reduce_check && Size() >= initial_size_queue) {
-        ResizeVec(head, tail);
+        ulong new_size = (size * reduce_set);
+        Data* nuovo = new Data[new_size] {};
+        for(ulong i = 0; i < Size(); ++i) {
+            nuovo[i] = Elements[(i + head) % size];
+        }
+        delete[] Elements;
+        Elements=nuovo;
+        tail = Size();
+        head = 0;
+        size = new_size;
     }
 }
 
-template <typename Data>
-void QueueVec<Data>::ResizeVec(ulong head, ulong tail)
-{
-    ulong new_size = (size * expand_set);
-    Data* nuovo = new Data[new_size] {};
-    for(ulong i = 0; i < size; ++i) {
-        nuovo[i] = Elements[(i + head) % size];
-    }
-    std::swap(Elements, nuovo);
-    delete[] nuovo;
-    tail = Size();
-    head = 0;
-    size = new_size;
-}
 
 template <typename Data>
 QueueVec<Data>::QueueVec() {

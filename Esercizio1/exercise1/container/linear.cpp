@@ -44,17 +44,14 @@ Data& LinearContainer<Data>::Back() {
 template<typename Data>
 bool LinearContainer<Data>::operator==(const LinearContainer& right) const {
     bool result=true;
-
     if(size!=right.size){
         return false;
     }
-
     for(int i=0; i < size; i++) {
-        if(this[i]!=right[i]) {
+        if(operator[](i)!=right[i]) {
             return false;
         }
     }
-    
     return true;
 }
 

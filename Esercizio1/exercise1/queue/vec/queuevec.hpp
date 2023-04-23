@@ -90,19 +90,13 @@ public:
 
   bool Empty() const noexcept override { return head == tail; } // Override Container member
 
-  ulong Size() const noexcept override { 
-    if(size == 0) {
-      return 0;
-    } else {
-      return ((tail + size - head) % size); 
-    }
-  } // Override Container member
+  ulong Size() const noexcept override; // Override Container member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ClearableContainer)
 
-  void Clear(); // Override ClearableContainer member
+  void Clear() override; // Override ClearableContainer member
 
 protected:
 
@@ -111,7 +105,7 @@ protected:
   void Expand();
   void Reduce();
 
-  void ResizeVec(ulong head, ulong tail);
+ // void ResizeVec(ulong head, ulong tail);
 
 };
 
