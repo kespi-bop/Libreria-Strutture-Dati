@@ -44,7 +44,7 @@ public:
 
   virtual Data& operator*() const = 0;    // (non-mutable version; concrete function must throw std::out_of_range when terminated) 
 
-  virtual bool Terminated() noexcept = 0;     // (concrete function should not throw exceptions)
+  virtual bool Terminated() const noexcept = 0;     // (concrete function should not throw exceptions)
 
 };
 
@@ -131,7 +131,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class BackwardIterator : virtual public Iteraotr<Data>{
+class BackwardIterator : virtual public Iterator<Data>{
 
 private:
 
@@ -171,8 +171,8 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class BidirectionalIterator : virtual public ForwardIterator<Data>
-                              virtual public BackwardIterator<Data>{
+class BidirectionalIterator : virtual public ForwardIterator<Data>,
+                              virtual public BackwardIterator<Data> {
 
 private:
 
@@ -198,24 +198,20 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const BackwardIterator& right) const noexcept = delete; // Comparison of abstract types might not be possible.
-  bool operator!=(const BackwardIterator& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator==(const BidirectionalIterator& right) const noexcept = delete; // Comparison of abstract types might not be possible.
+  bool operator!=(const BidirectionalIterator& right) const noexcept = delete; // Comparison of abstract types might not be possible.
 
   /* ************************************************************************ */
 
   // Specific member functions
 
-  virtual inline bool Terminated() override {
+  virtual inline bool Terminated() const noexcept override {
     return (ForwardTerminated() || BackWardTerminated());
   }; // Override Iterator member
 
-  virtual inline bool ForwardTerminated() noexcept {
-    return ForwardIterator<Data>::Terminated();
-  }; // (concrete function should not throw exceptions)
+  virtual bool ForwardTerminated() const noexcept = 0; // (concrete function should not throw exceptions)
 
-  virtual inline bool BackwardTerminated() noexcept {
-    return BackwardIterator<Data>::Terminated();
-  }; // (concrete function should not throw exceptions)
+  virtual bool BackWardTerminated() const noexcept = 0; // (concrete function should not throw exceptions)
 
 };
 
