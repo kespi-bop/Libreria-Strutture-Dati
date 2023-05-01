@@ -11,7 +11,7 @@
 
 int main() {
 
-//binarytree concreto -> binarytree link -> BST -> iterator -> binarytree vec 
+//binarytree astratto -> binarytree link -> BST -> iterator -> binarytree vec 
 
 /*viene usato in const cast per evitare di riscrivere funzioni che esistono sia
 in versione const che non const : const_cast<NodeLnk * *>(static_cast<const BST<data> *>(this)->FindPointerToSuccessor(nod, dat))

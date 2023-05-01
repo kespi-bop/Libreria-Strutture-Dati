@@ -96,10 +96,10 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  BinaryTree operator=(const BinaryTree& right) = delete; // Copy assignment of abstract types should not be possible.
+  BinaryTree<Data>& operator=(const BinaryTree& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  BinaryTree operator=(BinaryTree&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
+  BinaryTree<Data>& operator=(BinaryTree&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
@@ -239,10 +239,10 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  MutableBinaryTree& operator=(const MutableBinaryTree& right) = delete; // Copy assignment of abstract types should not be possible.
+  MutableBinaryTree<Data>& operator=(const MutableBinaryTree& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  MutableBinaryTree& operator=(MutableBinaryTree&& right) = delete; // Move assignment of abstract types should not be possible.
+  MutableBinaryTree<Data>& operator=(MutableBinaryTree&& right) = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 

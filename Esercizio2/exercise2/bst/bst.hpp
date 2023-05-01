@@ -13,11 +13,10 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class BST {
-            // Must extend ClearableContainer,
-            //             DictionaryContainer<Data>,
-            //             BinaryTree<Data>,
-            //             BinaryTreeLnk<Data>
+class BST : public virtual ClearableContainer,
+            public virtual DictionaryContainer<Data>,
+            public virtual BinaryTree<Data>,
+            public virtual BinaryTreeLnk<Data>{
 
 private:
 
@@ -32,80 +31,82 @@ protected:
 public:
 
   // Default constructor
-  // BST() specifiers;
+  BST() = default;
 
   /* ************************************************************************ */
 
   // Specific constructors
-  // BST(argument) specifiers; // A bst obtained from a MutableContainer
-  // BST(argument) specifiers; // A bst obtained from a MappableMutableContainer
+  BST(const MutableContainer& right); // A bst obtained from a MutableContainer
+  BST(MappableMutableContainer&& right) noexcept; // A bst obtained from a MappableMutableContainer
 
   /* ************************************************************************ */
 
   // Copy constructor
-  // BST(argument) specifiers;
+  BST(const BST& right);
 
   // Move constructor
-  // BST(argument) specifiers;
+  BST(BST&& right) noexcept;
 
   /* ************************************************************************ */
 
   // Destructor
-  // ~BST() specifiers;
+  virtual ~BST() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument) specifiers;
+  BST<Data>& operator=(const BST& right);
 
   // Move assignment
-  // type operator=(argument) specifiers;
+  BST<Data>& operator=(BST&& right) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator==(const BST& right) noexcept override;
+  bool inline operator!=(const BST& right) noexcept override {
+    return !(operator==(right));
+  }
 
   /* ************************************************************************ */
 
   // Specific member functions
 
-  // type Min(argument) specifiers; // (concrete function must throw std::length_error when empty)
-  // type MinNRemove(argument) specifiers; // (concrete function must throw std::length_error when empty)
-  // type RemoveMin(argument) specifiers; // (concrete function must throw std::length_error when empty)
+  Data& Min() const; // (concrete function must throw std::length_error when empty)
+  Data MinNRemove() const; // (concrete function must throw std::length_error when empty)
+  void RemoveMin() const; // (concrete function must throw std::length_error when empty)
 
-  // type Max(argument) specifiers; // (concrete function must throw std::length_error when empty)
-  // type MaxNRemove(argument) specifiers; // (concrete function must throw std::length_error when empty)
-  // type RemoveMax(argument) specifiers; // (concrete function must throw std::length_error when empty)
+  Data& Max() const; // (concrete function must throw std::length_error when empty)
+  Data MaxNRemove() const; // (concrete function must throw std::length_error when empty)
+  void RemoveMax() const; // (concrete function must throw std::length_error when empty)
 
-  // type Predecessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
-  // type PredecessorNRemove(argument) specifiers; // (concrete function must throw std::length_error when not found)
-  // type RemovePredecessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
+  Data& Predecessor(const Data& find) const; // (concrete function must throw std::length_error when not found)
+  Data PredecessorNRemove(const Data& find) const; // (concrete function must throw std::length_error when not found)
+  void RemovePredecessor(const Data& find) const; // (concrete function must throw std::length_error when not found)
 
-  // type Successor(argument) specifiers; // (concrete function must throw std::length_error when not found)
-  // type SuccessorNRemove(argument) specifiers; // (concrete function must throw std::length_error when not found)
-  // type RemoveSuccessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
+  Data& Successor(const Data& find) const; // (concrete function must throw std::length_error when not found)
+  Data SuccessorNRemove(const Data& find) const; // (concrete function must throw std::length_error when not found)
+  void RemoveSuccessor(const Data& find) const; // (concrete function must throw std::length_error when not found)
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from DictionaryContainer)
 
-  // type Insert(argument) specifiers; // Override DictionaryContainer member (Copy of the value)
-  // type Insert(argument) specifiers; // Override DictionaryContainer member (Move of the value)
-  // type Remove(argument) specifiers; // Override DictionaryContainer member
+  virtual bool Insert(const Data& value) override; // Override DictionaryContainer member (Copy of the value)
+  virtual bool Insert(Data&& value) override; // Override DictionaryContainer member (Move of the value)
+  virtual bool Remove(const Data& value) override; // Override DictionaryContainer member
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from TestableContainer)
 
-  // type Exists(argument) specifiers; // Override TestableContainer member
+  virtual bool Exists(const Data& valore) const noexcept override; // Override TestableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ClearableContainer)
 
-  // type Clear(argument) specifiers; // Override ClearableContainer member
+  virtual void Clear() override; // Override ClearableContainer member
 
 protected:
 

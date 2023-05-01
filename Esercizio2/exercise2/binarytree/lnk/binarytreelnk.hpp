@@ -108,10 +108,10 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  BinaryTreeLnk operator=(const BinaryTreeLnk& right);
+  BinaryTreeLnk<Data>& operator=(const BinaryTreeLnk& right);
 
   // Move assignment
-  BinaryTreeLnk operator=(BinaryTreeLnk&& right) noexcept;
+  BinaryTreeLnk<Data>& operator=(BinaryTreeLnk&& right) noexcept;
 
   /* ************************************************************************ */
 

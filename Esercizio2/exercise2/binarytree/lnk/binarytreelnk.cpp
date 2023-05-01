@@ -26,12 +26,12 @@ BinaryTreeLnk<Data>::BinaryTreeLnk(BinaryTreeLnk &&right) noexcept{
 }
 
 template <typename Data>
-BinaryTreeLnk<Data> BinaryTreeLnk<Data>::operator=(const BinaryTreeLnk &right){
+BinaryTreeLnk<Data>& BinaryTreeLnk<Data>::operator=(const BinaryTreeLnk &right){
     return BinaryTreeLnk();
 }
 
 template <typename Data>
-BinaryTreeLnk<Data> BinaryTreeLnk<Data>::operator=(BinaryTreeLnk &&right) noexcept{
+BinaryTreeLnk<Data>& BinaryTreeLnk<Data>::operator=(BinaryTreeLnk &&right) noexcept{
     return BinaryTreeLnk();
 }
 
