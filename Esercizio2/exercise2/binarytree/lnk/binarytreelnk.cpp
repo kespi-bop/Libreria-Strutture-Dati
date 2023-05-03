@@ -5,18 +5,62 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-inline BinaryTreeLnk<Data>::BinaryTreeLnk(const MappableContainer<Data> &right) {
-   ;
+BinaryTreeLnk<Data>::BinaryTreeLnk(const MappableContainer<Data> &right) {
+    size = right.Size();
+    QueueVec<NodeLnk * *> coda;
+    coda.Enqueue(&root);
+    right.Map(
+        [&coda](const Data& dat){
+            NodeLnk *& cur = *coda.HeadNDequeue();
+            cur = new NodeLnk(dat);
+            coda.Enqueue(&cur->LChild);
+            coda.Enqueue(&cur->RChild);
+        }
+    );
 }
 
 template <typename Data>
 BinaryTreeLnk<Data>::BinaryTreeLnk(MutableMappableContainer<Data> &&right) {
-    ;//con iteratore(?)
+    size = right.Size();
+    QueueVec<NodeLnk * *> coda;
+    coda.Enqueue(&root);
+    right.Map(
+        [&coda](const Data& dat){
+            NodeLnk *& cur = *coda.HeadNDequeue();
+            cur = new NodeLnk(std::move(dat));
+            coda.Enqueue(&cur->LChild);
+            coda.Enqueue(&cur->RChild);
+        }
+    );
 }
 
 template <typename Data>
 BinaryTreeLnk<Data>::BinaryTreeLnk(const BinaryTreeLnk &right){
-    ;//con iteratore(?)
+    for(BTBreadthIterator i(right); !i.Terminated(); ++i) {
+        if (root==nullptr) {
+            root = new NodeLnk(*i);
+            size++;
+        } else {
+            QueueVec<BinaryTreeLnk<Data>::NodeLnk*> coda;
+            coda.Enqueue(root);
+            while(!coda.Empty()){
+                NodeLnk* current = coda.HeadNDequeue();
+                if (!(current->HasLeftChild())) {
+                    current->LChild = new NodeLnk(*i);
+                    size++;
+                    break;
+                }
+                else coda.Enqueue(current->LChild);
+
+                if (!(current->HasRightChild())){
+                    current->RChild = new NodeLnk(*i);
+                    size++;
+                    break;
+                }
+                else coda.Enqueue(current->RChild);
+            }
+        }
+    }
 }
 
 template <typename Data>
@@ -27,24 +71,24 @@ BinaryTreeLnk<Data>::BinaryTreeLnk(BinaryTreeLnk &&right) noexcept{
 
 template <typename Data>
 BinaryTreeLnk<Data>& BinaryTreeLnk<Data>::operator=(const BinaryTreeLnk &right){
-    return BinaryTreeLnk();
+    Clear();
+    size = right.Size();
+    QueueVec<NodeLnk * *> coda;
+    coda.Enqueue(&root);
+    for(BTBreadthIterator i(right); !i.Terminated(); ++i) {
+        NodeLnk *& cur = *coda.HeadNDequeue();
+        cur = new NodeLnk(*i);
+        coda.Enqueue(&cur->LChild);
+        coda.Enqueue(&cur->RChild);
+    }
+    return *this;
 }
 
 template <typename Data>
 BinaryTreeLnk<Data>& BinaryTreeLnk<Data>::operator=(BinaryTreeLnk &&right) noexcept{
-    return BinaryTreeLnk();
-}
-
-template <typename Data>
-bool BinaryTreeLnk<Data>::operator==(const BinaryTreeLnk &right) noexcept{
-    return false;
-    //fare dopo
-}
-
-template <typename Data>
-inline void BinaryTreeLnk<Data>::Clear() noexcept{
-    delete root;
-    size = 0;
+    std::swap(root, right.root);
+    std::swap(size, right.size);
+    return *this;
 }
 
 /* ************************************************************************** */

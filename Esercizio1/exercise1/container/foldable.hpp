@@ -186,12 +186,12 @@ public:
   // Specific member function
   using typename FoldableContainer<Data>::FoldFunctor;
 
-  virtual void InOrderOrderFold(FoldFunctor func, void* acc) const = 0;
+  virtual void InOrderFold(FoldFunctor func, void* acc) const = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from FoldableContainer)
-  inline virtual void Fold(FoldFunctor func, void* acc) const override { InOrderOrderFold(func, acc); }  
+  inline virtual void Fold(FoldFunctor func, void* acc) const override { InOrderFold(func, acc); }  
 
 };
 

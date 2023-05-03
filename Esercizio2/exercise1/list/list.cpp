@@ -37,10 +37,10 @@ List<Data>::List(List &&right) noexcept{
 }
 
 template <typename Data>
-List<Data>& List<Data>::operator=(const List& other) {
-    Node* nodo = other.head;
+List<Data>& List<Data>::operator=(const List& right) {
+    Node* nodo = right.head;
     Clear();
-    other.PostOrderMap(
+    right.PostOrderMap(
         [this](const Data& dat) {
             InsertAtFront(dat);
         }

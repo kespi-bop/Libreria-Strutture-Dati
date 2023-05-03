@@ -128,7 +128,7 @@ public:
 
 template <typename Data>
 class PostOrderMappableContainer : virtual public PostOrderFoldableContainer<Data>,
-                                  virtual public MappableContainer<Data> {
+                                   virtual public MappableContainer<Data> {
 
 private:
 
@@ -446,9 +446,8 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class MutableInOrderMappableContainer {
-                                        // Must extend MutableMappableContainer<Data>,
-                                        //             InOrderMappableContainer<Data>
+class MutableInOrderMappableContainer : virtual public MutableMappableContainer<Data>,
+                                        virtual public InOrderMappableContainer<Data> {
 
 private:
 
@@ -494,9 +493,8 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class MutableBreadthMappableContainer {
-                                        // Must extend MutableMappableContainer<Data>,
-                                        //             BreadthMappableContainer<Data>
+class MutableBreadthMappableContainer : public virtual MutableMappableContainer<Data>,
+                                        public virtual BreadthMappableContainer<Data> {
 
 private:
 

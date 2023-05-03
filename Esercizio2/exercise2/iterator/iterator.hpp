@@ -42,7 +42,7 @@ public:
 
   // Specific member functions
 
-  virtual Data& operator*() const = 0;    // (non-mutable version; concrete function must throw std::out_of_range when terminated) 
+  virtual const Data& operator*() const = 0;    // (non-mutable version; concrete function must throw std::out_of_range when terminated) 
 
   virtual bool Terminated() const noexcept = 0;     // (concrete function should not throw exceptions)
 
@@ -64,7 +64,7 @@ protected:
 public:
 
   // Destructor
-  virtual ~MutableIterator() = delete;
+  virtual ~MutableIterator() = default;
 
   /* ************************************************************************ */
 
@@ -104,7 +104,7 @@ protected:
 public:
 
   // Destructor
-  virtual ~ForwardIterator() = delete;
+  virtual ~ForwardIterator() = default;
 
   /* ************************************************************************ */
 
@@ -124,7 +124,7 @@ public:
 
   // Specific member functions
 
-  virtual ForwardIterator& operator++() const = 0;  // (concrete function must throw std::out_of_range when terminated)
+  virtual ForwardIterator& operator++() = 0;  // (concrete function must throw std::out_of_range when terminated)
 
 };
 
@@ -164,7 +164,7 @@ public:
 
   // Specific member functions
 
-  virtual BackwardIterator& operator--() const = 0;      // (concrete function must throw std::out_of_range when terminated)
+  virtual BackwardIterator& operator--() = 0;      // (concrete function must throw std::out_of_range when terminated)
 
 };
 
@@ -236,10 +236,10 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  ResettableIterator& operator=(const ResettableIterator& right) = default; // Copy assignment of abstract types should not be possible.
+  ResettableIterator& operator=(const ResettableIterator& right) = delete; // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  ResettableIterator& operator=(ResettableIterator&& right) = default; // Move assignment of abstract types should not be possible.
+  ResettableIterator& operator=(ResettableIterator&& right) = delete; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 

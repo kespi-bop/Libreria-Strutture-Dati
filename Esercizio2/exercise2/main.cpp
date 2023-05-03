@@ -22,6 +22,9 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
 
 //modularizzare il piu possibile
 
+
+//CONTROLLA IN ORDER ITERATOR.
+
   std::cout << "Lasd Libraries 2023" << std::endl;
   uint scelta;
   while(true)

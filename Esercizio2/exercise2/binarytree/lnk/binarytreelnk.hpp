@@ -23,7 +23,7 @@ protected:
 
   using Container::size;
 
-  struct NodeLnk : public virtual BinaryTree<Data>::MutableNode { // Must extend MutableNode
+  struct NodeLnk : virtual public MutableBinaryTree<Data>::MutableNode {  // Must extend MutableNode
 
   private:
 
@@ -42,39 +42,68 @@ protected:
     /* ********************************************************************** */
 
     // Destructor
-    virtual ~NodeLnk() {
-      delete LChild;
-      delete RChild;
-    };
+    virtual ~NodeLnk() { 
+      if(LChild!=nullptr) { 
+        delete LChild; 
+        LChild=nullptr; 
+      } 
+      if(RChild!=nullptr) { 
+        delete RChild; 
+        RChild=nullptr; 
+      } 
+    }
 
     /* ********************************************************************** */
 
     // Specific member functions
 
-    virtual inline Data& Element() noexcept {
+    NodeLnk(const Data& newElem) : element(newElem) {;}
+    NodeLnk(Data&& newElem) noexcept : element(std::move(newElem)) {;}
+
+    virtual bool inline IsLeaf() const noexcept override { return (!(HasLeftChild() || HasRightChild())); };
+
+    virtual inline Data& Element() noexcept override {
       return element;
     };
 
-    virtual inline bool HasLeftChild() const noexcept override{
+    virtual const inline Data& Element() const noexcept override {
+      return element;
+    };
+
+    virtual bool inline HasLeftChild() const noexcept override{
       return (LChild == nullptr ? false : true);
     };
 
-    virtual inline bool HasRightChild() const noexcept override{
+    virtual bool inline HasRightChild() const noexcept override{
       return (RChild == nullptr ? false : true);
     };
 
-    virtual inline NodeLnk& LeftChild() {
-      if(this.isLeaf()) {
+    virtual inline NodeLnk& LeftChild() override {
+      if(IsLeaf()) {
         throw std::out_of_range("This NodeLnk is a Leaf!(No LeftChild)");
       }
-      return LChild;
+      return *LChild;
     }; 
 
-    virtual inline NodeLnk& RightChild() {
-      if(this.isLeaf()) {
+    virtual const inline NodeLnk& LeftChild() const override {
+      if(IsLeaf()) {
+        throw std::out_of_range("This NodeLnk is a Leaf!(No LeftChild)");
+      }
+      return *LChild;
+    }; 
+
+    virtual inline NodeLnk& RightChild() override {
+      if(IsLeaf()) {
         throw std::out_of_range("This NodeLnk is a Leaf!(No RightChild)");
       }
-      return RChild;
+      return *RChild;
+    };
+
+    virtual const inline NodeLnk& RightChild() const override {
+      if(IsLeaf()) {
+        throw std::out_of_range("This NodeLnk is a Leaf!(No RightChild)");
+      }
+      return *RChild;
     };
 
   };
@@ -103,7 +132,9 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~BinaryTreeLnk() = default;
+  virtual ~BinaryTreeLnk() {
+    delete root;
+  }
 
   /* ************************************************************************ */
 
@@ -116,16 +147,18 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const BinaryTreeLnk& right) noexcept override;
-  bool operator!=(const BinaryTreeLnk& right) noexcept override {
-    return !(operator==(right));
+  virtual inline bool operator==(const BinaryTreeLnk& right) const noexcept { 
+    return BinaryTree<Data>::operator==(right); 
+  };
+  virtual inline bool operator!=(const BinaryTreeLnk& right) const noexcept { 
+    return BinaryTree<Data>::operator!=(right); 
   };
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from BinaryTree)
   virtual inline const NodeLnk& Root() const override {
-    if(this.Empty()) {
+    if(this->Empty()) {
       throw std::length_error("Error: BinaryLnkTree->isEmpty");
     }
     return *root;
@@ -135,7 +168,7 @@ public:
 
   // Specific member function (inherited from MutableBinaryTree)
   virtual inline NodeLnk& Root() override {
-    if(this.Empty()) {
+    if(this->Empty()) {
       throw std::length_error("Error: BinaryLnkTree->isEmpty");
     }
     return *root;
@@ -145,7 +178,13 @@ public:
 
   // Specific member function (inherited from ClearableContainer)
 
-  virtual void Clear() noexcept override; // Override ClearableContainer member
+  virtual inline void Clear() override { 
+    if (root != nullptr) { 
+      delete root; 
+      root=nullptr; 
+    } 
+    size = 0; 
+  }; // Override ClearableContainer member
 
 };
 
