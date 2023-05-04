@@ -205,55 +205,55 @@ void stestBinaryTreeFloat(uint& testnum, uint& testerr) {
 }
 
 void stestBinaryTreeString(lasd::BinaryTree<string>& bt, uint& testnum, uint& testerr) {
-//   uint loctestnum = 0, loctesterr = 0;
-//   try {
-//     MapPreOrder(loctestnum, loctesterr, bt, true, &MapPrint<string>);
-//     FoldPreOrder(loctestnum, loctesterr, bt, true, &FoldStringConcatenate, string("?"), string("?ABDC"));
-//     FoldPostOrder(loctestnum, loctesterr, bt, true, &FoldStringConcatenate, string("?"), string("?DBCA"));
-//     FoldInOrder(loctestnum, loctesterr, bt, true, &FoldStringConcatenate, string("?"), string("?DBAC"));
-//     FoldBreadth(loctestnum, loctesterr, bt, true, &FoldStringConcatenate, string("?"), string("?ABCD"));
-//   } catch(...) {
-//     loctestnum++; loctesterr++;
-//     cout << endl << "Unmanaged error! " << endl;
-//   }
-//   cout << "End of BinaryTree<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
-//   testnum += loctestnum;
-//   testerr += loctesterr;
+  uint loctestnum = 0, loctesterr = 0;
+  try {
+    MapPreOrder(loctestnum, loctesterr, bt, true, &MapPrint<string>);
+    FoldPreOrder(loctestnum, loctesterr, bt, true, &FoldStringConcatenate, string("?"), string("?ABDC"));
+    FoldPostOrder(loctestnum, loctesterr, bt, true, &FoldStringConcatenate, string("?"), string("?DBCA"));
+    FoldInOrder(loctestnum, loctesterr, bt, true, &FoldStringConcatenate, string("?"), string("?DBAC"));
+    FoldBreadth(loctestnum, loctesterr, bt, true, &FoldStringConcatenate, string("?"), string("?ABCD"));
+  } catch(...) {
+    loctestnum++; loctesterr++;
+    cout << endl << "Unmanaged error! " << endl;
+  }
+  cout << "End of BinaryTree<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+  testnum += loctestnum;
+  testerr += loctesterr;
 }
 
 void stestBinaryTreeString(uint& testnum, uint& testerr) {
-//   uint loctestnum = 0, loctesterr = 0;
-//   cout << endl << "Begin of BinaryTree<string> Test" << endl;
-//   try {
-//     lasd::Vector<string> vec(4);
-//     SetAt(loctestnum, loctesterr, vec, true, 0, string("A"));
-//     SetAt(loctestnum, loctesterr, vec, true, 1, string("B"));
-//     SetAt(loctestnum, loctesterr, vec, true, 2, string("C"));
-//     SetAt(loctestnum, loctesterr, vec, true, 3, string("D"));
+  uint loctestnum = 0, loctesterr = 0;
+  cout << endl << "Begin of BinaryTree<string> Test" << endl;
+  try {
+    lasd::Vector<string> vec(4);
+    SetAt(loctestnum, loctesterr, vec, true, 0, string("A"));
+    SetAt(loctestnum, loctesterr, vec, true, 1, string("B"));
+    SetAt(loctestnum, loctesterr, vec, true, 2, string("C"));
+    SetAt(loctestnum, loctesterr, vec, true, 3, string("D"));
 
 //     cout << endl << "Begin of BinaryTreeVec<string> Test:" << endl;
 //     lasd::BinaryTreeVec<string> btvec(vec);
 //     stestBinaryTreeString(btvec, loctestnum, loctesterr);
-//     cout << endl << "Begin of BinaryTreeVec<string> Test:" << endl;
-//     lasd::BinaryTreeLnk<string> btlnk(vec);
-//     stestBinaryTreeString(btlnk, loctestnum, loctesterr);
-//     cout << "\n";
+    cout << endl << "Begin of BinaryTreeVec<string> Test:" << endl;
+    lasd::BinaryTreeLnk<string> btlnk(vec);
+    stestBinaryTreeString(btlnk, loctestnum, loctesterr);
+    cout << "\n";
 
 //     EqualBT(loctestnum, loctesterr, btvec, btlnk);
 //     btvec.Root().LeftChild().LeftChild().Element() = string("S");
-//     NonEqualBT(loctestnum, loctesterr, btlnk, btvec);
-//     btlnk.Root().RightChild().Element() = string("X");
+    // NonEqualBT(loctestnum, loctesterr, btlnk, btvec);
+    btlnk.Root().RightChild().Element() = string("X");
 //     NonEqualBT(loctestnum, loctesterr, btvec, btlnk);
 //     btvec.Root().RightChild().Element() = string("X");
-//     btlnk.Root().LeftChild().LeftChild().Element() = string("S");
+    btlnk.Root().LeftChild().LeftChild().Element() = string("S");
 //     EqualBT(loctestnum, loctesterr, btlnk, btvec);
-//   } catch(...) {
-//     loctestnum++; loctesterr++;
-//     cout << endl << "Unmanaged error! " << endl;
-//   }
-//   cout << "End of BinaryTree<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
-//   testnum += loctestnum;
-//   testerr += loctesterr;
+  } catch(...) {
+    loctestnum++; loctesterr++;
+    cout << endl << "Unmanaged error! " << endl;
+  }
+  cout << "End of BinaryTree<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+  testnum += loctestnum;
+  testerr += loctesterr;
 }
 
 /* ************************************************************************** */

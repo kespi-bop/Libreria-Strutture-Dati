@@ -189,14 +189,15 @@ void MutableBinaryTree<Data>::NotRecursiveBreadthMap(MutableNode* node, MutableM
 
 template <typename Data>
 BTPreOrderIterator<Data>::BTPreOrderIterator(const BinaryTree<Data>& right) {
-    root = current = &right.Root();
+    if(!right.Empty()) 
+        root = current = &right.Root();
 }
 
 
 template <typename Data>
-BTPreOrderIterator<Data>::BTPreOrderIterator(const BTPreOrderIterator &right) {
-    stack(right.stack);
-    root = current = right.current;
+BTPreOrderIterator<Data>::BTPreOrderIterator(const BTPreOrderIterator &right) : stack(right.stack) {
+    root = right.root;
+    current = right.current;
 }
 
 template <typename Data>
@@ -352,16 +353,16 @@ bool BTPostOrderIterator<Data>::operator==(const BTPostOrderIterator &right) con
 
 template <typename Data>
 const typename BinaryTree<Data>::Node *BTInOrderIterator<Data>::Min(const typename BinaryTree<Data>::Node* actual) {
-    if(actual->HasLeftChild()){   //NOTE: bisogna controllare che current sia diverso da nullptr?
+   while (actual != nullptr && (actual->HasLeftChild())) {
         stack.Push(actual);
-        actual=Min(&(actual->LeftChild()));
+        actual = &actual->LeftChild();
     }
     return actual;
 }
 
 template <typename Data>
 BTInOrderIterator<Data>::BTInOrderIterator(const BinaryTree<Data> &right) {
-    root=&right.Root();
+    root = (right.Empty()) ? nullptr : &right.Root();
     current=Min(root);
 }
 
@@ -412,7 +413,7 @@ bool BTInOrderIterator<Data>::Terminated() const noexcept {
 template <typename Data>
 BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator++() {
     // NOTE: Codice copiato
-    if (stack.Empty()) {
+    if (!stack.Empty()) {
         current = stack.TopNPop();
         if (current->HasRightChild()) {
             stack.Push(&(current->RightChild()));
@@ -432,7 +433,7 @@ void BTInOrderIterator<Data>::Reset() noexcept {
 
 template <typename Data>
 BTBreadthIterator<Data>::BTBreadthIterator(const BinaryTree<Data>& right) {
-    root = current = &right.Root();
+    root = current = (right.Empty()) ? nullptr : &right.Root();
 }
 
 template <typename Data>
