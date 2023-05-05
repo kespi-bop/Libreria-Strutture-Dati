@@ -94,7 +94,7 @@ public:
 
   // Specific member function (inherited from ClearableContainer)
 
-  // type Clear() specifiers; // Override ClearableContainer member (throw std::length_error when empty)
+  // type Clear() specifiers; // Override ClearableContainer member
 
   /* ************************************************************************ */
 

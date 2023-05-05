@@ -80,28 +80,28 @@ protected:
 
     virtual inline NodeLnk& LeftChild() override {
       if(IsLeaf()) {
-        throw std::out_of_range("This NodeLnk is a Leaf!(No LeftChild)");
+        throw std::out_of_range("Left Child does not exists.");
       }
       return *LChild;
     }; 
 
     virtual const inline NodeLnk& LeftChild() const override {
       if(IsLeaf()) {
-        throw std::out_of_range("This NodeLnk is a Leaf!(No LeftChild)");
+        throw std::out_of_range("Left Child does not exists.");
       }
       return *LChild;
     }; 
 
     virtual inline NodeLnk& RightChild() override {
       if(IsLeaf()) {
-        throw std::out_of_range("This NodeLnk is a Leaf!(No RightChild)");
+        throw std::out_of_range("Right Child does not exists.");
       }
       return *RChild;
     };
 
     virtual const inline NodeLnk& RightChild() const override {
       if(IsLeaf()) {
-        throw std::out_of_range("This NodeLnk is a Leaf!(No RightChild)");
+        throw std::out_of_range("Right Child does not exists.");
       }
       return *RChild;
     };
