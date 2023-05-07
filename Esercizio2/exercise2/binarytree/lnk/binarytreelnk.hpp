@@ -23,7 +23,7 @@ protected:
 
   using Container::size;
 
-  struct NodeLnk : virtual public MutableBinaryTree<Data>::MutableNode {  // Must extend MutableNode
+  struct NodeLnk : virtual MutableBinaryTree<Data>::MutableNode {  // Must extend MutableNode
 
   private:
 
@@ -41,24 +41,35 @@ protected:
 
     /* ********************************************************************** */
 
+    //Specific Constructor
+
+    NodeLnk(const Data& right) : element(right) {};
+    NodeLnk(Data&& right) noexcept : element(std::move(right)) {};
+
+    /* ********************************************************************** */
+
+    //Copy Constructor
+    NodeLnk(const NodeLnk& right);
+
+    //Move Constructor
+    NodeLnk(NodeLnk&& right) noexcept;
+
+    /* ********************************************************************** */
+
     // Destructor
-    virtual ~NodeLnk() { 
-      if(LChild!=nullptr) { 
-        delete LChild; 
-        LChild=nullptr; 
-      } 
-      if(RChild!=nullptr) { 
-        delete RChild; 
-        RChild=nullptr; 
-      } 
-    }
+    virtual ~NodeLnk();
+
+    /* ********************************************************************** */
+
+    //Copy Assignament
+    NodeLnk& operator=(const NodeLnk& right);
+
+    //Move Assignament
+    NodeLnk& operator=(NodeLnk&& right) noexcept;
 
     /* ********************************************************************** */
 
     // Specific member functions
-
-    NodeLnk(const Data& newElem) : element(newElem) {;}
-    NodeLnk(Data&& newElem) noexcept : element(std::move(newElem)) {;}
 
     virtual bool inline IsLeaf() const noexcept override { return (!(HasLeftChild() || HasRightChild())); };
 

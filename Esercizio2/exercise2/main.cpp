@@ -23,7 +23,10 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
 //modularizzare il piu possibile
 
 
-//CONTROLLA IN ORDER ITERATOR.
+//TEST DA FARE:
+/*
+  testare il costruttore e l'assegnazione del nodelnk
+*/
 
   std::cout << "Lasd Libraries 2023" << std::endl;
   uint scelta;
