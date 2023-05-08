@@ -8,7 +8,7 @@ template <typename Data>
 inline bool BinaryTree<Data>::operator==(const BinaryTree &right) const noexcept {
     if(this->size!=right.size) return false;
     BTPreOrderIterator i(*this);
-    BTPreOrderIterator j(*this);
+    BTPreOrderIterator j(right);
     while(!(i.Terminated() || j.Terminated())){
         if(*i!=*j) return false;
         ++i; ++j;
@@ -357,7 +357,7 @@ bool BTPostOrderIterator<Data>::operator==(const BTPostOrderIterator &right) con
 /* ************************************************************************** */
 
 template <typename Data>
-const typename BinaryTree<Data>::Node *BTInOrderIterator<Data>::Min(const typename BinaryTree<Data>::Node* actual) {
+const typename BinaryTree<Data>::Node *BTInOrderIterator<Data>::MostLeftNode(const typename BinaryTree<Data>::Node* actual) {
    while (actual != nullptr && (actual->HasLeftChild())) {
         stack.Push(actual);
         actual = &actual->LeftChild();
@@ -368,7 +368,7 @@ const typename BinaryTree<Data>::Node *BTInOrderIterator<Data>::Min(const typena
 template <typename Data>
 BTInOrderIterator<Data>::BTInOrderIterator(const BinaryTree<Data> &right) {
     root = (right.Empty()) ? nullptr : &right.Root();
-    current=Min(root);
+    current=MostLeftNode(root);
 }
 
 template <typename Data>
@@ -417,12 +417,11 @@ bool BTInOrderIterator<Data>::Terminated() const noexcept {
 
 template <typename Data>
 BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator++() {
-    // NOTE: Codice copiato
     if (!stack.Empty()) {
         current = stack.TopNPop();
         if (current->HasRightChild()) {
             stack.Push(&(current->RightChild()));
-            Min((&(current->RightChild())));
+            MostLeftNode((&(current->RightChild())));
         }
     } else current = nullptr;
 
@@ -431,7 +430,7 @@ BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator++() {
 
 template <typename Data>
 void BTInOrderIterator<Data>::Reset() noexcept {
-    current=Min(root);
+    current=MostLeftNode(root);
 }
 
 /* ************************************************************************** */

@@ -22,6 +22,8 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
 
 //modularizzare il piu possibile
 
+//fai operator= di btlnk ricorsivo
+
 
 //TEST DA FARE:
 /*

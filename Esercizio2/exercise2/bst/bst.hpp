@@ -24,7 +24,7 @@ private:
 
 protected:
 
-  // using BinaryTreeLnk<Data>::???;
+  using BinaryTreeLnk<Data>::NodeLnk;
 
   // ...
 
@@ -100,7 +100,7 @@ public:
 
   // Specific member functions (inherited from TestableContainer)
 
-  virtual bool Exists(const Data& valore) const noexcept override; // Override TestableContainer member
+  virtual bool Exists(const Data& value) const noexcept override; // Override TestableContainer member
 
   /* ************************************************************************ */
 
@@ -112,23 +112,30 @@ protected:
 
   // Auxiliary member functions
 
-  // type DataNDelete(argument) specifiers;
+  Data DataNDelete(NodeLnk* node);
+  
+  NodeLnk* Detach(NodeLnk*& node) noexcept;
 
-  // type Detach(argument) specifiers;
+  NodeLnk* DetachMin(NodeLnk *&) noexcept;
+  NodeLnk* DetachMax(NodeLnk *&) noexcept;
 
-  // type DetachMin(argument) specifiers;
-  // type DetachMax(argument) specifiers;
+  NodeLnk* Skip2Left(NodeLnk *&) noexcept;
+  NodeLnk* Skip2Right(NodeLnk *&) noexcept;
 
-  // type Skip2Left(argument) specifiers;
-  // type Skip2Right(argument) specifiers;
+  NodeLnk* const &FindPointerToMin(NodeLnk *const &nod) const noexcept;
+  NodeLnk* const &FindPointerToMax(NodeLnk *const &nod) const noexcept;
 
-  // type FindPointerToMin(argument) specifiers; // Both mutable & unmutable versions
-  // type FindPointerToMax(argument) specifiers; // Both mutable & unmutable versions
+  NodeLnk*& FindPointerToMin(NodeLnk *&nod) noexcept;
+  NodeLnk*& FindPointerToMax(NodeLnk *&nod) noexcept;
 
-  // type FindPointerTo(argument) specifiers; // Both mutable & unmutable versions
+  NodeLnk*const& FindPointerTo(NodeLnk *const &nod, Data dat) const noexcept;
+  NodeLnk*& FindPointerTo(NodeLnk *&nod, Data dat) noexcept;
 
-  // type FindPointerToPredecessor(argument) specifiers; // Both mutable & unmutable versions
-  // type FindPointerToSuccessor(argument) specifiers; // Both mutable & unmutable versions
+  NodeLnk* const& FindPointerToPredecessor(NodeLnk *const &nod, Data dat) const noexcept;
+  NodeLnk* const& FindPointerToSuccessor(NodeLnk *const &nod, Data dat) const noexcept;
+
+  NodeLnk*& FindPointerToPredecessor(NodeLnk *&nod, Data dat) noexcept;
+  NodeLnk*& FindPointerToSuccessor(NodeLnk *&nod, Data dat) noexcept;
 
 };
 

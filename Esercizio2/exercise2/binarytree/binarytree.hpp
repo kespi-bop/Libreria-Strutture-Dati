@@ -580,7 +580,7 @@ protected:
   const typename BinaryTree<Data>::Node* root=nullptr;
   StackVec<const typename BinaryTree<Data>::Node*> stack; // NOTE: va controllato il const
 
-  const typename BinaryTree<Data>::Node* Min(const typename BinaryTree<Data>::Node* );
+  const typename BinaryTree<Data>::Node* MostLeftNode(const typename BinaryTree<Data>::Node* );
 
 public:
 

@@ -195,6 +195,13 @@ void stestBSTFloat(uint& testnum, uint& testerr) {
     InsertC(loctestnum, loctesterr, bst2, true, 2.1);
     InsertC(loctestnum, loctesterr, bst2, true, 0.4);
     InsertC(loctestnum, loctesterr, bst2, true, 1.2);
+
+    cout<<"\nbst1: ";
+    for(lasd::BTInOrderIterator i(bst1); !(i.Terminated()); ++i) std::cout<<"\t"<<*i;
+    cout<<"\nbst2: ";
+    for(lasd::BTInOrderIterator i(bst2); !(i.Terminated()); ++i) std::cout<<"\t"<<*i;
+    std::cout<<"\n";
+
     InsertC(loctestnum, loctesterr, bst2, true, 3.5);
     InsertC(loctestnum, loctesterr, bst2, true, 5.3);
     InsertC(loctestnum, loctesterr, bst2, true, 4.0);
