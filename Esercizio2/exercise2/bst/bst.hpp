@@ -74,19 +74,19 @@ public:
 
   // Specific member functions
 
-  Data& Min() const; // (concrete function must throw std::length_error when empty)
+  const Data& Min() const; // (concrete function must throw std::length_error when empty)
   Data MinNRemove(); // (concrete function must throw std::length_error when empty)
   void RemoveMin(); // (concrete function must throw std::length_error when empty)
 
-  Data& Max() const; // (concrete function must throw std::length_error when empty)
+  const Data& Max() const; // (concrete function must throw std::length_error when empty)
   Data MaxNRemove(); // (concrete function must throw std::length_error when empty)
   void RemoveMax(); // (concrete function must throw std::length_error when empty)
 
-  Data& Predecessor(const Data& find) const; // (concrete function must throw std::length_error when not found)
+  const Data& Predecessor(const Data& find) const; // (concrete function must throw std::length_error when not found)
   Data PredecessorNRemove(const Data& find); // (concrete function must throw std::length_error when not found)
   void RemovePredecessor(const Data& find); // (concrete function must throw std::length_error when not found)
 
-  Data& Successor(const Data& find) const; // (concrete function must throw std::length_error when not found)
+  const Data& Successor(const Data& find) const; // (concrete function must throw std::length_error when not found)
   Data SuccessorNRemove(const Data& find); // (concrete function must throw std::length_error when not found)
   void RemoveSuccessor(const Data& find); // (concrete function must throw std::length_error when not found)
 
@@ -94,21 +94,21 @@ public:
 
   // Specific member functions (inherited from DictionaryContainer)
 
-  virtual bool Insert(const Data& value) override; // Override DictionaryContainer member (Copy of the value)
-  virtual bool Insert(Data&& value) override; // Override DictionaryContainer member (Move of the value)
-  virtual bool Remove(const Data& value) override; // Override DictionaryContainer member
+  bool Insert(const Data& value) override; // Override DictionaryContainer member (Copy of the value)
+  bool Insert(Data&& value) override; // Override DictionaryContainer member (Move of the value)
+  bool Remove(const Data& value) override; // Override DictionaryContainer member
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from TestableContainer)
 
-  virtual bool Exists(const Data& value) const noexcept override; // Override TestableContainer member
+  bool Exists(const Data& value) const noexcept override; // Override TestableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from ClearableContainer)
 
-  virtual void Clear() override; // Override ClearableContainer member
+  virtual void Clear() noexcept override; // Override ClearableContainer member
 
 protected:
 

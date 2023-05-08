@@ -191,7 +191,7 @@ public:
   virtual inline void Clear() override { 
     if (root != nullptr) { 
       delete root; 
-      root = nullptr; 
+      root=nullptr; 
     } 
     size = 0; 
   }; // Override ClearableContainer member

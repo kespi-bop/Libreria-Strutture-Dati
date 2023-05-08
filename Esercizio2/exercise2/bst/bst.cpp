@@ -5,7 +5,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-inline BST<Data>::BST(const MappableContainer<Data> &right) {
+BST<Data>::BST(const MappableContainer<Data>& right) {
     right.Map(
         [this](const Data& value){
             Insert(value);
@@ -14,7 +14,7 @@ inline BST<Data>::BST(const MappableContainer<Data> &right) {
 }
 
 template <typename Data>
-BST<Data>::BST(MutableMappableContainer<Data> &&right) noexcept {
+BST<Data>::BST(MutableMappableContainer<Data>&& right) noexcept {
         right.Map(
         [this](const Data& value){
             Insert(std::move(value));
@@ -55,7 +55,7 @@ bool BST<Data>::operator==(const BST &right) const noexcept {
 }
 
 template <typename Data>
-inline Data &BST<Data>::Min() const {
+const Data &BST<Data>::Min() const {
     if (root != nullptr) {
         return FindPointerToMin(root)->element;
     } else {
@@ -81,7 +81,7 @@ void BST<Data>::RemoveMin() {
 }
 
 template <typename Data>
-Data &BST<Data>::Max() const {
+const Data &BST<Data>::Max() const {
     if (root != nullptr) {
     return FindPointerToMax(root)->element;
   } else {
@@ -108,7 +108,7 @@ void BST<Data>::RemoveMax() {
 }
 
 template <typename Data>
-Data &BST<Data>::Predecessor(const Data &find) const {
+const Data &BST<Data>::Predecessor(const Data &find) const {
     NodeLnk* const* ptr =& FindPointerToPredecessor(root, find);
     if (ptr != nullptr) {
         return (*ptr)->element;
@@ -138,7 +138,7 @@ void BST<Data>::RemovePredecessor(const Data &find) {
 }
 
 template <typename Data>
-Data &BST<Data>::Successor(const Data &find) const {
+const Data &BST<Data>::Successor(const Data &find) const {
     NodeLnk* const* ptr =& FindPointerToSuccessor(root, find);
     if(ptr !=nullptr){
         return (*ptr)->element;
@@ -169,7 +169,7 @@ void BST<Data>::RemoveSuccessor(const Data &find) {
 }
 
 template <typename Data>
-inline bool BST<Data>::Insert(const Data &value) {
+bool BST<Data>::Insert(const Data &value) {
     NodeLnk * & ptr = FindPointerTo(root, value); 
     if(ptr == nullptr){
     ptr = new NodeLnk(value);
@@ -206,7 +206,7 @@ bool BST<Data>::Exists(const Data &value) const noexcept {
 }
 
 template <typename Data>
-void BST<Data>::Clear() {
+void BST<Data>::Clear() noexcept {
     BinaryTreeLnk<Data>::Clear();
 }
 
