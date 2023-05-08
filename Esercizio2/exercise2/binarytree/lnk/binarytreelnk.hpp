@@ -25,19 +25,18 @@ protected:
 
   struct NodeLnk : virtual MutableBinaryTree<Data>::MutableNode {  // Must extend MutableNode
 
+  friend class BinaryTreeLnk<Data>;
+
   private:
+
+  protected:
+
+  public:
 
     Data element;
     NodeLnk* LChild = nullptr;
     NodeLnk* RChild = nullptr;
 
-  protected:
-
-    // ...
-
-  public:
-
-    friend class BinaryTreeLnk<Data>;
 
     /* ********************************************************************** */
 
@@ -192,7 +191,7 @@ public:
   virtual inline void Clear() override { 
     if (root != nullptr) { 
       delete root; 
-      root=nullptr; 
+      root = nullptr; 
     } 
     size = 0; 
   }; // Override ClearableContainer member

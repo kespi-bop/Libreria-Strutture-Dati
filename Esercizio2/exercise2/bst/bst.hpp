@@ -24,7 +24,9 @@ private:
 
 protected:
 
-  using BinaryTreeLnk<Data>::NodeLnk;
+  using Container::size;
+  using BinaryTreeLnk<Data>::root;
+  using typename BinaryTreeLnk<Data>::NodeLnk;
 
   // ...
 
@@ -36,8 +38,8 @@ public:
   /* ************************************************************************ */
 
   // Specific constructors
-  BST(const MutableContainer& right); // A bst obtained from a MutableContainer
-  BST(MappableMutableContainer&& right) noexcept; // A bst obtained from a MappableMutableContainer
+  BST(const MappableContainer<Data>& right); // A bst obtained from a MutableContainer
+  BST(MutableMappableContainer<Data>&& right) noexcept; // A bst obtained from a MappableMutableContainer
 
   /* ************************************************************************ */
 
@@ -63,8 +65,8 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const BST& right) noexcept override;
-  bool inline operator!=(const BST& right) noexcept override {
+  bool operator==(const BST& right) const noexcept;
+  bool inline operator!=(const BST& right) const noexcept {
     return !(operator==(right));
   }
 
@@ -73,20 +75,20 @@ public:
   // Specific member functions
 
   Data& Min() const; // (concrete function must throw std::length_error when empty)
-  Data MinNRemove() const; // (concrete function must throw std::length_error when empty)
-  void RemoveMin() const; // (concrete function must throw std::length_error when empty)
+  Data MinNRemove(); // (concrete function must throw std::length_error when empty)
+  void RemoveMin(); // (concrete function must throw std::length_error when empty)
 
   Data& Max() const; // (concrete function must throw std::length_error when empty)
-  Data MaxNRemove() const; // (concrete function must throw std::length_error when empty)
-  void RemoveMax() const; // (concrete function must throw std::length_error when empty)
+  Data MaxNRemove(); // (concrete function must throw std::length_error when empty)
+  void RemoveMax(); // (concrete function must throw std::length_error when empty)
 
   Data& Predecessor(const Data& find) const; // (concrete function must throw std::length_error when not found)
-  Data PredecessorNRemove(const Data& find) const; // (concrete function must throw std::length_error when not found)
-  void RemovePredecessor(const Data& find) const; // (concrete function must throw std::length_error when not found)
+  Data PredecessorNRemove(const Data& find); // (concrete function must throw std::length_error when not found)
+  void RemovePredecessor(const Data& find); // (concrete function must throw std::length_error when not found)
 
   Data& Successor(const Data& find) const; // (concrete function must throw std::length_error when not found)
-  Data SuccessorNRemove(const Data& find) const; // (concrete function must throw std::length_error when not found)
-  void RemoveSuccessor(const Data& find) const; // (concrete function must throw std::length_error when not found)
+  Data SuccessorNRemove(const Data& find); // (concrete function must throw std::length_error when not found)
+  void RemoveSuccessor(const Data& find); // (concrete function must throw std::length_error when not found)
 
   /* ************************************************************************ */
 

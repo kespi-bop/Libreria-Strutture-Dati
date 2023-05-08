@@ -16,7 +16,7 @@
 
 #include "../binarytree/binarytree.hpp"
 #include "../../binarytree/lnk/binarytreelnk.hpp"
-#include "../../binarytree/vec/binarytreevec.hpp"
+// #include "../../binarytree/vec/binarytreevec.hpp"
 
 /* ************************************************************************** */
 
@@ -234,10 +234,10 @@ void stestBinaryTreeString(uint& testnum, uint& testerr) {
     // cout << endl << "Begin of BinaryTreeVec<string> Test:" << endl;
     // lasd::BinaryTreeVec<string> btvec(vec);
     // stestBinaryTreeString(btvec, loctestnum, loctesterr);
-    // cout << endl << "Begin of BinaryTreeVec<string> Test:" << endl;
-    // lasd::BinaryTreeLnk<string> btlnk(vec);
-    // stestBinaryTreeString(btlnk, loctestnum, loctesterr);
-    // cout << "\n";
+    cout << endl << "Begin of BinaryTreeVec<string> Test:" << endl;
+    lasd::BinaryTreeLnk<string> btlnk(vec);
+    stestBinaryTreeString(btlnk, loctestnum, loctesterr);
+    cout << "\n";
 
     // EqualBT(loctestnum, loctesterr, btvec, btlnk);
     // btvec.Root().LeftChild().LeftChild().Element() = string("S");

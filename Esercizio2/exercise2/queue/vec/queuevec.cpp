@@ -36,7 +36,7 @@ Data QueueVec<Data>::HeadNDequeue() {
     }
     Reduce();
     head = (head + 1) % size;
-    return Elements[((head - 1) % size)];
+    return Elements[((head - 1 + size) % size)];
 }
 
 template <typename Data>

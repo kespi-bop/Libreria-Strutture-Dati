@@ -6,11 +6,15 @@ namespace lasd {
 
 template <typename Data>
 inline bool BinaryTree<Data>::operator==(const BinaryTree &right) const noexcept {
-    if(this->size!=right.size) return false;
-    BTPreOrderIterator i(*this);
-    BTPreOrderIterator j(right);
-    while(!(i.Terminated() || j.Terminated())){
-        if(*i!=*j) return false;
+    if(size!=right.size) {
+        return false;
+    }
+    BTInOrderIterator i(*this);
+    BTInOrderIterator j(right);
+    while(i.Terminated() || j.Terminated()){
+        if((*i)!=(*j)) {
+            return false;
+        }
         ++i; ++j;
     }
     return true;
@@ -417,14 +421,17 @@ bool BTInOrderIterator<Data>::Terminated() const noexcept {
 
 template <typename Data>
 BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator++() {
-    if (!stack.Empty()) {
-        current = stack.TopNPop();
-        if (current->HasRightChild()) {
-            stack.Push(&(current->RightChild()));
-            MostLeftNode((&(current->RightChild())));
+    if((stack.Empty()) && !(current->HasRightChild())) {
+        current=nullptr;
+    }
+    else { 
+        if(current->HasRightChild()){
+            current = MostLeftNode(&current->RightChild());
+        } 
+        else {
+            current = stack.TopNPop();
         }
-    } else current = nullptr;
-
+    }
     return *this;
 }
 

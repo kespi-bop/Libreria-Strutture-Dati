@@ -18,7 +18,6 @@ in versione const che non const : const_cast<NodeLnk * *>(static_cast<const BST<
 qui la funzione non costante richiama la funzione costante castandola a non costante in modo da non riscriverla 
 il const cast si puo utilizzare soltanto su algoritmi che di per se non modificano dati.*/
 
-//diminuzione di size solo in skip2left e skip2right
 
 //modularizzare il piu possibile
 
@@ -43,8 +42,8 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
       exit(1);
     else if(scelta == 1)
       lasdtest();
-    else if(scelta == 2);
-      //myTest();
+    else if(scelta == 2)
+      myTest();
     else  
       continue;
   }
