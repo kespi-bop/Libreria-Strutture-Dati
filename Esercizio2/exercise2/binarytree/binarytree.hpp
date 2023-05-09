@@ -133,25 +133,25 @@ public:
 
   // Specific member function (inherited from PreOrderMappableContainer)
 
-  virtual void PreOrderMap(const MapFunctor func) const override; // Override PreOrderMappableContainer member
+  virtual void PreOrderMap(MapFunctor func) const override; // Override PreOrderMappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderMappableContainer)
 
-  virtual void PostOrderMap(const MapFunctor func) const override; // Override PostOrderMappableContainer member
+  virtual void PostOrderMap(MapFunctor func) const override; // Override PostOrderMappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from InOrderMappableContainer)
 
-  virtual void InOrderMap(const MapFunctor func) const override; // Override InOrderMappableContainer member
+  virtual void InOrderMap(MapFunctor func) const override; // Override InOrderMappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from BreadthMappableContainer)
 
-  virtual void BreadthMap(const MapFunctor func) const override; // Override BreadthMappableContainer member
+  virtual void BreadthMap(MapFunctor func) const override; // Override BreadthMappableContainer member
 
 protected:
 

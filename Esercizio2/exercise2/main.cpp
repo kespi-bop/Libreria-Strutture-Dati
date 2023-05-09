@@ -2,6 +2,23 @@
 
 #include "zlasdtest/test.hpp"
 
+#include "./container/container.hpp"
+#include "./container/testable.hpp"
+#include "./container/dictionary.hpp"
+#include "./container/foldable.hpp"
+#include "./container/mappable.hpp"
+#include "./container/linear.hpp"
+
+#include "./iterator/iterator.hpp"
+
+#include "./vector/vector.hpp"
+
+#include "./list/list.hpp"
+
+#include "./binarytree/binarytree.hpp"
+
+#include "./bst/bst.hpp"
+
 /* ************************************************************************** */
 
 #include <iostream>
@@ -33,7 +50,7 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
   uint scelta;
   while(true)
   {
-    std::cout<<"\nQuale test vuoi eseguire? Digita:\n"
+    std::cout<<"\n\n\nQuale test vuoi eseguire? Digita:\n"
                 "0. esci\n"
                 "1. lasdtest\n"
                 "2. myTest\n";
@@ -44,8 +61,6 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
       lasdtest();
     else if(scelta == 2)
       myTest();
-    else  
-      continue;
   }
 
   return 0;

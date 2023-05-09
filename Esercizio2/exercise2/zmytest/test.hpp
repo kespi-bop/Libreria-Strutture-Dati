@@ -21,15 +21,23 @@
 #include "../stack/lst/stacklst.hpp"
 #include "../stack/vec/stackvec.hpp"
 
+#include "../iterator/iterator.hpp"
+#include "../binarytree/binarytree.hpp"
+#include "../bst/bst.hpp"
+
 /* ************************************************************************** */
 
 void myTest();
 
+void TestEsercizio1();
 bool TestCostruttori();
 bool TestAssegnazioni();
 bool TestDictionaryFunctions();
 bool TestSort();
 bool TestQueueVec();
+
+void TestEsercizio2();
+bool TestIteratori();
 
 /* ************************************************************************** */
 

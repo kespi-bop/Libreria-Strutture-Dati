@@ -16,11 +16,14 @@ uniform_int_distribution<int> RandomNumber(0, 1000);
 /* ************************************************************************** */
 
 void myTest(){
-      cout<<(TestCostruttori()? "\nPASSATO\n" : "\nNON Passato\n");
-      cout<<(TestAssegnazioni()? "\nPASSATO\n" : "\nNON Passato\n");
-      cout<<(TestDictionaryFunctions()? "\nPASSATO\n" : "\nNON Passato\n");
-      cout<<(TestSort()? "\nPASSATO\n\n" : "\nNON Passato\n\n");
-      cout<<(TestQueueVec()? "\nPASSATO\n\n" : "\nNON Passato\n\n");
+  int scelta;
+  cout<<"\n\n\nQuale test vuoi eseguire? \n";
+  cout<<"Esercizio1 : (premi 1) \n";
+  cout<<"Esercizio2 : (premi 2) \n";
+  cin>>scelta;
+
+  if(scelta == 1) TestEsercizio1();
+  else if(scelta == 2) TestEsercizio2();
 }
 
 bool TestCostruttori()
@@ -405,7 +408,7 @@ bool TestAssegnazioni()
 {
     bool TestAssergnazioniErrori = true;
 
-    cout<<"\n\n\n***************TEST DELLE ASSEGNAZIONI: \n";
+    cout<<"\n\n***************TEST DELLE ASSEGNAZIONI: \n";
 
     cout<<"\nTestAssegnazione QueueVec->QueueVec(copy): ";
     lasd::QueueVec<int> qvc1;
@@ -511,7 +514,7 @@ bool TestDictionaryFunctions()
 { 
   bool TestDictionaryErrori = true;
 
-  cout<<"\n\n\n***************TEST DELLE FUNZIONI DEI DICTIONARY: \n";
+  cout<<"\n\n***************TEST DELLE FUNZIONI DEI DICTIONARY: \n";
 
   lasd::Vector<int> v1(3);
   v1[0]=1; v1[1]=2; v1[2]=3;
@@ -617,7 +620,7 @@ bool TestDictionaryFunctions()
 
 bool TestSort()
 {
-  cout<<"\n\n\n***************TEST DI SORTING: \n";
+  cout<<"\n\n***************TEST DI SORTING: \n";
 
   cout<<"\nTestSort SortingInt: ";
   bool TestSortInt = true;
@@ -657,7 +660,7 @@ bool TestSort()
 bool TestQueueVec()
 {
   bool TestQueueVec = true;
-  cout<<"\n\n\n***************TEST DI QUEUEVEC: \n";
+  cout<<"\n***************TEST DI QUEUEVEC: \n";
   cout<<"\nTestSort QueueVec: \n";
   lasd::QueueVec<int> queue;
 
@@ -774,8 +777,59 @@ bool TestQueueVec()
     TestQueueVec = false;
   }
 
-
   return TestQueueVec;
+}
+
+bool TestIteratori() {
+  bool result = true;
+  int lines = 0;
+
+  lasd::BinaryTreeLnk<int> btlnk;
+  lasd::BTInOrderIterator<int> inOrder_i_as(btlnk);
+  if(!(inOrder_i_as.Terminated()))
+    result=false;
+  inOrder_i_as.Reset();
+  if(!(inOrder_i_as.Terminated()))
+    result=false;
+  try{
+    inOrder_i_as.operator*();
+  }
+  catch(std::out_of_range our){
+    cout<<"catchata out_of_range in operator*()"<<endl;
+  }
+  if(!(inOrder_i_as.operator==(inOrder_i_as)))
+    result=false;
+  if(inOrder_i_as.operator!=(inOrder_i_as))
+    result=false;
+  cout<<"1"<<endl;
+  try{
+    cout<<"2"<<endl;
+    inOrder_i_as.operator++();
+    cout<<"3"<<endl;
+  }
+  catch(std::out_of_range our){
+    cout<<"4"<<endl;
+    cout<<"catchata out_of_range in operator++()"<<endl;
+    cout<<"5"<<endl;
+  }
+  cout<<"6"<<endl;
+
+  return result;
+}
+
+
+void TestEsercizio1(){
+  cout<<(TestCostruttori()? "\nPASSATO\n" : "\nNON Passato\n");
+  cout<<(TestAssegnazioni()? "\nPASSATO\n" : "\nNON Passato\n");
+  cout<<(TestDictionaryFunctions()? "\nPASSATO\n" : "\nNON Passato\n");
+  cout<<(TestSort()? "\nPASSATO\n\n" : "\nNON Passato\n\n");
+  cout<<(TestQueueVec()? "\nPASSATO\n\n" : "\nNON Passato\n\n");
+}
+
+void TestEsercizio2(){
+  bool testIteratori = TestIteratori();
+  cout<<"\n\nBegin of (BST into) Iterator Test: ", testIteratori ? cout<<"Passed!" : cout<<"NOT passed!";
+
 }
 
 #endif

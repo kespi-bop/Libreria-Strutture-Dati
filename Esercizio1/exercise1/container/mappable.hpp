@@ -110,7 +110,7 @@ public:
 
   using typename FoldableContainer<Data>::FoldFunctor;
 
-  //using typename FoldableContainer<Data>::Fold;
+  //using typename ableContainer<Data>::Fold;
 
   virtual inline void Fold(FoldFunctor func, void* acc) const override {   // Override FoldableContainer member
       MappableContainer<Data>::Fold(func, acc);

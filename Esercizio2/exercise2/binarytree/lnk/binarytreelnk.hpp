@@ -157,10 +157,10 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  virtual inline bool operator==(const BinaryTreeLnk& right) const noexcept { 
+  inline bool operator==(const BinaryTreeLnk& right) const noexcept { 
     return BinaryTree<Data>::operator==(right); 
   };
-  virtual inline bool operator!=(const BinaryTreeLnk& right) const noexcept { 
+  inline bool operator!=(const BinaryTreeLnk& right) const noexcept { 
     return BinaryTree<Data>::operator!=(right); 
   };
 

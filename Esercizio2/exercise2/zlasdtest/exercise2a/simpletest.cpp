@@ -16,7 +16,7 @@
 
 #include "../binarytree/binarytree.hpp"
 #include "../../binarytree/lnk/binarytreelnk.hpp"
-// #include "../../binarytree/vec/binarytreevec.hpp"
+#include "../../binarytree/vec/binarytreevec.hpp"
 
 /* ************************************************************************** */
 
@@ -53,20 +53,20 @@ void stestBinaryTreeInt(uint& testnum, uint& testerr) {
     SetAt(loctestnum, loctesterr, vec, true, 2, 2);
     SetAt(loctestnum, loctesterr, vec, true, 3, 3);
 
-    // lasd::BinaryTreeVec<int> btvec(vec);
-    // cout << endl << "Begin of BinaryTreeVec<int> Test:" << endl;
-    // stestBinaryTreeInt(btvec, loctestnum, loctesterr);
+    lasd::BinaryTreeVec<int> btvec(vec);
+    cout << endl << "Begin of BinaryTreeVec<int> Test:" << endl;
+    stestBinaryTreeInt(btvec, loctestnum, loctesterr);
     lasd::BinaryTreeLnk<int> btlnk(vec);
     cout << endl << "Begin of BinaryTreeLnk<int> Test:" << endl;
     stestBinaryTreeInt(btlnk, loctestnum, loctesterr);
     cout << "\n";
 
-    // lasd::BinaryTreeVec<int> copbtvec(btvec);
-    // EqualBT(loctestnum, loctesterr, copbtvec, btvec);
-    // btvec.Clear();
-    // btvec = move(copbtvec);
-    // NonEqualBT(loctestnum, loctesterr, copbtvec, btvec);
-    // Empty(loctestnum, loctesterr, copbtvec, true);
+    lasd::BinaryTreeVec<int> copbtvec(btvec);
+    EqualBT(loctestnum, loctesterr, copbtvec, btvec);
+    btvec.Clear();
+    btvec = move(copbtvec);
+    NonEqualBT(loctestnum, loctesterr, copbtvec, btvec);
+    Empty(loctestnum, loctesterr, copbtvec, true);
 
     lasd::BinaryTreeLnk<int> copbtlnk(btlnk);
     EqualBT(loctestnum, loctesterr, copbtlnk, btlnk);
@@ -176,19 +176,19 @@ void stestBinaryTreeFloat(uint& testnum, uint& testerr) {
     InsertAtFront(loctestnum, loctesterr, lst, true, 1.2);
     InsertAtBack(loctestnum, loctesterr, lst, true, 2.1);
 
-    // lasd::BinaryTreeVec<double> btvec(lst);
-    // cout << endl << "Begin of BinaryTreeVec<double> Test:" << endl;
-    // stestBinaryTreeFloat(btvec, loctestnum, loctesterr);
+    lasd::BinaryTreeVec<double> btvec(lst);
+    cout << endl << "Begin of BinaryTreeVec<double> Test:" << endl;
+    stestBinaryTreeFloat(btvec, loctestnum, loctesterr);
     lasd::BinaryTreeLnk<double> btlnk(lst);
     cout << endl << "Begin of BinaryTreeLnk<double> Test:" << endl;
     stestBinaryTreeFloat(btlnk, loctestnum, loctesterr);
     cout << "\n";
 
-    // lasd::BinaryTreeVec<double> copbtvec(move(btvec));
-    // Empty(loctestnum, loctesterr, btvec, true);
-    // NonEqualBT(loctestnum, loctesterr, copbtvec, btvec);
-    // btvec = copbtvec;
-    // EqualBT(loctestnum, loctesterr, copbtvec, btvec);
+    lasd::BinaryTreeVec<double> copbtvec(move(btvec));
+    Empty(loctestnum, loctesterr, btvec, true);
+    NonEqualBT(loctestnum, loctesterr, copbtvec, btvec);
+    btvec = copbtvec;
+    EqualBT(loctestnum, loctesterr, copbtvec, btvec);
 
     lasd::BinaryTreeLnk<double> copbtlnk(move(btlnk));
     Empty(loctestnum, loctesterr, btlnk, true);
@@ -231,22 +231,22 @@ void stestBinaryTreeString(uint& testnum, uint& testerr) {
     SetAt(loctestnum, loctesterr, vec, true, 2, string("C"));
     SetAt(loctestnum, loctesterr, vec, true, 3, string("D"));
 
-    // cout << endl << "Begin of BinaryTreeVec<string> Test:" << endl;
-    // lasd::BinaryTreeVec<string> btvec(vec);
-    // stestBinaryTreeString(btvec, loctestnum, loctesterr);
+    cout << endl << "Begin of BinaryTreeVec<string> Test:" << endl;
+    lasd::BinaryTreeVec<string> btvec(vec);
+    stestBinaryTreeString(btvec, loctestnum, loctesterr);
     cout << endl << "Begin of BinaryTreeVec<string> Test:" << endl;
     lasd::BinaryTreeLnk<string> btlnk(vec);
     stestBinaryTreeString(btlnk, loctestnum, loctesterr);
     cout << "\n";
 
-    // EqualBT(loctestnum, loctesterr, btvec, btlnk);
-    // btvec.Root().LeftChild().LeftChild().Element() = string("S");
-    // NonEqualBT(loctestnum, loctesterr, btlnk, btvec);
-    // btlnk.Root().RightChild().Element() = string("X");
-    // NonEqualBT(loctestnum, loctesterr, btvec, btlnk);
-    // btvec.Root().RightChild().Element() = string("X");
-    // btlnk.Root().LeftChild().LeftChild().Element() = string("S");
-    // EqualBT(loctestnum, loctesterr, btlnk, btvec);
+    EqualBT(loctestnum, loctesterr, btvec, btlnk);
+    btvec.Root().LeftChild().LeftChild().Element() = string("S");
+    NonEqualBT(loctestnum, loctesterr, btlnk, btvec);
+    btlnk.Root().RightChild().Element() = string("X");
+    NonEqualBT(loctestnum, loctesterr, btvec, btlnk);
+    btvec.Root().RightChild().Element() = string("X");
+    btlnk.Root().LeftChild().LeftChild().Element() = string("S");
+    EqualBT(loctestnum, loctesterr, btlnk, btvec);
   } catch(...) {
     loctestnum++; loctesterr++;
     cout << endl << "Unmanaged error! " << endl;

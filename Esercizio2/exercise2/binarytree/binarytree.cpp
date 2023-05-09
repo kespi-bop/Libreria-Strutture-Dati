@@ -32,28 +32,28 @@ void BinaryTree<Data>::Fold(FoldFunctor func, void *acc) const {
 }
 
 template <typename Data>
-void BinaryTree<Data>::PreOrderMap(const MapFunctor func) const {
+void BinaryTree<Data>::PreOrderMap(MapFunctor func) const {
   if(!(this->Empty())) {
     RecursivePreOrderMap(&this->Root(), func);
   }
 }
 
 template <typename Data>
-void BinaryTree<Data>::PostOrderMap(const MapFunctor func) const {
+void BinaryTree<Data>::PostOrderMap(MapFunctor func) const {
     if(!this->Empty()) {
         RecursivePostOrderMap(&this->Root(), func);
     }
 }
 
 template <typename Data>
-void BinaryTree<Data>::InOrderMap(const MapFunctor func) const {
+void BinaryTree<Data>::InOrderMap(MapFunctor func) const {
     if(!this->Empty()) {
         RecursiveInOrderMap(&this->Root(), func);
     }
 }
 
 template <typename Data>
-void BinaryTree<Data>::BreadthMap(const MapFunctor func) const{
+void BinaryTree<Data>::BreadthMap(MapFunctor func) const{
     if(!this->Empty()) {
         NotRecursiveBreadthMap(&this->Root(), func);
     }
@@ -239,7 +239,11 @@ bool BTPreOrderIterator<Data>::operator==(const BTPreOrderIterator &right) const
 
 template <typename Data>
 const Data& BTPreOrderIterator<Data>::operator*() const {
-    if(Terminated()) throw std::out_of_range("Iterator is terminated."); else return current->Element();
+    if(Terminated()) {
+        throw std::out_of_range("Iterator is terminated.");
+    } else {
+        return current->Element();
+    }
 }
 
 template <typename Data>
@@ -276,7 +280,7 @@ void BTPreOrderIterator<Data>::Reset() noexcept {
 template <typename Data>
 BTPostOrderIterator<Data>::BTPostOrderIterator(const BinaryTree<Data>& right){
     root = (right.Empty()) ? nullptr : &right.Root();
-    current=DeepestLeftLeaf(root);
+    current = DeepestLeftLeaf(root);
 }
 
 template <typename Data>
@@ -294,7 +298,12 @@ BTPostOrderIterator<Data>::BTPostOrderIterator(BTPostOrderIterator&& right) noex
 
 template <typename Data>
 const Data& BTPostOrderIterator<Data>::operator*() const {
-    if(Terminated()) throw std::out_of_range("Iterator is terminated."); else return current->Element();
+    if(Terminated()) {
+        throw std::out_of_range("Iterator is terminated.");
+    }
+    else {
+        return current->Element();
+    }
 }
 
 template <typename Data>
@@ -304,14 +313,21 @@ bool BTPostOrderIterator<Data>::Terminated() const noexcept {
 
 template <typename Data>
 BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator++(){
-    if(!(stack.Empty())){
-        if (stack.Top()->HasRightChild() && !(&(stack.Top()->RightChild()) == current)) {
-            current = &(stack.Top()->RightChild());
-            current = DeepestLeftLeaf(current);
+    if(!Terminated()){
+        if(!(stack.Empty())){
+            if (stack.Top()->HasRightChild() && !(&(stack.Top()->RightChild()) == current)) {
+                current = &(stack.Top()->RightChild());
+                current = DeepestLeftLeaf(current);
+            } else {
+                current = stack.TopNPop();
+            }
         } else {
-            current = stack.TopNPop();
+            current = nullptr;
         }
-    } else current = nullptr;
+    }
+    else {
+        throw std::out_of_range("Iterator is terminated.");
+    }
 
     return *this;
 }
@@ -411,7 +427,11 @@ bool BTInOrderIterator<Data>::operator==(const BTInOrderIterator &right) const n
 
 template <typename Data>
 const Data& BTInOrderIterator<Data>::operator*() const {
-    if(Terminated()) throw std::out_of_range("Iterator is terminated."); else return current->Element();
+    if(Terminated()) {
+        throw std::out_of_range("Iterator is terminated.");
+    } else {
+        return current->Element();
+    }
 }
 
 template <typename Data>
@@ -421,23 +441,28 @@ bool BTInOrderIterator<Data>::Terminated() const noexcept {
 
 template <typename Data>
 BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator++() {
-    if((stack.Empty()) && !(current->HasRightChild())) {
-        current=nullptr;
-    }
-    else { 
-        if(current->HasRightChild()){
-            current = MostLeftNode(&current->RightChild());
-        } 
-        else {
-            current = stack.TopNPop();
+    if(!Terminated()) {
+        if((stack.Empty()) && !(current->HasRightChild())) {
+            current=nullptr;
         }
+        else { 
+            if(current->HasRightChild()){
+                current = MostLeftNode(&current->RightChild());
+            } 
+            else {
+                current = stack.TopNPop();
+            }
+        }
+    } else {
+        throw std::out_of_range("Iterator is terminated.");
     }
+
     return *this;
 }
 
 template <typename Data>
 void BTInOrderIterator<Data>::Reset() noexcept {
-    current=MostLeftNode(root);
+    current = MostLeftNode(root);
 }
 
 /* ************************************************************************** */
@@ -477,12 +502,16 @@ BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator=(BTBreadthIterator&& 
 
 template <typename Data>
 bool BTBreadthIterator<Data>::operator==(const BTBreadthIterator &right) const noexcept {
-    return (current==right.current && queue==right.queue);
+    return (current == right.current && queue == right.queue);
 }
 
 template <typename Data>
 const Data& BTBreadthIterator<Data>::operator*() const {
-    if(Terminated()) throw std::out_of_range("Iterator is terminated."); else return current->Element();
+    if(Terminated()) {
+        throw std::out_of_range("Iterator is terminated.");
+    } else {
+        return current->Element();
+    }
 }
 
 template <typename Data>
@@ -492,19 +521,25 @@ bool BTBreadthIterator<Data>::Terminated() const noexcept {
 
 template <typename Data>
 BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator++() {
-    if (current != nullptr) {
-        if (current->HasLeftChild()) queue.Enqueue(&(current->LeftChild())); 
-        if (current->HasRightChild()) queue.Enqueue(&(current->RightChild()));
-        
-        if (!queue.Empty()) current = queue.HeadNDequeue();
-        else current = nullptr;
+    if(!Terminated()) {
+        if (current != nullptr) {
+            if (current->HasLeftChild()) queue.Enqueue(&(current->LeftChild())); 
+            if (current->HasRightChild()) queue.Enqueue(&(current->RightChild()));
+            
+            if (!queue.Empty()) current = queue.HeadNDequeue();
+            else current = nullptr;
+        } 
+    } else {
+        throw std::out_of_range("Iterator is terminated.");
     }
+
     return *this;
 }
 
 template <typename Data>
 void BTBreadthIterator<Data>::Reset() noexcept {
-    current=root;
+    current = root;
 }
+
 /* ************************************************************************** */
 }
