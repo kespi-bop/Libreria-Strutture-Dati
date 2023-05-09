@@ -9,9 +9,9 @@ inline bool BinaryTree<Data>::operator==(const BinaryTree &right) const noexcept
     if(size!=right.size) {
         return false;
     }
-    BTInOrderIterator i(*this);
-    BTInOrderIterator j(right);
-    while(i.Terminated() || j.Terminated()){
+    BTPreOrderIterator i(*this);
+    BTPreOrderIterator j(right);
+    while(!(i.Terminated()) && !(j.Terminated())){
         if((*i)!=(*j)) {
             return false;
         }
