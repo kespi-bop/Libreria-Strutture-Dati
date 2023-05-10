@@ -42,7 +42,7 @@ namespace lasd
     {
         if(right.root!=nullptr) {
             root = new NodeLnk(*right.root);
-            size = right.size;
+            size = right.Size();
         }     
     }
 
@@ -57,16 +57,10 @@ namespace lasd
     BinaryTreeLnk<Data> &BinaryTreeLnk<Data>::operator=(const BinaryTreeLnk &right)
     {
         Clear();
-        size = right.Size();
-        QueueVec<NodeLnk **> coda;
-        coda.Enqueue(&root);
-        for (BTBreadthIterator i(right); !i.Terminated(); ++i)
-        {
-            NodeLnk *&cur = *coda.HeadNDequeue();
-            cur = new NodeLnk(*i);
-            coda.Enqueue(&cur->LChild);
-            coda.Enqueue(&cur->RChild);
-        }
+        if(right.root!=nullptr) {
+            root = new NodeLnk(*right.root);
+            size = right.Size();
+        }    
         return *this;
     }
 

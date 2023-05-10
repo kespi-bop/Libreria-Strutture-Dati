@@ -52,10 +52,10 @@ protected:
     };
 
     // Copy assignment
-    inline NodeVec& operator=(const NodeVec& other) { bt->Elements[i]=other.Elements[i]; };
+    inline NodeVec& operator=(const NodeVec& right) { bt->Elements[i]=right.Elements[i]; };
 
     // Move assignment
-    inline NodeVec& operator=(NodeVec&& other) noexcept { std::swap(bt->Elements[i], other.Elements[i]); };
+    inline NodeVec& operator=(NodeVec&& right) noexcept { std::swap(bt->Elements[i], right.Elements[i]); };
 
     // Specific member functions
     inline virtual Data& Element() noexcept override { return bt->Elements[i]; }

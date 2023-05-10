@@ -285,8 +285,8 @@ BTPostOrderIterator<Data>::BTPostOrderIterator(const BinaryTree<Data>& right){
 
 template <typename Data>
 BTPostOrderIterator<Data>::BTPostOrderIterator(const BTPostOrderIterator& right) {
-    stack(right.stack);
-    root=right.Root();
+    stack = right.stack;
+    root = right.root;
     current=right.current;
 }
 
@@ -366,7 +366,8 @@ template <typename Data>
 BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator=(BTPostOrderIterator&& right) noexcept {
     std::swap(current, right.current);
     std::swap(root, right.root);
-    std::swap(stack, right.stack); //NOTE: si può fare? secondo me sì perché abbiamo fatto l'operatore && in stack
+    std::swap(stack, right.stack); 
+    return *this;
 }
 
 template <typename Data>
@@ -393,8 +394,8 @@ BTInOrderIterator<Data>::BTInOrderIterator(const BinaryTree<Data> &right) {
 
 template <typename Data>
 BTInOrderIterator<Data>::BTInOrderIterator(const BTInOrderIterator& right) {
-    stack(right.stack);
-    root=&right.Root();
+    stack = right.stack;
+    root = right.root;
     current=right.current;
 }
 
@@ -474,7 +475,7 @@ BTBreadthIterator<Data>::BTBreadthIterator(const BinaryTree<Data>& right) {
 
 template <typename Data>
 BTBreadthIterator<Data>::BTBreadthIterator(const BTBreadthIterator &right) {
-    stack(right.stack);
+    queue = right.queue;
     root = current = right.current;
 }
 
@@ -540,6 +541,76 @@ template <typename Data>
 void BTBreadthIterator<Data>::Reset() noexcept {
     current = root;
 }
+
+
+/* ************************************************************************** */
+
+
+template <typename Data>
+BTPreOrderMutableIterator<Data>& BTPreOrderMutableIterator<Data>::operator=(const BTPreOrderMutableIterator& right) {
+    this->current=right.current;
+    this->root=right.root;
+    this->stack=right.stack;
+    return *this;
+}
+
+template <typename Data>
+BTPreOrderMutableIterator<Data>& BTPreOrderMutableIterator<Data>::operator=(BTPreOrderMutableIterator&& right) noexcept {
+    this->current = std::move(right.current);
+    this->root = std::move(right.root);
+    this->stack = std::move(right.stack); 
+    return *this;
+}
+
+
+template <typename Data>
+BTPostOrderMutableIterator<Data>& BTPostOrderMutableIterator<Data>::operator=(const BTPostOrderMutableIterator& right) {
+    this->current=right.current;
+    this->root=right.root;
+    this->stack=right.stack;
+    return *this;
+}
+
+template <typename Data>
+BTPostOrderMutableIterator<Data>& BTPostOrderMutableIterator<Data>::operator=(BTPostOrderMutableIterator&& right) noexcept {
+    std::swap(this->current, right.current);
+    std::swap(this->root, right.root);
+    std::swap(this->stack, right.stack);
+    return *this;
+}
+
+template <typename Data>
+BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=(const BTInOrderMutableIterator& right) {
+    this->current=right.current;
+    this->root=right.root;
+    this->stack=right.stack;
+    return *this;
+}
+
+template <typename Data>
+BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=(BTInOrderMutableIterator&& right) noexcept {
+    std::swap(this->current, right.current);
+    std::swap(this->root, right.root);
+    std::swap(this->stack, right.stack);
+    return *this;
+}
+
+template <typename Data>
+BTBreadthMutableIterator<Data>& BTBreadthMutableIterator<Data>::operator=(const BTBreadthMutableIterator& right) {
+    this->current=right.current;
+    this->root=right.root;
+    this->queue=right.queue;
+    return *this;
+}
+
+template <typename Data>
+BTBreadthMutableIterator<Data>& BTBreadthMutableIterator<Data>::operator=(BTBreadthMutableIterator&& right) noexcept {
+    std::swap(this->current, right.current);
+    std::swap(this->root, right.root);
+    std::swap(this->queue, right.queue);
+    return *this;
+}
+
 
 /* ************************************************************************** */
 }

@@ -23,21 +23,23 @@
 
 #include "../iterator/iterator.hpp"
 #include "../binarytree/binarytree.hpp"
+#include "../binarytree/lnk/binarytreelnk.hpp"
+#include "../binarytree/vec/binarytreevec.hpp"
 #include "../bst/bst.hpp"
 
 /* ************************************************************************** */
 
-void myTest();
+bool myTest();
 
-void TestEsercizio1();
-bool TestCostruttori();
-bool TestAssegnazioni();
-bool TestDictionaryFunctions();
-bool TestSort();
-bool TestQueueVec();
+// void TestEsercizio1();
+// bool TestCostruttori();
+// bool TestAssegnazioni();
+// bool TestDictionaryFunctions();
+// bool TestSort();
+// bool TestQueueVec();
 
-void TestEsercizio2();
-bool TestIteratori();
+// void TestEsercizio2();
+// bool TestIteratori();
 
 /* ************************************************************************** */
 

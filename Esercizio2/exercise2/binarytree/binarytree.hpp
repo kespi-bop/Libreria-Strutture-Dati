@@ -352,7 +352,9 @@ public:
 
   // Comparison operators
   bool operator==(const BTPreOrderIterator& right) const noexcept;
-  bool operator!=(const BTPreOrderIterator& right) const noexcept;
+  bool operator!=(const BTPreOrderIterator& right) const noexcept {
+    return !(operator==(right));
+  };
 
   /* ************************************************************************ */
 
@@ -411,10 +413,10 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  BTPreOrderMutableIterator& operator=(const BTPreOrderMutableIterator& right) { return BTPreOrderIterator<Data>::operator=(right); };
+  BTPreOrderMutableIterator& operator=(const BTPreOrderMutableIterator& right);
 
   // Move assignment
-  BTPreOrderMutableIterator& operator=(BTPreOrderMutableIterator&& right) noexcept { return BTPreOrderIterator<Data>::operator=(std::move(right)); };
+  BTPreOrderMutableIterator& operator=(BTPreOrderMutableIterator&& right) noexcept;
 
   /* ************************************************************************ */
 
@@ -541,10 +543,10 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  BTPostOrderMutableIterator& operator=(const BTPostOrderMutableIterator& right) { return BTPostOrderIterator<Data>::operator=(right); };
+  BTPostOrderMutableIterator& operator=(const BTPostOrderMutableIterator& right);
 
   // Move assignment
-  BTPostOrderMutableIterator& operator=(BTPostOrderMutableIterator&& right) noexcept { return BTPostOrderIterator<Data>::operatr=(std::move(right)); };
+  BTPostOrderMutableIterator& operator=(BTPostOrderMutableIterator&& right) noexcept;
 
   /* ************************************************************************ */
 
@@ -667,10 +669,10 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  inline BTInOrderMutableIterator& operator=(const BTInOrderMutableIterator& right) { return BTInOrderIterator<Data>::operator=(right); };
+  inline BTInOrderMutableIterator& operator=(const BTInOrderMutableIterator& right);
 
   // Move assignment
-  inline BTInOrderMutableIterator& operator=(BTInOrderMutableIterator&& right) { return BTInOrderIterator<Data>::operator=(std::move(right)); };
+  inline BTInOrderMutableIterator& operator=(BTInOrderMutableIterator&& right) noexcept;
 
   /* ************************************************************************ */
 
@@ -791,10 +793,10 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  BTBreadthMutableIterator& operator=(const BTBreadthMutableIterator& right) { return BTBreadthIterator<Data>::operator=(right); };
+  BTBreadthMutableIterator& operator=(const BTBreadthMutableIterator& right);
 
   // Move assignment
-  BTBreadthMutableIterator& operator=(BTBreadthMutableIterator&& right) noexcept { return BTBreadthIterator<Data>::operator=(std::move(right)); };
+  BTBreadthMutableIterator& operator=(BTBreadthMutableIterator&& right) noexcept;
 
   /* ************************************************************************ */
 
