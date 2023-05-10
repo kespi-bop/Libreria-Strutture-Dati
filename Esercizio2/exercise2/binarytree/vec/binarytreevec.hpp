@@ -40,29 +40,35 @@ protected:
 
   protected:
 
-    const ulong Index() const { return i; };
-
   public:
 
-    virtual ~NodeVec() {
-      delete bt;
-    };
+    // Specific constructor
     NodeVec(const Data &dat, int i, BinaryTreeVec<Data>* bt);
     NodeVec(Data&& dat, int i, BinaryTreeVec<Data>* bt);
+
+    // Destructor
+    inline virtual ~NodeVec() { 
+      bt->Nodes[i] = nullptr; 
+    };
+
+    // Copy assignment
+    inline NodeVec& operator=(const NodeVec& other) { bt->Elements[i]=other.Elements[i]; };
+
+    // Move assignment
+    inline NodeVec& operator=(NodeVec&& other) noexcept { std::swap(bt->Elements[i], other.Elements[i]); };
+
+    // Specific member functions
+    inline virtual Data& Element() noexcept override { return bt->Elements[i]; }
+    inline virtual const Data& Element() const noexcept override { return bt->Elements[i]; }
 
     virtual bool HasLeftChild() const noexcept override;
     virtual bool HasRightChild() const noexcept override;
 
-    virtual NodeVec& RightChild() override;
-    virtual const NodeVec& RightChild() const override;
-
     virtual NodeVec& LeftChild() override;
     virtual const NodeVec& LeftChild() const override;
 
-
-    virtual inline Data& Element() noexcept override { return bt->Elements[Index()]; }
-    virtual inline const Data& Element() const noexcept override { return bt->Elements[Index()]; }
-
+    virtual NodeVec& RightChild() override;
+    virtual const NodeVec& RightChild() const override;
   };
 
   using Container::size;
@@ -91,7 +97,12 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~BinaryTreeVec() = default;
+  virtual ~BinaryTreeVec() {
+    for(int i=0; i<Nodes.Size(); i++){
+    if(Nodes[i]!=nullptr)
+        delete Nodes[i];
+    } 
+  };
 
   /* ************************************************************************ */
 
@@ -105,10 +116,10 @@ public:
 
   // Comparison operators
   inline bool operator==(const BinaryTreeVec& right) const noexcept { 
-    return Vector<Data>::operator==(right.Elements); 
+    return Vector<Data>::operator==(right); 
   };
   inline bool operator!=(const BinaryTreeVec& right) const noexcept { 
-    return Vector<Data>::operator!=(right.Elements); 
+    return Vector<Data>::operator!=(right); 
   };
 
   /* ************************************************************************ */
@@ -166,6 +177,14 @@ public:
   //Gestione del Diamond Problem
   void Fold(FoldFunctor func, void* acc) const override{
     BinaryTree<Data>::Fold(func, acc);
+  }
+
+  void PreOrderFold(FoldFunctor func, void* acc) const override{
+    BinaryTree<Data>::PreOrderFold(func, acc);
+  }
+
+  void PostOrderFold(FoldFunctor func, void* acc) const override{
+    BinaryTree<Data>::PostOrderFold(func, acc);
   }
 
   void PreOrderMap(MapFunctor func) const override{
