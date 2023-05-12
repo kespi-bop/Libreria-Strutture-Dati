@@ -82,7 +82,7 @@ BinaryTreeVec<Data>::BinaryTreeVec(const MappableContainer<Data>& right) {
             i++;
         }
     );
-    size = right.Size();
+    this->size = right.Size();
 }
 
 template <typename Data>
@@ -98,13 +98,12 @@ BinaryTreeVec<Data>::BinaryTreeVec(MutableMappableContainer<Data> &&right) noexc
             i++;
         }
     );
-    std::swap(size, right.size);
+    this->size = right.Size();
 }
 
 template <typename Data>
 BinaryTreeVec<Data>::BinaryTreeVec(const BinaryTreeVec<Data> &right) {
     this->Resize(right.Size());
-    this->size = right.Size();
     Nodes = new NodeVec[right.Size()];
     std::copy(right.Elements, right.Elements + size, Elements);
     std::copy(right.Nodes, right.Nodes + size, Nodes);
@@ -115,10 +114,9 @@ BinaryTreeVec<Data>::BinaryTreeVec(const BinaryTreeVec<Data> &right) {
 
 template <typename Data>
 BinaryTreeVec<Data>::BinaryTreeVec(BinaryTreeVec<Data> &&right) noexcept {
-    Nodes = new NodeVec[right.Size()];
     std::swap(this->size, right.size);
     std::swap(Elements, right.Elements);
-    std::swap(Nodes, right.Nodes);
+    Nodes = std::move(right.Nodes);
     for(int i = 0; i < size; i++) {
         right.Nodes[i].bt = &right;
         Nodes[i].bt = this;
@@ -129,7 +127,7 @@ template <typename Data>
 BinaryTreeVec<Data>& BinaryTreeVec<Data>::operator=(const BinaryTreeVec& right) {
     this->Clear();
     this->Resize(right.Size());
-    size = right.Size();
+    Nodes = new NodeVec[right.Size()];
     std::copy(right.Elements, right.Elements + size, Elements);
     std::copy(right.Nodes, right.Nodes + size, Nodes);
     for(int i = 0; i < right.Size(); i++) {

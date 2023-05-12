@@ -112,10 +112,7 @@ public:
 
   // Destructor
   virtual ~BinaryTreeVec(){
-    if(!this->Empty()) {
-      delete[] Nodes;
-      Nodes = nullptr;
-    }
+    Clear();
   }
 
   /* ************************************************************************ */
