@@ -68,8 +68,12 @@ protected:
     };
 
     // Specific member functions
-    inline virtual Data& Element() noexcept override { return bt->Elements[index]; }
-    inline virtual const Data& Element() const noexcept override { return bt->Elements[index]; }
+    inline virtual Data& Element() noexcept override { 
+      return bt->Elements[index]; 
+    }
+    inline virtual const Data& Element() const noexcept override { 
+      return bt->Elements[index]; 
+    }
 
     virtual bool HasLeftChild() const noexcept override;
     virtual bool HasRightChild() const noexcept override;
@@ -108,7 +112,7 @@ public:
 
   // Destructor
   virtual ~BinaryTreeVec(){
-    if(size > 0) {
+    if(!this->Empty()) {
       delete[] Nodes;
       Nodes = nullptr;
     }
@@ -149,12 +153,12 @@ public:
   // Specific member function (inherited from ClearableContainer)
 
   virtual inline void Clear() override {
-    if(size > 0){
+    if(!this->Empty()) {
       Vector<Data>::Clear();
       delete[] Nodes;
       Nodes = nullptr;
     }
-  }; // Override ClearableContainer member (throw std::length_error when empty)
+  }; // Override ClearableContainer member
 
   /* ************************************************************************ */
 
@@ -185,9 +189,7 @@ public:
   }; // Override MutableBreadthMappableContainer member
 
 
-
-
-  //Gestione del Diamond Problem
+  //Gestione del Diamond Problem ereditando da vector
   void Fold(FoldFunctor func, void* acc) const override{
     BinaryTree<Data>::Fold(func, acc);
   }

@@ -801,6 +801,85 @@ bool TestIteratori() {
     testIteratori &= false;
   }
 
+  lasd::List<int> lst;
+  for(int i=0; i<6; i++)
+      lst.InsertAtBack(i);
+  lasd::BinaryTreeLnk<int> btLnk(lst);
+
+  cout<<"MAP:"<<endl;
+  cout<<"Expected: 0->1->3->4->2->5->"<<endl;
+  cout<<"Map ottenuta: ";
+  btLnk.Map(
+    [](int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  cout<<endl<<endl;
+
+  cout<<"PRE_ORDER_MAP:"<<endl;
+  cout<<"Expected: 0->1->3->4->2->5->"<<endl;
+  cout<<"PreOrderMap ottenuto: ";
+  btLnk.PreOrderMap(
+    [](int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  lasd::BTPreOrderIterator<int> itrPre(btLnk);
+  cout<<"\nPreOrderIterator: ";
+  while(!(itrPre.Terminated())){
+    cout<<*itrPre<<"->";
+    ++itrPre;
+  }
+  cout<<endl<<endl;
+
+  cout<<"POST_ORDER_MAP:"<<endl;
+  cout<<"Expected: 3->4->1->5->2->0->"<<endl;
+  cout<<"PostOrderMap: ";
+  btLnk.PostOrderMap(
+    [](int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  lasd::BTPostOrderIterator<int> itrPost(btLnk);
+  cout<<"\nPostOrderIterator: ";
+  while(!(itrPost.Terminated())){
+    cout<<*itrPost<<"->";
+    ++itrPost;
+  }
+  cout<<endl<<endl;
+
+  cout<<"IN_ORDER_MAP:"<<endl;
+  cout<<"Expected: 3->1->4->0->5->2->"<<endl;
+  cout<<"InOrderMap: ";
+  btLnk.InOrderMap(
+    [](int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  lasd::BTInOrderIterator<int> itrIn(btLnk);
+  cout<<"\nInOrderIterator: ";
+  while(!(itrIn.Terminated())){
+    cout<<*itrIn<<"->";
+    ++itrIn;
+  }
+  cout<<endl<<endl;
+
+  cout<<"BREADTH_ORDER_MAP:"<<endl;
+  cout<<"Expected: 0->1->2->3->4->5->"<<endl;
+  cout<<"BreadthMap: ";
+  btLnk.BreadthMap(
+    [](int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  lasd::BTBreadthIterator<int> itrBreadth(btLnk);
+  cout<<"\nBreadthOrderIterator: ";
+  while(!(itrBreadth.Terminated())){
+    cout<<*itrBreadth<<"->";
+    ++itrBreadth;
+  }
+  cout<<endl<<endl;
+
 
   return testIteratori;
 }
@@ -933,84 +1012,3 @@ void TestEsercizio2(){
 
 
 #endif
-
-//TEST FOTTUTO DA FABRIZIO
-
-// lasd::List<int> lst;
-//   for(int i=0; i<6; i++)
-//       lst.InsertAtBack(i);
-
-//   lasd::BinaryTreeLnk<int> btLnk(lst);
-
-//   cout<<"Atteso con Map: 0->1->3->4->2->5->"<<endl;
-//   cout<<"Stampa con Map: ";
-//   btLnk.Map(
-//     [](int& dat){
-//       cout<<dat<<"->";
-//     }
-//   );
-//   cout<<endl<<endl;
-
-//   cout<<"Atteso con PreOrderMap: 0->1->3->4->2->5->"<<endl;
-//   cout<<"Stampa con PreOrderMap: ";
-//   btLnk.PreOrderMap(
-//     [](int& dat){
-//       cout<<dat<<"->";
-//     }
-//   );
-//   cout<<endl;
-//   lasd::BTPreOrderIterator<int> itrPre(btLnk);
-//   cout<<"Stampa PreOrder con iteratore: "<<endl;
-//   while(!(itrPre.Terminated())){
-//     cout<<*itrPre<<"->";
-//     ++itrPre;
-//   }
-//   cout<<endl<<endl;
-
-//   cout<<"Atteso con PostOrderMap: 3->4->1->5->2->0->"<<endl;
-//   cout<<"Stampa con PostOrderMap: ";
-//   btLnk.PostOrderMap(
-//     [](int& dat){
-//       cout<<dat<<"->";
-//     }
-//   );
-//   cout<<endl;
-//   lasd::BTPostOrderIterator<int> itrPost(btLnk);
-//   cout<<"Stampa PostOrder con iteratore: "<<endl;
-//   while(!(itrPost.Terminated())){
-//     cout<<*itrPost<<"->";
-//     ++itrPost;
-//   }
-//   cout<<endl<<endl;
-
-//   cout<<"Atteso con InOrderMap: 3->1->4->0->5->2->"<<endl;
-//   cout<<"Stampa con InOrderMap: ";
-//   btLnk.InOrderMap(
-//     [](int& dat){
-//       cout<<dat<<"->";
-//     }
-//   );
-//   cout<<endl;
-//   lasd::BTInOrderIterator<int> itrIn(btLnk);
-//   cout<<"Stampa InOrder con iteratore: "<<endl;
-//   while(!(itrIn.Terminated())){
-//     cout<<*itrIn<<"->";
-//     ++itrIn;
-//   }
-//   cout<<endl<<endl;
-
-//   cout<<"Atteso con BreadthMap: 0->1->2->3->4->5->"<<endl;
-//   cout<<"Stampa con BreadthMap: ";
-//   btLnk.BreadthMap(
-//     [](int& dat){
-//       cout<<dat<<"->";
-//     }
-//   );
-//   cout<<endl;
-//   lasd::BTBreadthIterator<int> itrBreadth(btLnk);
-//   cout<<"Stampa BreadthOrder con iteratore: "<<endl;
-//   while(!(itrBreadth.Terminated())){
-//     cout<<*itrBreadth<<"->";
-//     ++itrBreadth;
-//   }
-//   cout<<endl<<endl;

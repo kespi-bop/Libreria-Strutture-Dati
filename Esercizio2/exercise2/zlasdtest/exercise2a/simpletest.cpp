@@ -61,14 +61,10 @@ void stestBinaryTreeInt(uint& testnum, uint& testerr) {
     stestBinaryTreeInt(btlnk, loctestnum, loctesterr);
     cout << "\n";
 
-    cout<<"PRIMA DELLA COSTRUZIONE"<<endl;
     lasd::BinaryTreeVec<int> copbtvec(btvec);
-    cout<<"DOPO LA COSTRUZIONE"<<endl;
     EqualBT(loctestnum, loctesterr, copbtvec, btvec);
-    cout<<"DOPO L'UGUAGLIANZA"<<endl;
     btvec.Clear();
     btvec = move(copbtvec);
-    cout<<"E' ANDATO AVANTI"<<endl;
     NonEqualBT(loctestnum, loctesterr, copbtvec, btvec);
     Empty(loctestnum, loctesterr, copbtvec, true);
 

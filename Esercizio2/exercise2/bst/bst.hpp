@@ -28,8 +28,6 @@ protected:
   using BinaryTreeLnk<Data>::root;
   using typename BinaryTreeLnk<Data>::NodeLnk;
 
-  // ...
-
 public:
 
   // Default constructor

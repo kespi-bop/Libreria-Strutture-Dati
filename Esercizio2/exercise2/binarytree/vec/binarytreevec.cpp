@@ -1,3 +1,4 @@
+#include "binarytreevec.hpp"
 
 namespace lasd {
 
@@ -103,6 +104,7 @@ BinaryTreeVec<Data>::BinaryTreeVec(MutableMappableContainer<Data> &&right) noexc
 template <typename Data>
 BinaryTreeVec<Data>::BinaryTreeVec(const BinaryTreeVec<Data> &right) {
     this->Resize(right.Size());
+    this->size = right.Size();
     Nodes = new NodeVec[right.Size()];
     std::copy(right.Elements, right.Elements + size, Elements);
     std::copy(right.Nodes, right.Nodes + size, Nodes);
@@ -153,14 +155,22 @@ BinaryTreeVec<Data>& BinaryTreeVec<Data>::operator=(BinaryTreeVec &&right) noexc
 
 template <typename Data>
 const typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::Root() const {
-    if(!this->Empty()) return Nodes[0];
-    else throw std::length_error("BinaryTreeVec<Data>::Root(): Empty tree");
+    if(!this->Empty()) {
+        return Nodes[0];
+    }
+    else {
+        throw std::length_error("BinaryTreeVec<Data>::Root(): Empty tree");
+    }
 }
 
 template <typename Data>
 typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::Root() {
-    if(!this->Empty()) return Nodes[0];
-    else throw std::length_error("BinaryTreeVec<Data>::Root(): Empty tree");
+    if(!this->Empty()) {
+        return Nodes[0];
+    }
+    else {
+        throw std::length_error("BinaryTreeVec<Data>::Root(): Empty tree");
+    }
 }
 
 /* ************************************************************************** */
