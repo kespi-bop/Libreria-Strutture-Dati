@@ -35,31 +35,41 @@ protected:
 
   private:
 
-    BinaryTreeVec<Data>* bt = nullptr;
-    int i;
-
   protected:
 
   public:
 
+    BinaryTreeVec<Data>* bt = nullptr;
+    int index;
+
     // Specific constructor
+    NodeVec() {
+      bt = nullptr;
+      index = 0;
+    };
     NodeVec(const Data &dat, int i, BinaryTreeVec<Data>* bt);
     NodeVec(Data&& dat, int i, BinaryTreeVec<Data>* bt);
 
     // Destructor
-    inline virtual ~NodeVec() { 
-      bt->Nodes[i] = nullptr; 
-    };
+    inline virtual ~NodeVec() = default;
 
     // Copy assignment
-    inline NodeVec& operator=(const NodeVec& right) { bt->Elements[i]=right.Elements[i]; };
+    inline NodeVec& operator=(const NodeVec& right) { 
+      bt = right.bt;
+      index = right.index;
+      return *this;
+    };
 
     // Move assignment
-    inline NodeVec& operator=(NodeVec&& right) noexcept { std::swap(bt->Elements[i], right.Elements[i]); };
+    inline NodeVec& operator=(NodeVec&& right) noexcept { 
+      std::swap(bt, right.bt);
+      std::swap(index = right.index); 
+      return *this;
+    };
 
     // Specific member functions
-    inline virtual Data& Element() noexcept override { return bt->Elements[i]; }
-    inline virtual const Data& Element() const noexcept override { return bt->Elements[i]; }
+    inline virtual Data& Element() noexcept override { return bt->Elements[index]; }
+    inline virtual const Data& Element() const noexcept override { return bt->Elements[index]; }
 
     virtual bool HasLeftChild() const noexcept override;
     virtual bool HasRightChild() const noexcept override;
@@ -73,7 +83,7 @@ protected:
 
   using Container::size;
   using Vector<Data>::Elements;
-  Vector<NodeVec*> Nodes = Vector<NodeVec*>(0);
+  NodeVec* Nodes = nullptr;
 
 public:
 
@@ -97,12 +107,12 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~BinaryTreeVec() {
-    for(int i=0; i<Nodes.Size(); i++){
-    if(Nodes[i]!=nullptr)
-        delete Nodes[i];
-    } 
-  };
+  virtual ~BinaryTreeVec(){
+    if(size > 0) {
+      delete[] Nodes;
+      Nodes = nullptr;
+    }
+  }
 
   /* ************************************************************************ */
 
@@ -138,9 +148,12 @@ public:
 
   // Specific member function (inherited from ClearableContainer)
 
-  virtual inline void Clear() override { 
-    Vector<Data>::Clear();
-    Nodes.Clear();
+  virtual inline void Clear() override {
+    if(size > 0){
+      Vector<Data>::Clear();
+      delete[] Nodes;
+      Nodes = nullptr;
+    }
   }; // Override ClearableContainer member (throw std::length_error when empty)
 
   /* ************************************************************************ */
@@ -210,8 +223,6 @@ public:
   void Map(MutableMapFunctor func) override{
     MutableBinaryTree<Data>::Map(func); 
   }
-  
-
 
 };
 

@@ -29,17 +29,18 @@
 
 /* ************************************************************************** */
 
-bool myTest();
+void myTest();
 
-// void TestEsercizio1();
-// bool TestCostruttori();
-// bool TestAssegnazioni();
-// bool TestDictionaryFunctions();
-// bool TestSort();
-// bool TestQueueVec();
+void TestEsercizio1();
+bool TestCostruttori();
+bool TestAssegnazioni();
+bool TestDictionaryFunctions();
+bool TestSort();
+bool TestQueueVec();
 
-// void TestEsercizio2();
-// bool TestIteratori();
+void TestEsercizio2();
+bool TestBST();
+bool TestIteratori();
 
 /* ************************************************************************** */
 

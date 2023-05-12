@@ -25,6 +25,7 @@
 
 /* ************************************************************************** */
 
+using namespace std;
 
 int main() {
 
@@ -63,5 +64,7 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
       myTest();
   }
 
+
+  
   return 0;
 }

@@ -127,6 +127,7 @@ private:
 
   using Container::size;
 
+
 protected:
 
   ulong Partition(ulong p, ulong r)noexcept;

@@ -124,7 +124,7 @@ inline void MutableBinaryTree<Data>::PreOrderMap(MutableMapFunctor func) {
 template <typename Data>
 void MutableBinaryTree<Data>::PostOrderMap(MutableMapFunctor func){
     if(!(this->Empty())) {
-        RecursivePreOrderMap(&this->Root(), func);
+        RecursivePostOrderMap(&this->Root(), func);
     }
 }
 

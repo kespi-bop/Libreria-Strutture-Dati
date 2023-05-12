@@ -6,49 +6,63 @@ namespace lasd {
 template <typename Data>
 BinaryTreeVec<Data>::NodeVec::NodeVec(const Data &dat, int i, BinaryTreeVec<Data>* bt) {
     this->bt = bt;
-    this->i=i;
-    bt->Elements[i]=dat;  
+    this->index = i;
+    bt->Elements[i] = dat;  
 }
 
 template <typename Data>
 BinaryTreeVec<Data>::NodeVec::NodeVec(Data&& dat, int i, BinaryTreeVec<Data>* bt) {
-    this->bt = bt;
-    this->i=i;
+    std::swap(this->bt, bt);
+    std::swap(this->index, i);
     std::swap(bt->Elements[i], dat);  
 }
 
 template <typename Data>
 bool BinaryTreeVec<Data>::NodeVec::HasLeftChild() const noexcept
 {
-    return (i*2+1<(bt->Nodes).Size()) && ((bt->Nodes)[i*2+1] != nullptr);
+    if(index*2+1 < bt->size) {
+        return true;
+    }
+    return false;
 }
 
 template <typename Data>
 bool BinaryTreeVec<Data>::NodeVec::HasRightChild() const noexcept {
-    return i*2+2<(bt->Nodes).Size() && (bt->Nodes)[i*2+2] != nullptr;
+    if(index*2+2 < bt->size) {
+            return true;
+    }
+    return false;
 }
 
 template <typename Data>
 const typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::LeftChild() const {
-    if(HasLeftChild()) return *(bt->Nodes).operator[](i*2+1);
+    if(HasLeftChild()) {
+        return (bt->Nodes[index*2+1]);
+    }
     else throw std::out_of_range("BinaryTreeVec<Data>::NodeVec::LeftChild(): Not found!");
 }
 
 template <typename Data>
 const typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::RightChild() const {
-    if(HasRightChild()) return *(bt->Nodes).operator[](i*2+2);//[i*2+2];
+    if(HasRightChild()) {
+        return (bt->Nodes[index*2+2]);
+    }
     else throw std::out_of_range("BinaryTreeVec<Data>::NodeVec::RightChild(): Not found!");
 }
 
 template <typename Data>
 typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::LeftChild() {
-    if(HasLeftChild()) return *(bt->Nodes).operator[](i*2+1);
+    if(HasLeftChild()) {
+        return (bt->Nodes[index*2+1]);
+    }
     else throw std::out_of_range("BinaryTreeVec<Data>::NodeVec::LeftChild(): Not found!");
 }
 
 template <typename Data>
 typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::RightChild() {
-    if(HasRightChild()) return *(bt->Nodes).operator[](i*2+2);
+    if(HasRightChild()) {
+        return (bt->Nodes[index*2+2]);
+    }
     else throw std::out_of_range("BinaryTreeVec<Data>::NodeVec::RightChild(): Not found!");
 }
 
@@ -57,56 +71,68 @@ typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::RightChild(
 template <typename Data>
 BinaryTreeVec<Data>::BinaryTreeVec(const MappableContainer<Data>& right) {
     this->Resize(right.Size());
-    Nodes.Resize(right.Size());
+    Nodes = new NodeVec[right.Size()];
     int i = 0;
-    this->size = right.Size();
     right.Map(
         [this, &i](const Data& dat){
-            this->Nodes[i] = new NodeVec(dat, i, this);
+            this->Nodes[i].index = i;
+            Elements[i] = dat;
+            this->Nodes[i].bt = this;
             i++;
         }
     );
-
+    size = right.Size();
 }
 
 template <typename Data>
 BinaryTreeVec<Data>::BinaryTreeVec(MutableMappableContainer<Data> &&right) noexcept {
     this->Resize(right.Size());
-    Nodes.Resize(right.Size());
+    Nodes = new NodeVec[right.Size()];
     int i = 0;
-    std::swap(this->size, right.size);
     right.Map(
-        [this, &i](const Data& dat){
-            this->Nodes[i] = new NodeVec(std::move(dat), i, this);
+        [this, &i](Data& dat){
+            this->Nodes[i].index = i;
+            Elements[i] = std::move(dat);
+            this->Nodes[i].bt = this;
             i++;
         }
     );
+    std::swap(size, right.size);
 }
 
 template <typename Data>
 BinaryTreeVec<Data>::BinaryTreeVec(const BinaryTreeVec<Data> &right) {
     this->Resize(right.Size());
+    Nodes = new NodeVec[right.Size()];
+    std::copy(right.Elements, right.Elements + size, Elements);
+    std::copy(right.Nodes, right.Nodes + size, Nodes);
     for(int i = 0; i < right.Size(); i++) {
-        Elements[i] = right.Elements[i];
+        Nodes[i].bt = this;
     }
-    Nodes = right.Nodes;
 }
 
 template <typename Data>
 BinaryTreeVec<Data>::BinaryTreeVec(BinaryTreeVec<Data> &&right) noexcept {
+    Nodes = new NodeVec[right.Size()];
     std::swap(this->size, right.size);
     std::swap(Elements, right.Elements);
     std::swap(Nodes, right.Nodes);
+    for(int i = 0; i < size; i++) {
+        right.Nodes[i].bt = &right;
+        Nodes[i].bt = this;
+    }
 }
 
 template <typename Data>
 BinaryTreeVec<Data>& BinaryTreeVec<Data>::operator=(const BinaryTreeVec& right) {
     this->Clear();
     this->Resize(right.Size());
-    for(int i = 0; i < this->Size(); i++) {
-        Elements[i] = right.Elements[i];
+    size = right.Size();
+    std::copy(right.Elements, right.Elements + size, Elements);
+    std::copy(right.Nodes, right.Nodes + size, Nodes);
+    for(int i = 0; i < right.Size(); i++) {
+        Nodes[i].bt = this;
     }
-    Nodes=right.Nodes;
     return *this;
 }
 
@@ -116,18 +142,24 @@ BinaryTreeVec<Data>& BinaryTreeVec<Data>::operator=(BinaryTreeVec &&right) noexc
     std::swap(this->size, right.size);
     std::swap(Elements, right.Elements);
     Nodes = std::move(right.Nodes);
+    for(int i = 0; i < size; i++) {
+        Nodes[i].bt = this;
+    }
+    for(int i = 0; i < right.size; i++) {
+        right.Nodes[i].bt = &right;
+    }
     return *this;
 }
 
 template <typename Data>
 const typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::Root() const {
-    if(!this->Empty()) return *Nodes[0];
+    if(!this->Empty()) return Nodes[0];
     else throw std::length_error("BinaryTreeVec<Data>::Root(): Empty tree");
 }
 
 template <typename Data>
 typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::Root() {
-    if(!this->Empty()) return *Nodes[0];
+    if(!this->Empty()) return Nodes[0];
     else throw std::length_error("BinaryTreeVec<Data>::Root(): Empty tree");
 }
 
