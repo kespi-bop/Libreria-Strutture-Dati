@@ -33,7 +33,7 @@ protected:
 
   public:
 
-    Data element;
+    Data element {};
     NodeLnk* LChild = nullptr;
     NodeLnk* RChild = nullptr;
 

@@ -421,8 +421,12 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  inline bool operator==(const BTPreOrderMutableIterator& right) const noexcept { return BTPreOrderIterator<Data>::operator==(right); };
-  inline bool operator!=(const BTPreOrderMutableIterator& right) const noexcept { return BTPreOrderIterator<Data>::operator!=(right); };
+  inline bool operator==(const BTPreOrderMutableIterator& right) const noexcept { 
+    return BTPreOrderIterator<Data>::operator==(right); 
+  };
+  inline bool operator!=(const BTPreOrderMutableIterator& right) const noexcept { 
+    return BTPreOrderIterator<Data>::operator!=(right); 
+  };
 
   /* ************************************************************************ */
 
@@ -551,8 +555,12 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  inline bool operator==(const BTPostOrderMutableIterator& right) const noexcept { return BTPostOrderIterator<Data>::operator==(right); };
-  inline bool operator!=(const BTPostOrderMutableIterator& right) const noexcept { return !(operator==(right)); };
+  inline bool operator==(const BTPostOrderMutableIterator& right) const noexcept { 
+    return BTPostOrderIterator<Data>::operator==(right); 
+  };
+  inline bool operator!=(const BTPostOrderMutableIterator& right) const noexcept { 
+    return !(operator==(right)); 
+  };
 
   /* ************************************************************************ */
 
@@ -580,7 +588,7 @@ protected:
 
   const typename BinaryTree<Data>::Node* current=nullptr;
   const typename BinaryTree<Data>::Node* root=nullptr;
-  StackVec<const typename BinaryTree<Data>::Node*> stack; // NOTE: va controllato il const
+  StackVec<const typename BinaryTree<Data>::Node*> stack;
 
   const typename BinaryTree<Data>::Node* MostLeftNode(const typename BinaryTree<Data>::Node* );
 
@@ -614,7 +622,9 @@ public:
 
   // Comparison operators
   bool operator==(const BTInOrderIterator& right) const noexcept;
-  inline bool operator!=(const BTInOrderIterator& right) const noexcept { return !(operator==(right)); };
+  inline bool operator!=(const BTInOrderIterator& right) const noexcept { 
+    return !(operator==(right)); 
+  };
 
   /* ************************************************************************ */
 
@@ -677,8 +687,12 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  inline bool operator==(const BTInOrderMutableIterator& right) const noexcept { return BTInOrderIterator<Data>::operator==(right); };
-  inline bool operator!=(const BTInOrderMutableIterator& right) const noexcept { return !(operator==(right)); };
+  inline bool operator==(const BTInOrderMutableIterator& right) const noexcept { 
+    return BTInOrderIterator<Data>::operator==(right); 
+  };
+  inline bool operator!=(const BTInOrderMutableIterator& right) const noexcept { 
+    return !(operator==(right)); 
+  };
 
   /* ************************************************************************ */
 
@@ -738,7 +752,9 @@ public:
 
   // Comparison operators
   bool operator==(const BTBreadthIterator& right) const noexcept;
-  inline bool operator!=(const BTBreadthIterator& right) const noexcept { return !(operator==(right)); }
+  inline bool operator!=(const BTBreadthIterator& right) const noexcept { 
+    return !(operator==(right)); 
+  };
 
   /* ************************************************************************ */
 
@@ -801,8 +817,12 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  inline bool operator==(const BTBreadthMutableIterator& right) const noexcept { return BTBreadthIterator<Data>::operator==(right); };
-  inline bool operator!=(const BTBreadthMutableIterator& right) const noexcept { return !(operator==(right)); };
+  inline bool operator==(const BTBreadthMutableIterator& right) const noexcept { 
+    return BTBreadthIterator<Data>::operator==(right); 
+  };
+  inline bool operator!=(const BTBreadthMutableIterator& right) const noexcept { 
+    return !(operator==(right)); 
+  };
 
   /* ************************************************************************ */
 

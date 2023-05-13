@@ -112,7 +112,8 @@ public:
 
   // Destructor
   virtual ~BinaryTreeVec(){
-    Clear();
+    delete[] Nodes;
+    Nodes = nullptr;
   }
 
   /* ************************************************************************ */
@@ -150,11 +151,9 @@ public:
   // Specific member function (inherited from ClearableContainer)
 
   virtual inline void Clear() override {
-    if(!this->Empty()) {
-      Vector<Data>::Clear();
-      delete[] Nodes;
-      Nodes = nullptr;
-    }
+    Vector<Data>::Clear();
+    delete[] Nodes;
+    Nodes = nullptr;
   }; // Override ClearableContainer member
 
   /* ************************************************************************ */

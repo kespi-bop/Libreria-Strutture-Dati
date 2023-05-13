@@ -261,6 +261,6 @@ void stestBinaryTreeString(uint& testnum, uint& testerr) {
 void testSimpleExercise2A(uint& testnum, uint& testerr) {
   stestBinaryTreeInt(testnum, testerr);
   stestBinaryTreeFloat(testnum, testerr);
-  // stestBinaryTreeString(testnum, testerr);
+  stestBinaryTreeString(testnum, testerr);
   cout << endl << "Exercise 2A (Simple Test) (Errors/Tests: " << testerr << "/" << testnum << ")" << endl;
 }

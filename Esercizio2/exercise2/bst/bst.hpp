@@ -30,6 +30,13 @@ protected:
 
 public:
 
+  using BinaryTree<Data>::Map;
+  using BinaryTree<Data>::PreOrderMap;
+  using BinaryTree<Data>::PostOrderMap;
+  using BinaryTree<Data>::InOrderMap;
+  using BinaryTree<Data>::BreadthMap;
+  using BinaryTree<Data>::Root;
+  
   // Default constructor
   BST() = default;
 
