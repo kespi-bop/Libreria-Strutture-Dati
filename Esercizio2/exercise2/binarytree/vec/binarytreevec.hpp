@@ -28,7 +28,6 @@ private:
 protected:
 
   // ...
-
   struct NodeVec : virtual MutableBinaryTree<Data>::MutableNode{ // Must extend MutableNode
 
   friend class BinaryTreeVec<Data>;
@@ -91,6 +90,9 @@ protected:
 
 public:
 
+  using BinaryTree<Data>::Map;
+using BinaryTree<Data>::PreOrderMap;
+using BinaryTree<Data>::PostOrderMap;
   // Default constructor
   BinaryTreeVec() = default;
 

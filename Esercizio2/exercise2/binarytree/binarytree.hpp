@@ -320,7 +320,7 @@ protected:
 
   const typename BinaryTree<Data>::Node* root=nullptr;
   const typename BinaryTree<Data>::Node* current=nullptr;
-  StackVec<const typename BinaryTree<Data>::Node*> stack; // NOTE: va controllato il const
+  StackVec<const typename BinaryTree<Data>::Node*> stack;
 
 public:
 

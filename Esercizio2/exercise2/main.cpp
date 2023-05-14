@@ -63,8 +63,6 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
     else if(scelta == 2)
       myTest();
   }
-
-
   
   return 0;
 }
