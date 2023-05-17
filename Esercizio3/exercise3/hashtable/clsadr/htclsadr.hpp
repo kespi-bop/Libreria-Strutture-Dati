@@ -1,0 +1,110 @@
+
+#ifndef HTCLSADR_HPP
+#define HTCLSADR_HPP
+
+/* ************************************************************************** */
+
+#include "../hashtable.hpp"
+// #include ...
+
+/* ************************************************************************** */
+
+namespace lasd {
+
+/* ************************************************************************** */
+
+template <typename Data>
+class HashTableClsAdr : virtual public HashTable<Data>{
+
+private:
+
+  // ...
+
+protected:
+
+  using Container::size;
+  using HashTable<Data>::InsertAll;
+  ulong tableSize = 0;
+  lasd::List<Data>** table = nullptr;  
+
+public:
+
+  // Default constructor
+  HashTableClsAdr() = default;
+
+  /* ************************************************************************ */
+
+  // Specific constructors
+  HashTableClsAdr(const ulong size); // A hash table of a given size
+  HashTableClsAdr(const MappableContainer<Data>& right); // A hash table obtained from a MappableContainer
+  HashTableClsAdr(const ulong size, const MappableContainer<Data>& right); // A hash table of a given size obtained from a MappableContainer
+  HashTableClsAdr(MutableMappableContainer<Data>&& right); // A hash table obtained from a MutableMappableContainer
+  HashTableClsAdr(const ulong size, MutableMappableContainer<Data>&& right); // A hash table of a given size obtained from a MutableMappableContainer
+
+  /* ************************************************************************ */
+
+  // Copy constructor
+  HashTableClsAdr(const HashTableClsAdr<Data>& right);
+
+  // Move constructor
+  HashTableClsAdr(HashTableClsAdr<Data>&& rigth) noexcept;
+
+  /* ************************************************************************ */
+
+  // Destructor
+  virtual ~HashTableClsAdr() {
+    Clear();
+    delete[] this->table;
+  };
+
+  /* ************************************************************************ */
+
+  // Copy assignment
+  HashTableClsAdr& operator=(const HashTableClsAdr<Data>& right);
+
+  // Move assignment
+  HashTableClsAdr& operator=(HashTableClsAdr<Data>&& right) noexcept;
+
+  /* ************************************************************************ */
+
+  // Comparison operators
+  bool operator==(const HashTableClsAdr<Data>& right) const noexcept;
+  bool operator!=(const HashTableClsAdr<Data>& right) const noexcept {
+    return !(operator==(right));
+  };
+
+  /* ************************************************************************ */
+
+  // Specific member functions (inherited from DictionaryContainer)
+
+  virtual bool Insert(const Data& value) override; // Override DictionaryContainer member (Copy of the value)
+  virtual bool Insert(Data&& value) override; // Override DictionaryContainer member (Move of the value)
+  virtual bool Remove(const Data& value) override; // Override DictionaryContainer member
+
+  /* ************************************************************************ */
+
+  // Specific member functions (inherited from TestableContainer)
+
+  virtual bool Exists(const Data& value) const noexcept override; // Override TestableContainer member
+
+  /* ************************************************************************ */
+
+  // Specific member functions (inherited from ResizableContainer)
+
+  virtual void Resize(const ulong new_size) override; // Resize the hashtable to a given size
+
+  /* ************************************************************************ */
+
+  // Specific member functions (inherited from ClearableContainer)
+
+  virtual void Clear() override; // Override Container member
+
+};
+
+/* ************************************************************************** */
+
+}
+
+#include "htclsadr.cpp"
+
+#endif

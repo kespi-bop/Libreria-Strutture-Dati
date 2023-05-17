@@ -1,0 +1,40 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "c:\\Users\\david\\OneDrive - Università di Napoli Federico II\\Laboratorio di Algoritmi e Strutture Dati (LASD)\\lasd\\librerie\\exercise1/**",
+                "\\\\wsl.localhost\\Ubuntu\\usr\\include/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "linux-clang-x64",
+            "mergeConfigurations": false,
+            "compilerPath": "",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "\\\\wsl.localhost\\Ubuntu\\usr\\include"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ]
+        }
+    ],
+    "version": 4
+}
