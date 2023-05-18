@@ -5,28 +5,39 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <>
-inline ulong Hashable<std::string>::operator()(std::string element) const noexcept {
-    ulong accumulator = 0;
-    for(ulong i = 0; i < element.length(); i++) {
-        accumulator += element[i] * i;
-    }
-    return accumulator;
-}
+class Hashable<int> {
+    public:
+        ulong operator()(const int & dat) const noexcept {
+            return (dat * dat);
+        }
+};
 
-template <>
-inline ulong Hashable<int>::operator()(int element) const noexcept {
-    return element + 1;
-}
+template<>
+class Hashable<std::string> {
+    public:
+        ulong operator()(const std::string& dat) const noexcept {
+            ulong accumulator = 0;
+            for(ulong i = 0; i < dat.length(); i++) {
+                accumulator += dat[i] * i;
+            }
+            return accumulator;
+        }
+};
 
-template <>
-inline ulong Hashable<double>::operator()(double element) const noexcept {
-    return element + 1;
-}
+template<>
+class Hashable<double> {
+    public:
+        ulong operator()(const double& dat) const noexcept {
+            ulong intgpart = floor(dat);
+            ulong fracpart = pow(2, 24) * (dat - intgpart);
+            return (intgpart * fracpart);
+        }
+};
 
 template <typename Data>
-inline ulong HashTable<Data>::HashKey(ulong key) {
+inline ulong HashTable<Data>::HashKey(ulong key) const noexcept {
     if(size!=0) {
-        return (a * key + b) % this->size;
+        return (a * key + b) % tableSize;
     }
     else {
         return 0;

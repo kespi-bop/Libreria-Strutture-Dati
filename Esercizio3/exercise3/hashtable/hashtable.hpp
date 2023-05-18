@@ -21,7 +21,7 @@ class Hashable {
 
 public:
 
-  ulong operator()(Data element) const noexcept; // (concrete function should not throw exceptions)
+  ulong operator()(const Data& element) const noexcept = 0; // (concrete function should not throw exceptions)
 
 };
 
@@ -33,14 +33,11 @@ class HashTable : virtual public ResizableContainer,
 
 private:
 
-  int a = 3;
-  int b = 5;
-
 protected:
 
-  using DictionaryContainer<Data>::size;
-
-  // ...
+  ulong tableSize = 0;
+  ulong a = 3;
+  ulong b = 5;
 
 public:
 
@@ -58,8 +55,8 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(const HashTable& right) = delete; // Comparison of abstract hashtable is possible but not required.
-  bool operator!=(HashTable&& right) noexcept{
+  bool operator==(const HashTable& right) const noexcept = delete; // Comparison of abstract hashtable is possible but not required.
+  bool inline operator!=(HashTable&& right) const noexcept {
     return !(operator==(right));
   } // Comparison of abstract hashtable is possible but not required.
 
@@ -67,7 +64,7 @@ protected:
 
   // Auxiliary member functions
 
-  ulong HashKey(ulong key);
+  ulong HashKey(ulong key) const noexcept;
 
 };
 
