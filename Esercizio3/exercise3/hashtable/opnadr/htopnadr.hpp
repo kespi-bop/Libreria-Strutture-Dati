@@ -94,7 +94,7 @@ public:
 
   virtual void Clear() override; // Override Container member
 
-public:
+protected:
 
   // Auxiliary member functions
 

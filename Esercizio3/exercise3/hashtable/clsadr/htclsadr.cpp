@@ -45,6 +45,7 @@ HashTableClsAdr<Data>::HashTableClsAdr(const HashTableClsAdr<Data>& right) {
     for(ulong i = 0; i < tableSize; i++) {
         InsertAll(right.table[i]);
     }
+    size = right.size;
 }
 
 template <typename Data>
@@ -63,6 +64,7 @@ HashTableClsAdr<Data>& HashTableClsAdr<Data>::operator=(const HashTableClsAdr<Da
     for(ulong i = 0; i < tableSize; i++) {
         InsertAll(right.table[i]);
     }
+    size = right.size;
     return *this;
 }
 
@@ -147,8 +149,16 @@ inline void HashTableClsAdr<Data>::Resize(const ulong new_size) {
     }
     ulong newTableSize = std::pow(2, log2(new_size) + 1);
     lasd::List<Data>* newTable = new List<Data>[newTableSize];
-    for(ulong i = 0; i < tableSize; i++) {
-        newTable[i] = table[i];
+
+    if(tableSize < newTableSize) {
+        for(ulong i = 0; i < tableSize; i++) {
+            newTable[i] = table[i];
+        }
+    }
+    else {
+        for(ulong i = 0; i < newTableSize; i++) {
+            newTable[i] = table[i];
+        }
     }
     std::swap(tableSize, newTableSize);
     std::swap(table, newTable);
@@ -158,6 +168,7 @@ inline void HashTableClsAdr<Data>::Resize(const ulong new_size) {
 template <typename Data>
 void HashTableClsAdr<Data>::Clear() {
     delete[] table;
+    table = new List<Data>[tableSize];
     size = 0;
 }
 /* ************************************************************************** */

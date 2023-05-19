@@ -35,8 +35,8 @@ class Hashable<double> {
 };
 
 template <typename Data>
-inline ulong HashTable<Data>::HashKey(ulong key) const noexcept {
-    if(size!=0) {
+ulong HashTable<Data>::HashKey(ulong key) const noexcept {
+    if(tableSize!=0) {
         return (a * key + b) % tableSize;
     }
     else {
