@@ -45,7 +45,6 @@ HashTableClsAdr<Data>::HashTableClsAdr(const HashTableClsAdr<Data>& right) {
     for(ulong i = 0; i < tableSize; i++) {
         InsertAll(right.table[i]);
     }
-    size = right.size;
 }
 
 template <typename Data>
@@ -64,7 +63,6 @@ HashTableClsAdr<Data>& HashTableClsAdr<Data>::operator=(const HashTableClsAdr<Da
     for(ulong i = 0; i < tableSize; i++) {
         InsertAll(right.table[i]);
     }
-    size = right.size;
     return *this;
 }
 
@@ -79,19 +77,23 @@ HashTableClsAdr<Data>& HashTableClsAdr<Data>::operator=(HashTableClsAdr<Data> &&
 template <typename Data>
 bool HashTableClsAdr<Data>::operator==(const HashTableClsAdr<Data> &right) const noexcept
 {
-    if(size != right.size) {
+    if(right.size != size) {
         return false;
     }
-    for(ulong i = 0 ; i < tableSize; i++){
-        bool result = true;
-        table[i].Map(
-            [&right, &result](const Data& dat){
-                right.table->Exists(dat);
+    for(ulong i = 0; i < tableSize; i++){
+            bool result = true;
+            table[i].Map(
+                [&right, &result](const Data& dat){
+                    ulong index = right.HashKey(Hashable<Data>()(dat));
+                    if(!right.Exists(dat)){
+                        result = false;
+                        return;
+                    }
+                }
+            );
+            if(!result) {
+                return false;
             }
-        );
-        if(!result) {
-            return false;
-        }
     }
     return true;
 }
@@ -132,8 +134,7 @@ bool HashTableClsAdr<Data>::Remove(const Data &value)
 }
 
 template <typename Data>
-bool HashTableClsAdr<Data>::Exists(const Data &value) const noexcept
-{
+bool HashTableClsAdr<Data>::Exists(const Data &value) const noexcept {
     ulong index = this->HashKey(Hashable<Data>()(value));
     if(table[index].Exists(value)) {
         return true;
@@ -142,26 +143,20 @@ bool HashTableClsAdr<Data>::Exists(const Data &value) const noexcept
 }
 
 template <typename Data>
-inline void HashTableClsAdr<Data>::Resize(const ulong new_size) {
-    if(new_size == 0) {
-        Clear();
-        return;
+void HashTableClsAdr<Data>::Resize(const ulong new_size) {
+    ulong newTableSize;
+    if(new_size <= 8) {
+        newTableSize = 8;
+    } else {
+        newTableSize = std::pow(2, log2(new_size) + 1); 
     }
-    ulong newTableSize = std::pow(2, log2(new_size) + 1);
-    lasd::List<Data>* newTable = new List<Data>[newTableSize];
-
-    if(tableSize < newTableSize) {
-        for(ulong i = 0; i < tableSize; i++) {
-            newTable[i] = table[i];
-        }
+    this->size = 0;
+    List<Data>* newTable = new List<Data>[newTableSize];
+    std::swap(newTable, table);
+    std::swap(newTableSize, tableSize);
+    for(ulong i = 0; i < newTableSize; i++){
+        InsertAll(newTable[i]);
     }
-    else {
-        for(ulong i = 0; i < newTableSize; i++) {
-            newTable[i] = table[i];
-        }
-    }
-    std::swap(tableSize, newTableSize);
-    std::swap(table, newTable);
     delete[] newTable;
 }
 
