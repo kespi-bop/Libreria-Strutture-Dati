@@ -77,23 +77,21 @@ HashTableClsAdr<Data>& HashTableClsAdr<Data>::operator=(HashTableClsAdr<Data> &&
 template <typename Data>
 bool HashTableClsAdr<Data>::operator==(const HashTableClsAdr<Data> &right) const noexcept
 {
+    bool result = true;
     if(right.size != size) {
         return false;
     }
     for(ulong i = 0; i < tableSize; i++){
-            bool result = true;
-            table[i].Map(
-                [&right, &result](const Data& dat){
-                    ulong index = right.HashKey(Hashable<Data>()(dat));
-                    if(!right.Exists(dat)){
-                        result = false;
-                        return;
-                    }
+        table[i].Map(
+            [&right, &result](const Data& dat){
+                if(!right.Exists(dat)){
+                    result = false;
                 }
-            );
-            if(!result) {
-                return false;
             }
+        );
+        if(!result) {
+            return false;
+        }
     }
     return true;
 }
