@@ -6,34 +6,34 @@ namespace lasd {
 
 template <typename Data>
 inline HashTableClsAdr<Data>::HashTableClsAdr(const ulong size) {
-    tableSize = std::pow(2, log2(size) + 1);
+    tableSize = std::pow(2, std::floor(log2(size)) + 1);
     table = new lasd::List<Data>[tableSize];
 }
 
 template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(const MappableContainer<Data>& right) {
-    tableSize = std::pow(2, log2(right.Size()) + 1);
+    tableSize = std::pow(2, std::floor(log2(right.size)) + 1);
     table = new lasd::List<Data>[tableSize];
     InsertAll(right);
 }
 
 template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(const ulong size, const MappableContainer<Data>& right) {
-    tableSize = std::pow(2, log2(size) + 1);
+    tableSize = std::pow(2, std::floor(log2(size)) + 1);
     table = new lasd::List<Data>[tableSize];
     InsertAll(right);
 }
 
 template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(MutableMappableContainer<Data>&& right) noexcept {
-    tableSize = std::pow(2, log2(right.Size()) + 1);
+    tableSize = std::pow(2, std::floor(log2(right.size)) + 1);
     table = new lasd::List<Data>[tableSize];
     InsertAll(std::move(right));
 }
 
 template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(const ulong size, MutableMappableContainer<Data>&& right) noexcept {
-    tableSize = std::pow(2, log2(size) + 1);
+    tableSize = std::pow(2, std::floor(log2(size)) + 1);
     table = new lasd::List<Data>[tableSize];
     InsertAll(std::move(right));
 }
@@ -146,7 +146,7 @@ void HashTableClsAdr<Data>::Resize(const ulong new_size) {
     if(new_size <= 8) {
         newTableSize = 8;
     } else {
-        newTableSize = std::pow(2, log2(new_size) + 1); 
+        newTableSize = std::pow(2, std::floor(log2(new_size)) + 1); 
     }
     this->size = 0;
     List<Data>* newTable = new List<Data>[newTableSize];

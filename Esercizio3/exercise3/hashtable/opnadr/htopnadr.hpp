@@ -5,7 +5,7 @@
 /* ************************************************************************** */
 
 #include "../hashtable.hpp"
-// #include ...
+#include <bitset>
 
 /* ************************************************************************** */
 
@@ -15,17 +15,20 @@ namespace lasd {
 
 template <typename Data>
 class HashTableOpnAdr : virtual public HashTable<Data> {
-                        // Must extend HashTable<Data>
 
 private:
 
   // ...
 
 protected:
+  using DictionaryContainer<Data>::InsertAll;
+  using Container::size;
+  using HashTable<Data>::tableSize;
+  using HashTable<Data>::HashKey;
 
-  // using HashTable<Data>::???;
-
-  // ...
+  Data* table = nullptr;
+  std::bitset<2>* tableFlag; //4 bits = -(00) Empty/Deleted -(01) Empty/Valid(unused)
+                            //          -(10) Full/Deleted -(11)Full/Valid
 
 public:
 
@@ -35,11 +38,11 @@ public:
   /* ************************************************************************ */
 
   // Specific constructors
-  HashTableOpnAdr(ulong size); // A hash table of a given size
+  HashTableOpnAdr(const ulong size); // A hash table of a given size
   HashTableOpnAdr(const MappableContainer<Data>& right); // A hash table obtained from a MappableContainer
-  HashTableOpnAdr(ulong size, const MappableContainer<Data>& right); // A hash table of a given size obtained from a MappableContainer
+  HashTableOpnAdr(const ulong size, const MappableContainer<Data>& right); // A hash table of a given size obtained from a MappableContainer
   HashTableOpnAdr(MutableMappableContainer<Data>&& right) noexcept; // A hash table obtained from a MutableMappableContainer
-  HashTableOpnAdr(ulong size, MutableMappableContainer<Data>&& right); // A hash table of a given size obtained from a MutableMappableContainer
+  HashTableOpnAdr(const ulong size, MutableMappableContainer<Data>&& right) noexcept; // A hash table of a given size obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
@@ -65,28 +68,30 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(HashTableOpnAdr& right) const noexcept;
-  bool operator!=(HashTableOpnAdr& right) const noexcept;
+  bool operator==(const HashTableOpnAdr& right) const noexcept;
+  bool inline operator!=(const HashTableOpnAdr& right) const noexcept {
+    return !(operator==(right));
+  };
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from DictionaryContainer)
 
-  bool Insert(const Data& element) override; // Override DictionaryContainer member (Copy of the value)
-  bool Insert(Data&& element) override; // Override DictionaryContainer member (Move of the value)
-  bool Remove(const Data& element) override; // Override DictionaryContainer member
+  virtual bool Insert(const Data& element) override; // Override DictionaryContainer member (Copy of the value)
+  virtual bool Insert(Data&& element) override; // Override DictionaryContainer member (Move of the value)
+  virtual bool Remove(const Data& element) override; // Override DictionaryContainer member
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from TestableContainer)
 
-  bool Exists(const Data& element) const noexcept override; // Override TestableContainer member
+  virtual bool Exists(const Data& element) const noexcept override; // Override TestableContainer member
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from ResizableContainer)
 
-  virtual void Resize(const ulong new_size) override; // Resize the hashtable to a given size
+  virtual void Resize(const ulong new_size); // Resize the hashtable to a given size
 
   /* ************************************************************************ */
 
@@ -98,10 +103,10 @@ protected:
 
   // Auxiliary member functions
 
-  // type HashKey(argument) specifiers;
-  // type Find(argument) specifiers;
-  // type FindEmpty(argument) specifiers;
-  // type Remove(argument) specifiers;
+  ulong HashKey(ulong index, const ulong key) const noexcept;
+  bool Find(ulong& index, const Data& element) const noexcept;
+  bool FindEmpty(ulong& index, const Data& element) const noexcept;
+  bool Remove(ulong& index, const Data& key) noexcept;
 
 };
 
