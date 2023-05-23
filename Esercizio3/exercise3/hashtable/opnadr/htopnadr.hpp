@@ -55,7 +55,10 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  ~HashTableOpnAdr() = default;
+  ~HashTableOpnAdr() {
+    delete[] table;
+    delete[] tableFlag;
+  };
 
   /* ************************************************************************ */
 
@@ -105,7 +108,7 @@ protected:
 
   ulong HashKey(ulong index, const ulong key) const noexcept;
   bool Find(ulong& index, const Data& element) const noexcept;
-  bool FindEmpty(ulong& index, const Data& element) const noexcept;
+  ulong FindEmpty(ulong& index, const Data& element) const noexcept;
   bool Remove(ulong& index, const Data& key) noexcept;
 
 };
