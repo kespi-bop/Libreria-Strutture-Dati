@@ -110,7 +110,7 @@ bool HashTableOpnAdr<Data>::Insert(const Data &element) {
     }
     ulong index = HashKey(Hashable<Data>()(element));
     index = FindEmpty(index, element);
-    if(!tableFlag[index].all()){
+    if(tableFlag[index][1] == 0){
         table[index] = element;
         tableFlag[index].set();
         size++;
@@ -126,7 +126,7 @@ bool HashTableOpnAdr<Data>::Insert(Data &&element) {
     }
     ulong index = HashKey(Hashable<Data>()(element));
     index = FindEmpty(index, element);
-    if(!tableFlag[index].all()){
+    if(tableFlag[index][1] == 0){
         std::swap(table[index],element);
         tableFlag[index].set();
         size++;
@@ -142,7 +142,7 @@ bool HashTableOpnAdr<Data>::Remove(const Data &element) {
     }
     ulong index = HashKey(Hashable<Data>()(element));
     if(tableFlag[index].all() && table[index] == element){
-        tableFlag[index].set(1,false);
+        tableFlag[index][1] = 0;
         size--;
         return true;
     }
@@ -184,14 +184,14 @@ void HashTableOpnAdr<Data>::Resize(const ulong new_size) {
 template <typename Data>
 void HashTableOpnAdr<Data>::Clear() {
     for(ulong i = 0; i < tableSize; i++) {
-        tableFlag[i].set(false);
+        tableFlag[i][1] = 0;
     }
     size = 0;
 }
 
-template <typename Data>
-ulong HashTableOpnAdr<Data>::HashKey(ulong index, const ulong key) const noexcept {
-    return (index + 1) % tableSize;
+template <typename Data> 
+ulong HashTableOpnAdr<Data>::HashKey(ulong index, ulong& prob_index, const ulong key) const noexcept {
+    return (index+(++prob_index))%tableSize;
 }
 
 template <typename Data>
@@ -204,30 +204,29 @@ bool HashTableOpnAdr<Data>::Find(ulong &index, const Data &element) const noexce
             index=tmp_index;
             return true;
         }
-        tmp_index = HashKey(index, Hashable<Data>()(element));
-        prob_index++;
+        tmp_index = HashKey(index, prob_index, Hashable<Data>()(element));
     }while(!tableFlag[tmp_index].none());
     return false;
 }
 
 template <typename Data>
-ulong HashTableOpnAdr<Data>::FindEmpty(ulong &index, const Data &element) const noexcept
+ulong HashTableOpnAdr<Data>::FindEmpty(ulong index, const Data &element) const noexcept
 {
     ulong prob_index = 0;
     while(tableFlag[index].all() && table[index]!=element) {   
-        index = HashKey(index, Hashable<Data>()(element));
+        index = HashKey(index, prob_index, Hashable<Data>()(element));
         prob_index++;
     }
     return index;
 }
 
 template <typename Data>
-bool HashTableOpnAdr<Data>::Remove(ulong &index, const Data &key) noexcept {
+bool HashTableOpnAdr<Data>::Remove(ulong index, const Data &key) noexcept {
     ulong prob_index = 0;
-    index = HashKey(index, Hashable<Data>()(key));
+    index = HashKey(index, prob_index, Hashable<Data>()(key));
     prob_index++;
     if(Find(index, key)){
-        tableFlag[index].set(1, false);
+        tableFlag[index][1] = 0;
         size--;
         return true;
     }

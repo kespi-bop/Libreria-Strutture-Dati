@@ -20,6 +20,11 @@
 #include "./bst/bst.hpp"
 
 
+#include "./hashtable/hashtable.hpp"
+#include "./hashtable/clsadr/htclsadr.hpp"
+#include "./hashtable/opnadr/htopnadr.hpp"
+
+
 /* ************************************************************************** */
 
 #include <iostream>
@@ -64,6 +69,26 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
     else if(scelta == 2)
       myTest();
   }
+
+  // lasd::Vector<int> a(4);
+  // a[0] = 5;
+  // a[1] = 1792;
+  // a[2] = -123;
+  // a[3] = -1;
+  
+
+  // lasd::HashTableOpnAdr<int> b(1,a);
+  // b.Exists(16) ? std::cout<<"ESISTE 16" : std::cout<<"16 NON ESISTE";
+  // std::cout<<std::endl;
+  // b.Exists(1792) ? std::cout<<"ESISTE 1792" : std::cout<<"1792 NON ESISTE";
+  // std::cout<<std::endl;
+  // b.Exists(5) ? std::cout<<"ESISTE 5" : std::cout<<"5 NON ESISTE";
+  // std::cout<<std::endl;
+  // b.Exists(-123) ? std::cout<<"ESISTE -123" : std::cout<<"-123 NON ESISTE";
+  // std::cout<<std::endl;
+  // b.Exists(-1) ? std::cout<<"ESISTE -1" : std::cout<<"-1 NON ESISTE";
+  // std::cout<<std::endl;
+  // b.Exists(1) ? std::cout<<"ESISTE 1" : std::cout<<"1 NON ESISTE";
   
   return 0;
 }

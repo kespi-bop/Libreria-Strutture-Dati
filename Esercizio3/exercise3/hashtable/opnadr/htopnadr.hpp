@@ -21,16 +21,21 @@ private:
   // ...
 
 protected:
-  using DictionaryContainer<Data>::InsertAll;
+
   using Container::size;
   using HashTable<Data>::tableSize;
   using HashTable<Data>::HashKey;
 
-  Data* table = nullptr;
+  Data* table;
   std::bitset<2>* tableFlag; //4 bits = -(00) Empty/Deleted -(01) Empty/Valid(unused)
                             //          -(10) Full/Deleted -(11)Full/Valid
 
 public:
+
+  using DictionaryContainer<Data>::InsertAll;
+  using DictionaryContainer<Data>::InsertSome;
+  using DictionaryContainer<Data>::RemoveAll;
+  using DictionaryContainer<Data>::RemoveSome;
 
   // Default constructor
   HashTableOpnAdr() = default;
@@ -106,10 +111,10 @@ protected:
 
   // Auxiliary member functions
 
-  ulong HashKey(ulong index, const ulong key) const noexcept;
+  ulong HashKey(ulong index, ulong &prob_index, const ulong key) const noexcept;
   bool Find(ulong& index, const Data& element) const noexcept;
-  ulong FindEmpty(ulong& index, const Data& element) const noexcept;
-  bool Remove(ulong& index, const Data& key) noexcept;
+  ulong FindEmpty(ulong index, const Data& element) const noexcept;
+  bool Remove(ulong index, const Data& key) noexcept;
 
 };
 
