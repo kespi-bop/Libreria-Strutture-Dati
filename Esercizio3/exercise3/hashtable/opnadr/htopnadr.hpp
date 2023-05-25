@@ -9,6 +9,12 @@
 
 /* ************************************************************************** */
 
+enum flag{
+  empty,
+  dirty,
+  valid 
+};
+
 namespace lasd {
 
 /* ************************************************************************** */
@@ -27,6 +33,9 @@ protected:
   using HashTable<Data>::HashKey;
 
   Data* table;
+  //Flag* tableFlag;
+  // flag c;
+  // c = empty;
   std::bitset<2>* tableFlag; //4 bits = -(00) Empty/Deleted -(01) Empty/Valid(unused)
                             //          -(10) Full/Deleted -(11)Full/Valid
 

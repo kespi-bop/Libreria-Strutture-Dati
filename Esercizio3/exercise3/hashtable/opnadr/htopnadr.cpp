@@ -7,48 +7,48 @@ namespace lasd {
 template <typename Data>
 inline HashTableOpnAdr<Data>::HashTableOpnAdr(const ulong size) {
     tableSize = std::pow(2, std::floor(log2(size)) + 1);
-    table = new Data[tableSize];
-    tableFlag = new std::bitset<2>[tableSize];
+    table = new Data[tableSize] {};
+    tableFlag = new std::bitset<2>[tableSize] {};
 }
 
 
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(const MappableContainer<Data> &right) {
     tableSize = std::pow(2, std::floor(log2(right.size)) + 2);
-    table = new Data[tableSize];
-    tableFlag = new std::bitset<2>[tableSize];
+    table = new Data[tableSize] {};
+    tableFlag = new std::bitset<2>[tableSize] {};
     InsertAll(right);
 }
 
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(const ulong size, const MappableContainer<Data> &right) {
     tableSize = std::pow(2, std::floor(log2(size)) + 1);
-    table = new Data[tableSize];
-    tableFlag = new std::bitset<2>[tableSize];
+    table = new Data[tableSize] {};
+    tableFlag = new std::bitset<2>[tableSize] {};
     InsertAll(right);
 }
 
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(MutableMappableContainer<Data> &&right) noexcept {
     tableSize = std::pow(2, std::floor(log2(right.size)) + 2);
-    table = new Data[tableSize];   
-    tableFlag = new std::bitset<2>[tableSize];
+    table = new Data[tableSize] {};   
+    tableFlag = new std::bitset<2>[tableSize] {};
     InsertAll(std::move(right));
 }
 
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(const ulong size, MutableMappableContainer<Data> &&right) noexcept {
     tableSize = std::pow(2, std::floor(log2(size)) + 1);
-    table = new Data[tableSize];
-    tableFlag = new std::bitset<2>[tableSize];
+    table = new Data[tableSize] {};
+    tableFlag = new std::bitset<2>[tableSize] {};
     InsertAll(std::move(right));
 }
 
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(const HashTableOpnAdr &right) {
     tableSize = right.tableSize;
-    table = new Data[tableSize];
-    tableFlag = new std::bitset<2>[tableSize];
+    table = new Data[tableSize] {};
+    tableFlag = new std::bitset<2>[tableSize] {};
     for(ulong i = 0; i < tableSize; i++) {
         if(right.tableFlag[i].all()) { //controllo che sia valido, quindi che abbia tutti i bit a 1
             Insert(right.table[i]);     
@@ -69,8 +69,8 @@ HashTableOpnAdr<Data>& HashTableOpnAdr<Data>::operator=(const HashTableOpnAdr &r
     delete[] table;
     delete[] tableFlag;
     tableSize = right.tableSize;
-    table = new Data[tableSize];
-    tableFlag = new std::bitset<2>[tableSize];
+    table = new Data[tableSize] {};
+    tableFlag = new std::bitset<2>[tableSize] {};
     for(ulong i = 0; i < tableSize; i++) {
         if(right.tableFlag[i].all()) { //controllo che sia valido, quindi che abbia tutti i bit a 1
             Insert(right.table[i]);     
@@ -164,8 +164,8 @@ void HashTableOpnAdr<Data>::Resize(const ulong new_size) {
         tmptableSize = std::pow(2, std::floor(log2(new_size)) + 1); 
     }
 
-    Data* tmpTable = new Data[tmptableSize];
-    std::bitset<2>* tmpTableFlag = new std::bitset<2>[tmptableSize];
+    Data* tmpTable = new Data[tmptableSize] {};
+    std::bitset<2>* tmpTableFlag = new std::bitset<2>[tmptableSize] {}; 
 
     this->size = 0;
     std::swap(tmptableSize, tableSize);
@@ -214,7 +214,7 @@ ulong HashTableOpnAdr<Data>::FindEmpty(ulong index, const Data &element) const n
 {
     ulong prob_index = 0;
     ulong tmp_index = index;
-    while(tableFlag[tmp_index].all() && tableyy[tmp_index]!=element) {   
+    while(tableFlag[tmp_index].all() && table[tmp_index]!=element) {   
         tmp_index = HashKey(index, prob_index, Hashable<Data>()(element));
     }
     return tmp_index;
