@@ -213,20 +213,20 @@ template <typename Data>
 ulong HashTableOpnAdr<Data>::FindEmpty(ulong index, const Data &element) const noexcept
 {
     ulong prob_index = 0;
-    while(tableFlag[index].all() && table[index]!=element) {   
-        index = HashKey(index, prob_index, Hashable<Data>()(element));
-        prob_index++;
+    ulong tmp_index = index;
+    while(tableFlag[tmp_index].all() && tableyy[tmp_index]!=element) {   
+        tmp_index = HashKey(index, prob_index, Hashable<Data>()(element));
     }
-    return index;
+    return tmp_index;
 }
 
 template <typename Data>
 bool HashTableOpnAdr<Data>::Remove(ulong index, const Data &key) noexcept {
     ulong prob_index = 0;
-    index = HashKey(index, prob_index, Hashable<Data>()(key));
-    prob_index++;
-    if(Find(index, key)){
-        tableFlag[index][1] = 0;
+    ulong tmp_index = index;
+    tmp_index = HashKey(index, prob_index, Hashable<Data>()(key));
+    if(Find(tmp_index, key)){
+        tableFlag[tmp_index][1] = 0;
         size--;
         return true;
     }
