@@ -21,7 +21,7 @@ class Hashable {
 
 public:
 
-  ulong operator()(const Data& element) const noexcept = 0; // (concrete function should not throw exceptions)
+  ulong operator()(const Data& element) const noexcept; // (concrete function should not throw exceptions)
 
 };
 
@@ -34,12 +34,35 @@ class HashTable : virtual public ResizableContainer,
 private:
 
 protected:
+  using Container::size;
+  using DictionaryContainer<Data>::InsertAll;
+  using DictionaryContainer<Data>::InsertSome;
+  using DictionaryContainer<Data>::RemoveAll;
+  using DictionaryContainer<Data>::RemoveSome;
 
-  ulong tableSize = 0;
+  ulong prime = 31;
+
+  std::default_random_engine gen = std::default_random_engine(std::random_device{}());
+  std::uniform_int_distribution<ulong> genA = std::uniform_int_distribution<ulong>(1, prime);
+  std::uniform_int_distribution<ulong> genB = std::uniform_int_distribution<ulong>(0, prime);
+
+
   ulong a = 3;
   ulong b = 5;
 
 public:
+  ulong tableSize = 16;
+  //Constructor
+  HashTable() {
+    a = (genA(gen) * 2) + 1;
+    b = std::pow(2, std::floor(log2(genB(gen))) + 1);
+  }
+
+  //Copy constructor
+  HashTable(const HashTable& right);
+
+  //Move constructor
+  HashTable(HashTable&& right) noexcept;
 
   // Destructor
   virtual ~HashTable() = default;
@@ -47,10 +70,10 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  HashTable& operator=(const HashTable& right) = delete; // Copy assignment of abstract types should not be possible.
+  HashTable& operator=(const HashTable& right); // Copy assignment of abstract types should not be possible.
 
   // Move assignment
-  HashTable& operator=(HashTable&& right) noexcept = delete; // Move assignment of abstract types should not be possible.
+  HashTable& operator=(HashTable&& right) noexcept; // Move assignment of abstract types should not be possible.
 
   /* ************************************************************************ */
 
@@ -63,7 +86,6 @@ public:
 protected:
 
   // Auxiliary member functions
-
   ulong HashKey(ulong key) const noexcept;
 
 };

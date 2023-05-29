@@ -23,23 +23,27 @@ private:
 protected:
 
   using Container::size;
-  using DictionaryContainer<Data>::InsertAll;
-  using HashTable<Data>::tableSize;
+
   lasd::List<Data>* table = nullptr;  
 
 public:
 
+  using DictionaryContainer<Data>::InsertAll;
+  using DictionaryContainer<Data>::InsertSome;
+  using DictionaryContainer<Data>::RemoveAll;
+  using DictionaryContainer<Data>::RemoveSome;
+  using HashTable<Data>::tableSize;
   // Default constructor
-  HashTableClsAdr() = default;
+  HashTableClsAdr() : HashTableClsAdr(16) {};
 
   /* ************************************************************************ */
 
   // Specific constructors
-  HashTableClsAdr(const ulong size); // A hash table of a given size
+  HashTableClsAdr(const ulong newSize); // A hash table of a given size
   HashTableClsAdr(const MappableContainer<Data>& right); // A hash table obtained from a MappableContainer
-  HashTableClsAdr(const ulong size, const MappableContainer<Data>& right); // A hash table of a given size obtained from a MappableContainer
+  HashTableClsAdr(const ulong newSize, const MappableContainer<Data>& right); // A hash table of a given size obtained from a MappableContainer
   HashTableClsAdr(MutableMappableContainer<Data>&& right) noexcept; // A hash table obtained from a MutableMappableContainer
-  HashTableClsAdr(const ulong size, MutableMappableContainer<Data>&& right) noexcept; // A hash table of a given size obtained from a MutableMappableContainer
+  HashTableClsAdr(const ulong newSize, MutableMappableContainer<Data>&& right) noexcept; // A hash table of a given size obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 

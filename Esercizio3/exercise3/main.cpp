@@ -42,17 +42,6 @@ in versione const che non const : const_cast<NodeLnk * *>(static_cast<const BST<
 qui la funzione non costante richiama la funzione costante castandola a non costante in modo da non riscriverla 
 il const cast si puo utilizzare soltanto su algoritmi che di per se non modificano dati.*/
 
-
-//modularizzare il piu possibile
-
-//fai operator= di btlnk ricorsivo
-
-
-//TEST DA FARE:
-/*
-  testare il costruttore e l'assegnazione del nodelnk
-*/
-
   std::cout << "Lasd Libraries 2023" << std::endl;
   uint scelta;
   while(true)
@@ -103,5 +92,6 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
   // b.Exists(-6) ? std::cout<<"ESISTE -6" : std::cout<<"-6 NON ESISTE";
   // std::cout<<std::endl;
   // b.Exists(5) ? std::cout<<"ESISTE 5" : std::cout<<"5 NON ESISTE";
+
   return 0;
 }

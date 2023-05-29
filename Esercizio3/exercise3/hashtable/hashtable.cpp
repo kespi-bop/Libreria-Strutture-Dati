@@ -8,7 +8,7 @@ template <>
 class Hashable<int> {
     public:
         ulong operator()(const int & dat) const noexcept {
-            return (dat * dat);
+            return dat * dat;
         }
 };
 
@@ -36,13 +36,41 @@ class Hashable<double> {
 
 template <typename Data>
 ulong HashTable<Data>::HashKey(ulong key) const noexcept {
-    if(tableSize!=0) {
-        return (a * key + b) % tableSize;
-    }
-    else {
-        return 0;
-    }
+    return (a * key + b) % tableSize;
+}
 
+template <typename Data>
+HashTable<Data>::HashTable(const HashTable &right) {
+    tableSize = right.tableSize;
+    size = right.size;
+    a = right.a;
+    b = right.b;
+}
+
+template <typename Data>
+HashTable<Data>::HashTable(HashTable &&right) noexcept{
+    std::swap(tableSize, right.tableSize);
+    std::swap(size, right.size);
+    std::swap(a, right.a);
+    std::swap(b, right.b);
+}
+
+template <typename Data>
+HashTable<Data>& HashTable<Data>::operator=(const HashTable &right) {
+    tableSize = right.tableSize;
+    size = right.size;
+    a = right.a;
+    b = right.b;
+    return *this;
+}
+
+template <typename Data>
+HashTable<Data>& HashTable<Data>::operator=(HashTable &&right) noexcept {
+    std::swap(tableSize, right.tableSize);
+    std::swap(size, right.size);
+    std::swap(a, right.a);
+    std::swap(b, right.b);
+    return *this;
 }
 
 /* ************************************************************************** */

@@ -9,8 +9,8 @@
 
 /* ************************************************************************** */
 
-enum flag{
-  empty,
+enum Flag{
+  empt,
   dirty,
   valid 
 };
@@ -29,15 +29,11 @@ private:
 protected:
 
   using Container::size;
-  using HashTable<Data>::tableSize;
+
   using HashTable<Data>::HashKey;
 
-  Data* table;
-  //Flag* tableFlag;
-  // flag c;
-  // c = empty;
-  std::bitset<2>* tableFlag; //4 bits = -(00) Empty/Deleted -(01) Empty/Valid(unused)
-                            //          -(10) Full/Deleted -(11)Full/Valid
+  Data* table = nullptr;
+  Flag* tableFlag = nullptr;
 
 public:
 
@@ -45,18 +41,19 @@ public:
   using DictionaryContainer<Data>::InsertSome;
   using DictionaryContainer<Data>::RemoveAll;
   using DictionaryContainer<Data>::RemoveSome;
+  using HashTable<Data>::tableSize;
 
   // Default constructor
-  HashTableOpnAdr() = default;
+  HashTableOpnAdr() : HashTableOpnAdr(16) {};
 
   /* ************************************************************************ */
 
   // Specific constructors
-  HashTableOpnAdr(const ulong size); // A hash table of a given size
+  HashTableOpnAdr(const ulong newSize); // A hash table of a given size
   HashTableOpnAdr(const MappableContainer<Data>& right); // A hash table obtained from a MappableContainer
-  HashTableOpnAdr(const ulong size, const MappableContainer<Data>& right); // A hash table of a given size obtained from a MappableContainer
+  HashTableOpnAdr(const ulong newSize, const MappableContainer<Data>& right); // A hash table of a given size obtained from a MappableContainer
   HashTableOpnAdr(MutableMappableContainer<Data>&& right) noexcept; // A hash table obtained from a MutableMappableContainer
-  HashTableOpnAdr(const ulong size, MutableMappableContainer<Data>&& right) noexcept; // A hash table of a given size obtained from a MutableMappableContainer
+  HashTableOpnAdr(const ulong newSize, MutableMappableContainer<Data>&& right) noexcept; // A hash table of a given size obtained from a MutableMappableContainer
 
   /* ************************************************************************ */
 
@@ -119,11 +116,10 @@ public:
 protected:
 
   // Auxiliary member functions
-
-  ulong HashKey(ulong index, ulong &prob_index, const ulong key) const noexcept;
-  bool Find(ulong& index, const Data& element) const noexcept;
-  ulong FindEmpty(ulong index, const Data& element) const noexcept;
-  bool Remove(ulong index, const Data& key) noexcept;
+  ulong HashKey(const Data& key, ulong& prob_index) const noexcept;
+  bool Find(ulong& index, ulong& prob_index, const Data& element) const noexcept;
+  ulong FindEmpty(const Data &element, ulong& prob_index) const noexcept;
+  bool Remove(ulong& prob_index, const Data &key) noexcept;
 
 };
 
