@@ -6,7 +6,7 @@ namespace lasd {
 
 template <typename Data>
 inline HashTableClsAdr<Data>::HashTableClsAdr(const ulong newSize) : HashTable<Data>() {
-    tableSize = std::pow(2, std::floor(log2((newSize < 16) ? 16 : newSize)) + 1);
+    tableSize = std::pow(2, std::ceil(log2((newSize <= 16) ? 16 : newSize)));
     table = new lasd::List<Data>[tableSize] {};
 }
 
@@ -83,7 +83,7 @@ bool HashTableClsAdr<Data>::operator==(const HashTableClsAdr<Data> &right) const
 template <typename Data>
 bool HashTableClsAdr<Data>::Insert(const Data &value) {
     bool result = false;
-    ulong index = this->HashKey(Hashable<Data>()(value));
+    ulong index = HashKey(Hashable<Data>()(value));
     result = table[index].Insert(value);
     if(result) {
         size++;
@@ -95,7 +95,7 @@ template <typename Data>
 bool HashTableClsAdr<Data>::Insert(Data &&value)
 {
     bool result = false;
-    ulong index = this->HashKey(Hashable<Data>()(std::move(value)));
+    ulong index = HashKey(Hashable<Data>()(std::move(value)));
     result = table[index].Insert(std::move(value));
     if(result) {
         size++;
@@ -107,7 +107,7 @@ template <typename Data>
 bool HashTableClsAdr<Data>::Remove(const Data &value)
 {
     bool result = false;
-    ulong index = this->HashKey(Hashable<Data>()(value));
+    ulong index = HashKey(Hashable<Data>()(value));
     result = table[index].List<Data>::Remove(value);
     if(result) {
         size--;
@@ -117,7 +117,7 @@ bool HashTableClsAdr<Data>::Remove(const Data &value)
 
 template <typename Data>
 bool HashTableClsAdr<Data>::Exists(const Data &value) const noexcept {
-    ulong index = this->HashKey(Hashable<Data>()(value));
+    ulong index = HashKey(Hashable<Data>()(value));
     if(table[index].Exists(value)) {
         return true;
     }
@@ -126,13 +126,8 @@ bool HashTableClsAdr<Data>::Exists(const Data &value) const noexcept {
 
 template <typename Data>
 void HashTableClsAdr<Data>::Resize(const ulong new_size) {
-    ulong newTableSize;
-    if(new_size <= 16) {
-        newTableSize = 16;
-    } else {
-        newTableSize = std::pow(2, std::floor(log2((new_size < 16) ? 16 : new_size)) + 1);
-    }
-    this->size = 0;
+    ulong newTableSize = (new_size <= 16)? 16 : std::pow(2, std::ceil(log2(new_size)));
+    size = 0;
     List<Data>* newTable = new List<Data>[newTableSize] {};
     std::swap(newTable, table);
     std::swap(newTableSize, tableSize);

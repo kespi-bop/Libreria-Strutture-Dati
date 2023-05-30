@@ -34,28 +34,24 @@ class HashTable : virtual public ResizableContainer,
 private:
 
 protected:
-  using Container::size;
-  using DictionaryContainer<Data>::InsertAll;
-  using DictionaryContainer<Data>::InsertSome;
-  using DictionaryContainer<Data>::RemoveAll;
-  using DictionaryContainer<Data>::RemoveSome;
 
-  ulong prime = 31;
+  using Container::size;
+
+  ulong a = 3;
+  ulong b = 5;
+  
+  ulong prime = 47;
 
   std::default_random_engine gen = std::default_random_engine(std::random_device{}());
   std::uniform_int_distribution<ulong> genA = std::uniform_int_distribution<ulong>(1, prime);
   std::uniform_int_distribution<ulong> genB = std::uniform_int_distribution<ulong>(0, prime);
 
-
-  ulong a = 3;
-  ulong b = 5;
-
 public:
-  ulong tableSize = 16;
+  ulong tableSize = 16; // va in protected
   //Constructor
   HashTable() {
     a = (genA(gen) * 2) + 1;
-    b = std::pow(2, std::floor(log2(genB(gen))) + 1);
+    b = std::pow(2, std::ceil(log2(genB(gen))));
   }
 
   //Copy constructor

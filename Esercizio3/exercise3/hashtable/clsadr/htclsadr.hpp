@@ -23,18 +23,18 @@ private:
 protected:
 
   using Container::size;
-
+  using HashTable<Data>::HashKey;
   lasd::List<Data>* table = nullptr;  
 
 public:
 
   using DictionaryContainer<Data>::InsertAll;
   using DictionaryContainer<Data>::InsertSome;
-  using DictionaryContainer<Data>::RemoveAll;
-  using DictionaryContainer<Data>::RemoveSome;
   using HashTable<Data>::tableSize;
   // Default constructor
-  HashTableClsAdr() : HashTableClsAdr(16) {};
+  HashTableClsAdr() {
+     table = new lasd::List<Data>[tableSize] {};
+  };
 
   /* ************************************************************************ */
 

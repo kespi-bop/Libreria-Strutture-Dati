@@ -6,7 +6,7 @@ namespace lasd {
 
 template <typename Data>
 inline HashTableOpnAdr<Data>::HashTableOpnAdr(const ulong newSize) : HashTable<Data>() {
-    tableSize = std::pow(2, std::floor(log2((newSize < 16) ? 16 : newSize)) + 1);
+    tableSize = std::pow(2, std::ceil(log2((newSize < 16) ? 16 : newSize)));
     table = new Data[tableSize] {};
     tableFlag = new Flag[tableSize] {};
 }
@@ -88,14 +88,14 @@ bool HashTableOpnAdr<Data>::operator==(const HashTableOpnAdr &right) const noexc
 template <typename Data>
 bool HashTableOpnAdr<Data>::Insert(const Data &element) {
     ulong prob_index = 0;
-    if(size * 2 >= tableSize) {
+    if(size * 2 > tableSize) {
         Resize(tableSize * 2);
     }
     ulong index = FindEmpty(element, prob_index);
     if(tableFlag[index] != valid){
         table[index] = element;
         tableFlag[index] = valid;
-        size++;
+        ++size;
         return !Remove(++prob_index, element); 
     }
     prob_index = 0;
@@ -110,10 +110,10 @@ bool HashTableOpnAdr<Data>::Insert(Data &&element) {
     }
     ulong index = FindEmpty(element, prob_index);
     if(tableFlag[index] != valid){
-        std::swap(table[index], element);
+        table[index] = std::move(element);
         tableFlag[index] = valid;
-        size++;
-        return !Remove(++prob_index, table[index]); 
+        ++size;
+        return !Remove(++prob_index, element); 
     }
     prob_index = 0;
     return false;
@@ -134,12 +134,7 @@ bool HashTableOpnAdr<Data>::Exists(const Data &element) const noexcept {
 
 template <typename Data>
 void HashTableOpnAdr<Data>::Resize(const ulong new_size) {
-    ulong tmptableSize;
-    if(new_size <= 16) {
-        tmptableSize = 16;
-    } else {
-        tmptableSize = std::pow(2, std::ceil(log2(new_size))); 
-    }
+    ulong tmptableSize = (new_size <= 16)? 16 : std::pow(2, std::ceil(log2(new_size)));
 
     Data* tmpTable = new Data[tmptableSize] {};
     Flag* tmpTableFlag = new Flag[tmptableSize] {}; 

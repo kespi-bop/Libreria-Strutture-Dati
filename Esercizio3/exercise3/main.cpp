@@ -42,6 +42,12 @@ in versione const che non const : const_cast<NodeLnk * *>(static_cast<const BST<
 qui la funzione non costante richiama la funzione costante castandola a non costante in modo da non riscriverla 
 il const cast si puo utilizzare soltanto su algoritmi che di per se non modificano dati.*/
 
+/*
+  - riportare tableSize in HashTable.hpp in protected
+  - porta tablesize insertsome e insert all di htclsadr in protected
+  - porta tablesize insertsome e insert all di htopnadr in protected
+*/
+
   std::cout << "Lasd Libraries 2023" << std::endl;
   uint scelta;
   while(true)
@@ -56,7 +62,7 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
     else if(scelta == 1)
       lasdtest();
     else if(scelta == 2)
-      myTest();
+      davtest_ex3();
   }
 
   // lasd::Vector<int> a(8);

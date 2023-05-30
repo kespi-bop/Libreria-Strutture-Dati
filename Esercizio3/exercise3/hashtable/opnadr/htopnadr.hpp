@@ -9,12 +9,6 @@
 
 /* ************************************************************************** */
 
-enum Flag{
-  empt,
-  dirty,
-  valid 
-};
-
 namespace lasd {
 
 /* ************************************************************************** */
@@ -24,7 +18,11 @@ class HashTableOpnAdr : virtual public HashTable<Data> {
 
 private:
 
-  // ...
+  enum Flag{
+    empt,
+    dirty,
+    valid 
+  };
 
 protected:
 
@@ -39,12 +37,13 @@ public:
 
   using DictionaryContainer<Data>::InsertAll;
   using DictionaryContainer<Data>::InsertSome;
-  using DictionaryContainer<Data>::RemoveAll;
-  using DictionaryContainer<Data>::RemoveSome;
   using HashTable<Data>::tableSize;
 
   // Default constructor
-  HashTableOpnAdr() : HashTableOpnAdr(16) {};
+  HashTableOpnAdr() {
+    table = new Data[tableSize] {};
+    tableFlag = new Flag[tableSize] {};
+  };
 
   /* ************************************************************************ */
 
