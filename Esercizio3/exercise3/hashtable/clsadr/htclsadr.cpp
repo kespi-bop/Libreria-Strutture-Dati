@@ -7,7 +7,7 @@ namespace lasd {
 template <typename Data>
 inline HashTableClsAdr<Data>::HashTableClsAdr(const ulong newSize) : HashTable<Data>() {
     tableSize = std::pow(2, std::ceil(log2((newSize <= 16) ? 16 : newSize)));
-    table = new lasd::List<Data>[tableSize] {};
+    table = new lasd::BST<Data>[tableSize] {};
 }
 
 template <typename Data>
@@ -32,7 +32,7 @@ HashTableClsAdr<Data>::HashTableClsAdr(const ulong newSize, MutableMappableConta
 
 template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(const HashTableClsAdr<Data>& right) : HashTable<Data>(right) {
-    table = new lasd::List<Data>[tableSize] {};
+    table = new lasd::BST<Data>[tableSize] {};
     std::copy(right.table, right.table + tableSize, table);
 }
 
@@ -45,7 +45,7 @@ template <typename Data>
 HashTableClsAdr<Data>& HashTableClsAdr<Data>::operator=(const HashTableClsAdr<Data>& right) {
     HashTable<Data>::operator=(right);
     delete[] table;
-    table = new lasd::List<Data>[tableSize] {};
+    table = new lasd::BST<Data>[tableSize] {};
     for(ulong i = 0; i < tableSize; i++) {
         table[i] = right.table[i];
     }
@@ -108,7 +108,7 @@ bool HashTableClsAdr<Data>::Remove(const Data &value)
 {
     bool result = false;
     ulong index = HashKey(Hashable<Data>()(value));
-    result = table[index].List<Data>::Remove(value);
+    result = table[index].lasd::BST<Data>::Remove(value);
     if(result) {
         size--;
     }
@@ -128,7 +128,7 @@ template <typename Data>
 void HashTableClsAdr<Data>::Resize(const ulong new_size) {
     ulong newTableSize = (new_size <= 16)? 16 : std::pow(2, std::ceil(log2(new_size)));
     size = 0;
-    List<Data>* newTable = new List<Data>[newTableSize] {};
+    lasd::BST<Data>* newTable = new lasd::BST<Data>[newTableSize] {};
     std::swap(newTable, table);
     std::swap(newTableSize, tableSize);
     for(ulong i = 0; i < newTableSize; i++){
@@ -140,7 +140,7 @@ void HashTableClsAdr<Data>::Resize(const ulong new_size) {
 template <typename Data>
 void HashTableClsAdr<Data>::Clear() {
     delete[] table;
-    table = new List<Data>[tableSize] {};
+    table = new lasd::BST<Data>[tableSize] {};
     size = 0;
 }
 /* ************************************************************************** */

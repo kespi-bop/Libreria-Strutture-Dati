@@ -40,7 +40,7 @@ protected:
   ulong a = 3;
   ulong b = 5;
   
-  ulong prime = 47;
+  ulong prime = 1069;
 
   std::default_random_engine gen = std::default_random_engine(std::random_device{}());
   std::uniform_int_distribution<ulong> genA = std::uniform_int_distribution<ulong>(1, prime);

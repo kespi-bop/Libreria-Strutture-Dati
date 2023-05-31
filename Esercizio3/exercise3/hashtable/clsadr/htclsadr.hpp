@@ -5,7 +5,7 @@
 /* ************************************************************************** */
 
 #include "../hashtable.hpp"
-// #include ...
+#include "../../bst/bst.hpp"
 
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ protected:
 
   using Container::size;
   using HashTable<Data>::HashKey;
-  lasd::List<Data>* table = nullptr;  
+  lasd::BST<Data>* table = nullptr;  
 
 public:
 
@@ -33,7 +33,7 @@ public:
   using HashTable<Data>::tableSize;
   // Default constructor
   HashTableClsAdr() {
-     table = new lasd::List<Data>[tableSize] {};
+     table = new lasd::BST<Data>[tableSize] {};
   };
 
   /* ************************************************************************ */
