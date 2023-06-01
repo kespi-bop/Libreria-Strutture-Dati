@@ -70,6 +70,7 @@ bool HashTableClsAdr<Data>::operator==(const HashTableClsAdr<Data> &right) const
             [&right, &result](const Data& dat){
                 if(!right.Exists(dat)){
                     result = false;
+                    return;
                 }
             }
         );
