@@ -5,7 +5,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-inline HashTableOpnAdr<Data>::HashTableOpnAdr(const ulong newSize) : HashTable<Data>() {
+inline HashTableOpnAdr<Data>::HashTableOpnAdr(const ulong newSize) {
     tableSize = std::pow(2, std::ceil(log2((newSize < 16) ? 16 : newSize)));
     table = new Data[tableSize] {};
     tableFlag = new Flag[tableSize] {};
@@ -133,8 +133,8 @@ bool HashTableOpnAdr<Data>::Exists(const Data &element) const noexcept {
 }
 
 template <typename Data>
-void HashTableOpnAdr<Data>::Resize(const ulong new_size) {
-    ulong tmptableSize = (new_size <= 16)? 16 : std::pow(2, std::ceil(log2(new_size)));
+void HashTableOpnAdr<Data>::Resize(const ulong newSize) {
+    ulong tmptableSize = (newSize <= 16)? 16 : std::pow(2, std::ceil(log2(newSize)));
 
     Data* tmpTable = new Data[tmptableSize] {};
     Flag* tmpTableFlag = new Flag[tmptableSize] {}; 

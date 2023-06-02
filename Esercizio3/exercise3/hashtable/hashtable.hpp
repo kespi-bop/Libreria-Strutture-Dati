@@ -41,13 +41,12 @@ protected:
   ulong b = 5;
   
   ulong prime = 1069;
+  ulong tableSize = 16;
 
   std::default_random_engine gen = std::default_random_engine(std::random_device{}());
   std::uniform_int_distribution<ulong> genA = std::uniform_int_distribution<ulong>(1, prime);
   std::uniform_int_distribution<ulong> genB = std::uniform_int_distribution<ulong>(0, prime);
 
-public:
-  ulong tableSize = 16; // va in protected
   //Constructor
   HashTable() {
     a = (genA(gen) * 2) + 1;
@@ -59,6 +58,8 @@ public:
 
   //Move constructor
   HashTable(HashTable&& right) noexcept;
+
+public:
 
   // Destructor
   virtual ~HashTable() = default;

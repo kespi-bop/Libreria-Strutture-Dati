@@ -27,8 +27,8 @@ private:
 protected:
 
   using Container::size;
-
   using HashTable<Data>::HashKey;
+  using HashTable<Data>::tableSize;
 
   Data* table = nullptr;
   Flag* tableFlag = nullptr;
@@ -37,7 +37,8 @@ public:
 
   using DictionaryContainer<Data>::InsertAll;
   using DictionaryContainer<Data>::InsertSome;
-  using HashTable<Data>::tableSize;
+  using DictionaryContainer<Data>::RemoveAll;
+  using DictionaryContainer<Data>::RemoveSome;
 
   // Default constructor
   HashTableOpnAdr() {
@@ -104,7 +105,7 @@ public:
 
   // Specific member functions (inherited from ResizableContainer)
 
-  virtual void Resize(const ulong new_size); // Resize the hashtable to a given size
+  virtual void Resize(const ulong newSize); // Resize the hashtable to a given size
 
   /* ************************************************************************ */
 

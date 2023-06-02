@@ -24,13 +24,16 @@ protected:
 
   using Container::size;
   using HashTable<Data>::HashKey;
+  using HashTable<Data>::tableSize;
   lasd::BST<Data>* table = nullptr;  
 
 public:
 
   using DictionaryContainer<Data>::InsertAll;
   using DictionaryContainer<Data>::InsertSome;
-  using HashTable<Data>::tableSize;
+  using DictionaryContainer<Data>::RemoveAll;
+  using DictionaryContainer<Data>::RemoveSome;
+
   // Default constructor
   HashTableClsAdr() {
      table = new lasd::BST<Data>[tableSize] {};

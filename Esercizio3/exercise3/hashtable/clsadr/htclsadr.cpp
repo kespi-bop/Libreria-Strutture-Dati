@@ -5,7 +5,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-inline HashTableClsAdr<Data>::HashTableClsAdr(const ulong newSize) : HashTable<Data>() {
+inline HashTableClsAdr<Data>::HashTableClsAdr(const ulong newSize) {
     tableSize = std::pow(2, std::ceil(log2((newSize <= 16) ? 16 : newSize)));
     table = new lasd::BST<Data>[tableSize] {};
 }

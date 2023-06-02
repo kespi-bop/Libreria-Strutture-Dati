@@ -35,19 +35,6 @@ using namespace std;
 
 int main() {
 
-//binarytree astratto -> binarytree link -> BST -> iterator -> binarytree vec 
-
-/*viene usato in const cast per evitare di riscrivere funzioni che esistono sia
-in versione const che non const : const_cast<NodeLnk * *>(static_cast<const BST<data> *>(this)->FindPointerToSuccessor(nod, dat))
-qui la funzione non costante richiama la funzione costante castandola a non costante in modo da non riscriverla 
-il const cast si puo utilizzare soltanto su algoritmi che di per se non modificano dati.*/
-
-/*
-  - riportare tableSize in HashTable.hpp in protected
-  - porta tablesize insertsome e insert all di htclsadr in protected
-  - porta tablesize insertsome e insert all di htopnadr in protected
-*/
-
   std::cout << "Lasd Libraries 2023" << std::endl;
   uint scelta;
   while(true)
@@ -65,4 +52,5 @@ il const cast si puo utilizzare soltanto su algoritmi che di per se non modifica
       myTest();
   }
   return 0;
+
 }
