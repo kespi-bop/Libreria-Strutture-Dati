@@ -8,18 +8,11 @@
 #include "./container/foldable.hpp"
 #include "./container/mappable.hpp"
 #include "./container/linear.hpp"
-
 #include "./iterator/iterator.hpp"
-
 #include "./vector/vector.hpp"
-
 #include "./list/list.hpp"
-
 #include "./binarytree/binarytree.hpp"
-
 #include "./bst/bst.hpp"
-
-
 #include "./hashtable/hashtable.hpp"
 #include "./hashtable/clsadr/htclsadr.hpp"
 #include "./hashtable/opnadr/htopnadr.hpp"
